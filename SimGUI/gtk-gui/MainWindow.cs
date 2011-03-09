@@ -171,7 +171,6 @@ public partial class MainWindow {
         this.hbox1.Spacing = 6;
         // Container child hbox1.Gtk.Box+BoxChild
         this.table1 = new Gtk.Table(((uint)(7)), ((uint)(2)), false);
-        this.table1.Name = "table1";
         this.table1.RowSpacing = ((uint)(6));
         this.table1.ColumnSpacing = ((uint)(6));
         // Container child table1.Gtk.Table+TableChild
@@ -701,5 +700,7 @@ public partial class MainWindow {
         this.DefaultHeight = 409;
         this.Show();
         this.ExitAction.Activated += new System.EventHandler(this.OnExitActionActivated);
+        this.button5.Clicked += new System.EventHandler(this.OnButton5Clicked);
+        this.button4.Clicked += new System.EventHandler(this.OnButton4Clicked);
     }
 }
