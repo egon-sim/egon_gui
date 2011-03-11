@@ -18,10 +18,16 @@ namespace SimGUI {
 			this.Cookie = Cookie;
 			this.ModulePath = ModulePath;
 			this.shell = "bash";
+
+			if (this.ModulePath.EndsWith("/") != true) {
+				this.ModulePath += "/";
+			}
 		}
 		
 		public string StartNode() {
-			return this.Exec("erl -sname " + this.NodeName + " -pa '" + this.ModulePath + "' -setcookie '" + this.Cookie + "' -detached");
+			//return this.Exec("erl -sname " + this.NodeName + " -pa '" + this.ModulePath + "' -setcookie '" + this.Cookie + "' -detached");
+			Console.WriteLine(this.ModulePath + "start.sh");
+			return this.Exec(this.ModulePath + "start.sh");
 		}
 		
 		public string StopNode() {
@@ -30,7 +36,6 @@ namespace SimGUI {
 		}
 		
 		public string StartModule() {
-			
 			return this.Call("start");
 		}
 	

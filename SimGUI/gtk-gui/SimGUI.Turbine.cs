@@ -261,6 +261,9 @@ namespace SimGUI {
             this.DefaultWidth = 501;
             this.DefaultHeight = 222;
             this.Show();
+            this.button9.Clicked += new System.EventHandler(this.OnButton9Clicked);
+            this.button8.Clicked += new System.EventHandler(this.OnButton8Clicked);
+            this.button7.Clicked += new System.EventHandler(this.OnButton7Clicked);
         }
     }
 }

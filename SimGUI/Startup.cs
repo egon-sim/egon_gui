@@ -45,10 +45,10 @@ namespace SimGUI
 		
 		protected virtual void OnButton1Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface = new ErlInterface(this.entry1.Text, this.entry3.Text, "reactor", "FOO", "/home/nick/code/simulator/erl");
+			this.simInterface = new ErlInterface(this.entry1.Text, this.entry3.Text, "indicator", "FOO", "/home/nick/code/simulator/erl");
 
 			//this.simInterface.StartNode();
-			//this.simInterface.StartModule();
+			this.simInterface.StartModule();
 			
 			/*Console.WriteLine(e.StartNode());
 			Console.WriteLine("Started!");*/

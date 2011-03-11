@@ -52,7 +52,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
-            <node name="__gtksharp_64_Stetic_Editor_ActionMenuBar" type="Menubar">
+            <node name="menubar1" type="Menubar">
               <node type="Menu" action="FileAction">
                 <node type="Menuitem" action="ExitAction1" />
               </node>
@@ -902,7 +902,6 @@
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">Borate</property>
-                    <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -939,6 +938,7 @@
                     <property name="Type">TextOnly</property>
                     <property name="Label" translatable="yes">START</property>
                     <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnTogglebutton2Clicked" />
                   </widget>
                   <packing>
                     <property name="Position">4</property>
@@ -1073,6 +1073,7 @@
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">GO</property>
                 <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButton7Clicked" />
               </widget>
               <packing>
                 <property name="TopAttach">4</property>
@@ -1097,6 +1098,7 @@
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">SET</property>
                 <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButton8Clicked" />
               </widget>
               <packing>
                 <property name="TopAttach">3</property>
@@ -1121,6 +1123,7 @@
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">SET</property>
                 <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnButton9Clicked" />
               </widget>
               <packing>
                 <property name="TopAttach">3</property>
