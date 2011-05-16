@@ -45,26 +45,8 @@ namespace SimGUI
 		
 		protected virtual void OnButton1Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface = new ErlInterface(this.entry1.Text, this.entry3.Text, "indicator", "FOO", "/home/nick/code/simulator/erl");
-
-			//this.simInterface.StartNode();
-			this.simInterface.StartModule();
-			
-			/*Console.WriteLine(e.StartNode());
-			Console.WriteLine("Started!");*/
-			/*Console.WriteLine(e.StartModule());
-			Console.WriteLine (e.Call("boron"));
-			Console.WriteLine (e.Call("tavg"));
-			Console.WriteLine (e.Call("step_in"));
-			Console.WriteLine (e.Call("tavg"));
-			Console.WriteLine (e.Call("dilute [5]"));
-			Console.WriteLine (e.Call("tavg"));*/
-			/*Console.WriteLine(e.StopModule());
-			Console.WriteLine(e.StopNode());*/
+			this.simInterface = new ErlInterface("localhost", 1055);
 
 		}
-		
-		
-		
 	}
 }

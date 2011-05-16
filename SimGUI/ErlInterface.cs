@@ -1,77 +1,33 @@
 using System;
 using System.Diagnostics;
+using System.Net.Sockets;
+using System.Text;
 
 namespace SimGUI {
 
 	public class ErlInterface {
-		string ReactorNode;
-		string ReactorModule;
-		string NodeName;
-		string Cookie;
-		string ModulePath;
-		string shell;
+		public NetworkStream stream;
+		public TcpClient client;
 		
-		public ErlInterface(string NodeName, string ServerName, string ReactorModule, string Cookie, string ModulePath) {
-			this.ReactorNode = NodeName + "@" + ServerName;
-			this.NodeName = NodeName;
-			this.ReactorModule = ReactorModule;
-			this.Cookie = Cookie;
-			this.ModulePath = ModulePath;
-			this.shell = "bash";
-
-			if (this.ModulePath.EndsWith("/") != true) {
-				this.ModulePath += "/";
-			}
+		public ErlInterface(String server, int port) {
+			this.client = new TcpClient(server, port);
+			this.stream = client.GetStream();
 		}
 		
-		public string StartNode() {
-			//return this.Exec("erl -sname " + this.NodeName + " -pa '" + this.ModulePath + "' -setcookie '" + this.Cookie + "' -detached");
-			Console.WriteLine(this.ModulePath + "start.sh");
-			return this.Exec(this.ModulePath + "start.sh");
+		public String Call(String parameter) {
+			return this.getParameter(parameter);
 		}
 		
-		public string StopNode() {
-			string command = "erl_call -a 'init stop' -n " + this.ReactorNode + " -c '" + this.Cookie + "'";
-			return this.Exec(command);
+		public String getParameter(String parameter) {
+			Byte[] data = Encoding.ASCII.GetBytes(parameter);
+			this.stream.Write(data, 0, data.Length);
+			this.stream.Flush();
+			
+			data = new Byte[256];
+			String responseData = String.Empty;
+			Int32 bytes = stream.Read(data, 0, data.Length);
+			responseData = Encoding.ASCII.GetString(data, 0, bytes);
+			return responseData;
 		}
-		
-		public string StartModule() {
-			return this.Call("start");
-		}
-	
-		public string StopModule() {
-			return this.Call("stop");
-		}
-	
-		public string Call(string param) {
-			string command = "erl_call -a '" + this.ReactorModule + " " + param + "' -n " + this.ReactorNode + " -c '" + this.Cookie + "'";
-			return this.Exec(command);
-		}
-		
-		public string Call(string module, string param) {
-			string command = "erl_call -a '" + module + " " + param + "' -n " + this.ReactorNode + " -c '" + this.Cookie + "'";
-			return this.Exec(command);
-		}
-		
-		public string Exec(string cmd) {
-			string retval;
-	
-			ProcessStartInfo PSI = new ProcessStartInfo(this.shell);
-	        PSI.RedirectStandardInput = true;
-	        PSI.RedirectStandardOutput = true;
-	        PSI.RedirectStandardError = true;
-	        PSI.UseShellExecute = false;
-	        Process p = Process.Start(PSI);
-	        System.IO.StreamWriter SW = p.StandardInput;
-	        System.IO.StreamReader SR = p.StandardOutput;
-	        SW.WriteLine(cmd);
-			//Console.WriteLine("Log: " + cmd);
-	        SW.Close();
-			retval = SR.ReadToEnd();
-			SR.Close();
-			p.Close();
-			return retval;
-		}
-		
 	}
 }

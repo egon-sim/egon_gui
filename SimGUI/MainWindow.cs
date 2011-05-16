@@ -19,18 +19,18 @@ public partial class MainWindow : Gtk.Window
 	}
 	
 	public bool Refresh() {
-		this.label3.Text = this.simInterface.Call("burnup");
-		this.label5.Text = this.simInterface.Call("boron");
-		this.label10.Text = this.simInterface.Call("tavg");
-		this.label11.Text = this.simInterface.Call("tref");
-		this.label12.Text = this.simInterface.Call("flux");
-		this.label13.Text = this.simInterface.Call("power");
- 		this.vscale1.Value = int.Parse(this.simInterface.Call("rod_pos [0]"));
- 		this.vscale2.Value = int.Parse(this.simInterface.Call("rod_pos [1]"));
- 		this.vscale3.Value = int.Parse(this.simInterface.Call("rod_pos [2]"));
- 		this.vscale4.Value = int.Parse(this.simInterface.Call("rod_pos [3]"));
- 		this.vscale5.Value = int.Parse(this.simInterface.Call("rod_pos [4]"));
-		this.vscale6.Value = int.Parse(this.simInterface.Call("rod_pos [5]"));
+		this.label3.Text = this.simInterface.Call("core:burnup()\n");
+		this.label5.Text = this.simInterface.Call("core:boron()\n");
+		this.label10.Text = this.simInterface.Call("core:tavg()\n");
+		this.label11.Text = this.simInterface.Call("reactor:tref()\n");
+		this.label12.Text = this.simInterface.Call("core:flux()\n");
+		this.label13.Text = this.simInterface.Call("turbine:power()\n");
+ 		/*this.vscale1.Value = int.Parse(this.simInterface.Call("rod_position:position(0)\n"));
+ 		this.vscale2.Value = int.Parse(this.simInterface.Call("rod_position:position(1)\n"));
+ 		this.vscale3.Value = int.Parse(this.simInterface.Call("rod_position:position(2)\n"));
+ 		this.vscale4.Value = int.Parse(this.simInterface.Call("rod_position:position(3)\n"));
+ 		this.vscale5.Value = int.Parse(this.simInterface.Call("rod_position:position(4)\n"));
+		this.vscale6.Value = int.Parse(this.simInterface.Call("rod_position:position(5)\n"));*/
 		
 		return true;
 	}
@@ -47,14 +47,14 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnButton4Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("rodcontrol", "step_out");
+		this.simInterface.Call("rod_position:step_out()\n");
 		this.Refresh();
 
 	}
 	
 	protected virtual void OnButton5Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("rodcontrol", "step_in");
+		this.simInterface.Call("rod_position:step_in()\n");
 		this.Refresh();
 
 	}
@@ -65,15 +65,15 @@ public partial class MainWindow : Gtk.Window
 		int val;
 		
 		if (this.radiobutton1.Active) {
-			action = "borate_d";
+			action = "borate";
 			val = (int)this.spinbutton1.Value;
 		} else if (this.radiobutton2.Active) {
-			action = "dilute_d";
+			action = "dilute";
 			val = (int)this.spinbutton2.Value;
 		} else {
 			return;
 		}
-		this.simInterface.Call("reactor", action + " [" + val + "]");
+		this.simInterface.Call("reactor:" + action + "(" + val + ")");
 		
 	}
 	
