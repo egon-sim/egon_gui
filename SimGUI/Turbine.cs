@@ -28,13 +28,13 @@ namespace SimGUI
 			this.label11.Text = this.simInterface.Call("turbine:power()\n");
 			this.label12.Text = this.simInterface.Call("turbine:target()\n");
 			this.label13.Text = this.simInterface.Call("turbine:rate()\n");
-			go = this.simInterface.Call("turbine:go()\n");
+			go = this.simInterface.Call("turbine:go()\n").Trim();
 			if (go == "true") {
 				this.label17.Text = "GO";
 			} else if (go == "false") {
 				this.label17.Text = "STOP";
 			} else {
-				this.label17.Text = "ERROR";
+				this.label17.Text = "ERROR: '" + go.ToString() + "'";
 			}
 			
 			
@@ -44,20 +44,20 @@ namespace SimGUI
 		protected virtual void OnButton8Clicked (object sender, System.EventArgs e)
 		{
 			int val = int.Parse(this.entry2.Text);
-			this.simInterface.Call("turbine:set_target(" + val.ToString() + ")\n");
+			this.simInterface.Call("turbine:set(target, " + val.ToString() + ")\n");
 			
 		}
 		
 		protected virtual void OnButton9Clicked (object sender, System.EventArgs e)
 		{
 			int val = int.Parse(this.entry4.Text);
-			this.simInterface.Call("turbine:set_rate(" + val.ToString() + ")\n");
+			this.simInterface.Call("turbine:set(rate, " + val.ToString() + ")\n");
 
 		}
 		
 		protected virtual void OnButton7Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface.Call("turbine:start_ramp()");
+			this.simInterface.Call("turbine:start_ramp()\n");
 		}
 		
 	}

@@ -21,16 +21,16 @@ public partial class MainWindow : Gtk.Window
 	public bool Refresh() {
 		this.label3.Text = this.simInterface.Call("core:burnup()\n");
 		this.label5.Text = this.simInterface.Call("core:boron()\n");
-		this.label10.Text = this.simInterface.Call("core:tavg()\n");
+		this.label10.Text = float.Parse(this.simInterface.Call("core:tavg()\n")).ToString();
 		this.label11.Text = this.simInterface.Call("reactor:tref()\n");
 		this.label12.Text = this.simInterface.Call("core:flux()\n");
 		this.label13.Text = this.simInterface.Call("turbine:power()\n");
- 		/*this.vscale1.Value = int.Parse(this.simInterface.Call("rod_position:position(0)\n"));
+		this.vscale1.Value = int.Parse(this.simInterface.Call("rod_position:position(0)\n"));
  		this.vscale2.Value = int.Parse(this.simInterface.Call("rod_position:position(1)\n"));
  		this.vscale3.Value = int.Parse(this.simInterface.Call("rod_position:position(2)\n"));
  		this.vscale4.Value = int.Parse(this.simInterface.Call("rod_position:position(3)\n"));
  		this.vscale5.Value = int.Parse(this.simInterface.Call("rod_position:position(4)\n"));
-		this.vscale6.Value = int.Parse(this.simInterface.Call("rod_position:position(5)\n"));*/
+		this.vscale6.Value = int.Parse(this.simInterface.Call("rod_position:position(5)\n"));
 		
 		return true;
 	}
@@ -73,7 +73,7 @@ public partial class MainWindow : Gtk.Window
 		} else {
 			return;
 		}
-		this.simInterface.Call("reactor:" + action + "(" + val + ")");
+		this.simInterface.Call("reactor:" + action + "(" + val + ")\n");
 		
 	}
 	
