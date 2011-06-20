@@ -6,22 +6,40 @@ using System.Text;
 namespace SimGUI {
 
 	public class ErlInterface {
-		public NetworkStream stream;
-		public TcpClient client;
+		public NetworkStream getStream;
+		public NetworkStream actionStream;
+		public NetworkStream setStream;
 		
-		public ErlInterface(String server, int port) {
-			this.client = new TcpClient(server, port);
-			this.stream = client.GetStream();
+		public ErlInterface(String server, int getPort, int actionPort, int setPort) {
+			TcpClient client;
+			
+			client = new TcpClient(server, getPort);
+			this.getStream = client.GetStream();
+			
+			client = new TcpClient(server, actionPort);
+			this.actionStream = client.GetStream();
+			
+			client = new TcpClient(server, setPort);
+			this.setStream = client.GetStream();
+			
 		}
 		
-		public String Call(String parameter) {
-			return this.getParameter(parameter);
+		public String getCall(String parameter) {
+			return this.Call(this.getStream, parameter);
 		}
 		
-		public String getParameter(String parameter) {
+		public String actionCall(String parameter) {
+			return this.Call(this.actionStream, parameter);
+		}
+		
+		public String setCall(String parameter) {
+			return this.Call(this.setStream, parameter);
+		}
+		
+		public String Call(NetworkStream stream, String parameter) {
 			Byte[] data = Encoding.ASCII.GetBytes(parameter);
-			this.stream.Write(data, 0, data.Length);
-			this.stream.Flush();
+			stream.Write(data, 0, data.Length);
+			stream.Flush();
 			
 			data = new Byte[256];
 			String responseData = String.Empty;
