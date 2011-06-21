@@ -25,12 +25,12 @@ public partial class MainWindow : Gtk.Window
 		this.label11.Text = this.simInterface.getCall("{es_w7300_server, tref}\n");
 		this.label12.Text = this.simInterface.getCall("{es_core_server, flux}\n");
 		this.label13.Text = this.simInterface.getCall("{es_turbine_server, power}\n");
-		this.vscale1.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 1}\n"));
- 		this.vscale2.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 2}\n"));
- 		this.vscale3.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 3}\n"));
- 		this.vscale4.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 4}\n"));
-/* 		this.vscale5.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 5}\n"));
-		this.vscale6.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, position, 6}\n"));*/
+		this.vscale1.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 1}\n"));
+ 		this.vscale2.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 2}\n"));
+ 		this.vscale3.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 3}\n"));
+ 		this.vscale4.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 4}\n"));
+ 		this.vscale5.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, shutdown_position, 1}\n"));
+		this.vscale6.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, shutdown_position, 2}\n"));
 		this.label26.Text = this.simInterface.getCall("{es_rod_controller_server, speed}\n").ToString();
 		
 		/*string rod_controller_mode = this.simInterface.getCall("{es_rod_controller_server, mode}\n").Trim();
