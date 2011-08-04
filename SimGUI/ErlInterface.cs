@@ -21,18 +21,16 @@ namespace SimGUI {
 		
 		public String listSims() {
 			String response = this.Call("{ask, list_sims}");
-//			Regex r = new Regex("\\[(.+)\\]");
-			Regex r = new Regex("(.+)");
-			Match m = r.Match(response);
+			String pattern = @"{(.+)}";
 			
-			if (m.Groups[1].Success) {
-				String retval = "";
-				foreach (Capture c in m.Groups[1].Captures) {
-					retval += "Sim: >" + c.Value + "<\n";
-				}
-				return retval;
+			MatchCollection matches = Regex.Matches(response, pattern);
+			
+			String retval = "";
+			foreach (Match match in matches) {
+				retval += match.Groups[1].Value + "\n";
 			}
-			return "Empty";
+			return String.Join(" ", retval.Split(','));
+			
 		}
 		
 		public String Call(String parameter) {
