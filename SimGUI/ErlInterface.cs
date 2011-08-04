@@ -2,48 +2,48 @@ using System;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SimGUI {
 
 	public class ErlInterface {
-		public NetworkStream getStream;
-		public NetworkStream actionStream;
-		public NetworkStream setStream;
+		public NetworkStream stream;
+		public String username;
 		
-		public ErlInterface(String server, int getPort, int actionPort, int setPort) {
+		public ErlInterface(String username, String server, int port) {
 			TcpClient client;
 			
-			client = new TcpClient(server, getPort);
-			this.getStream = client.GetStream();
-			
-			client = new TcpClient(server, actionPort);
-			this.actionStream = client.GetStream();
-			
-			client = new TcpClient(server, setPort);
-			this.setStream = client.GetStream();
+			client = new TcpClient(server, port);
+			this.stream = client.GetStream();
+			this.username = username;
 			
 		}
 		
-		public String getCall(String parameter) {
-			return this.Call(this.getStream, parameter);
+		public String listSims() {
+			String response = this.Call("{ask, list_sims}");
+//			Regex r = new Regex("\\[(.+)\\]");
+			Regex r = new Regex("(.+)");
+			Match m = r.Match(response);
+			
+			if (m.Groups[1].Success) {
+				String retval = "";
+				foreach (Capture c in m.Groups[1].Captures) {
+					retval += "Sim: >" + c.Value + "<\n";
+				}
+				return retval;
+			}
+			return "Empty";
 		}
 		
-		public String actionCall(String parameter) {
-			return this.Call(this.actionStream, parameter);
-		}
-		
-		public String setCall(String parameter) {
-			return this.Call(this.setStream, parameter);
-		}
-		
-		public String Call(NetworkStream stream, String parameter) {
+		public String Call(String parameter) {
+			
 			Byte[] data = Encoding.ASCII.GetBytes(parameter);
-			stream.Write(data, 0, data.Length);
-			stream.Flush();
+			this.stream.Write(data, 0, data.Length);
+			this.stream.Flush();
 			
 			data = new Byte[256];
 			String responseData = String.Empty;
-			Int32 bytes = stream.Read(data, 0, data.Length);
+			Int32 bytes = this.stream.Read(data, 0, data.Length);
 			responseData = Encoding.ASCII.GetString(data, 0, bytes);
 			return responseData;
 		}

@@ -24,11 +24,11 @@ namespace SimGUI
 		public bool Refresh() {
 			string go;
 			
-			this.label10.Text = this.simInterface.getCall("{es_turbine_server, power}\n");
-			this.label11.Text = this.simInterface.getCall("{es_turbine_server, power}\n");
-			this.label12.Text = this.simInterface.getCall("{es_turbine_server, target}\n");
-			this.label13.Text = this.simInterface.getCall("{es_turbine_server, rate}\n");
-			go = this.simInterface.getCall("{es_turbine_server, go}\n").Trim();
+			this.label10.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
+			this.label11.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
+			this.label12.Text = this.simInterface.Call("{get, es_turbine_server, target}\n");
+			this.label13.Text = this.simInterface.Call("{get, es_turbine_server, rate}\n");
+			go = this.simInterface.Call("{get, es_turbine_server, go}\n").Trim();
 			if (go == "true") {
 				this.label17.Text = "GO";
 			} else if (go == "false") {
@@ -44,20 +44,20 @@ namespace SimGUI
 		protected virtual void OnButton8Clicked (object sender, System.EventArgs e)
 		{
 			int val = int.Parse(this.entry2.Text);
-			this.simInterface.setCall("{es_turbine_server, target, " + val.ToString() + "}\n");
+			this.simInterface.Call("{set, es_turbine_server, target, " + val.ToString() + "}\n");
 			
 		}
 		
 		protected virtual void OnButton9Clicked (object sender, System.EventArgs e)
 		{
 			int val = int.Parse(this.entry4.Text);
-			this.simInterface.setCall("{es_turbine_server, rate, " + val.ToString() + "}\n");
+			this.simInterface.Call("{set, es_turbine_server, rate, " + val.ToString() + "}\n");
 
 		}
 		
 		protected virtual void OnButton7Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface.actionCall("{es_turbine_server, ramp, start}\n");
+			this.simInterface.Call("{action, es_turbine_server, ramp, start}\n");
 		}
 		
 	}

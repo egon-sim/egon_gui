@@ -19,21 +19,21 @@ public partial class MainWindow : Gtk.Window
 	}
 	
 	public bool Refresh() {
-		this.label3.Text = this.simInterface.getCall("{es_core_server, burnup}\n");
-		this.label5.Text = this.simInterface.getCall("{es_core_server, boron}\n");
-		this.label10.Text = float.Parse(this.simInterface.getCall("{es_core_server, tavg}\n")).ToString();
-		this.label11.Text = this.simInterface.getCall("{es_w7300_server, tref}\n");
-		this.label12.Text = this.simInterface.getCall("{es_core_server, flux}\n");
-		this.label13.Text = this.simInterface.getCall("{es_turbine_server, power}\n");
-		this.vscale1.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 1}\n"));
- 		this.vscale2.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 2}\n"));
- 		this.vscale3.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 3}\n"));
- 		this.vscale4.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, control_position, 4}\n"));
- 		this.vscale5.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, shutdown_position, 1}\n"));
-		this.vscale6.Value = int.Parse(this.simInterface.getCall("{es_rod_position_server, shutdown_position, 2}\n"));
-		this.label26.Text = this.simInterface.getCall("{es_rod_controller_server, speed}\n").ToString();
+		this.label3.Text = this.simInterface.Call("{get, es_core_server, burnup}\n");
+		this.label5.Text = this.simInterface.Call("{get, es_core_server, boron}\n");
+		this.label10.Text = float.Parse(this.simInterface.Call("{get, es_core_server, tavg}\n")).ToString();
+		this.label11.Text = this.simInterface.Call("{get, es_w7300_server, tref}\n");
+		this.label12.Text = this.simInterface.Call("{get, es_core_server, flux}\n");
+		this.label13.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
+		this.vscale1.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 1}\n"));
+ 		this.vscale2.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 2}\n"));
+ 		this.vscale3.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 3}\n"));
+ 		this.vscale4.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 4}\n"));
+ 		this.vscale5.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, 1}\n"));
+		this.vscale6.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, 2}\n"));
+		this.label26.Text = this.simInterface.Call("{get, es_rod_controller_server, speed}\n").ToString();
 		
-		/*string rod_controller_mode = this.simInterface.getCall("{es_rod_controller_server, mode}\n").Trim();
+		/*string rod_controller_mode = this.simInterface.Call("{get, es_rod_controller_server, mode}\n").Trim();
 		if (rod_controller_mode == "auto") {
 			this.radiobutton3.Activate();
 		}
@@ -57,14 +57,14 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnButton4Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.actionCall("{es_rod_position_server, step_out}\n");
+		this.simInterface.Call("{action, es_rod_position_server, step_out}\n");
 		this.Refresh();
 
 	}
 	
 	protected virtual void OnButton5Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.actionCall("{es_rod_position_server, step_in}\n");
+		this.simInterface.Call("{action, es_rod_position_server, step_in}\n");
 		this.Refresh();
 
 	}
@@ -83,19 +83,19 @@ public partial class MainWindow : Gtk.Window
 		} else {
 			return;
 		}
-		String boron = this.simInterface.getCall("{es_core_server, boron}\n").Trim();
-		this.simInterface.actionCall("{es_makeup_buffer_server, " + action + ", [" + boron + ", " + val + "]}\n");
+		String boron = this.simInterface.Call("{get, es_core_server, boron}\n").Trim();
+		this.simInterface.Call("{action, es_makeup_buffer_server, " + action + ", [" + boron + ", " + val + "]}\n");
 		
 	}
 	
 	protected virtual void OnRadiobutton3Activated (object sender, System.EventArgs e)
 	{
-		this.simInterface.setCall("{es_rod_controller_server, mode, auto}\n");
+		this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
 	}
 	
 	protected virtual void OnRadiobutton4Activated (object sender, System.EventArgs e)
 	{
-		this.simInterface.setCall("{es_rod_controller_server, mode, manual}\n");
+		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
 	}
 	
 	

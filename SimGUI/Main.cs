@@ -8,7 +8,7 @@ namespace SimGUI
 		public static void Main (string[] args)
 		{
 			Application.Init ();
-			Startup win = new Startup ();
+			Browser win = new Browser ();
 			win.Show ();
 			Application.Run ();
 		}

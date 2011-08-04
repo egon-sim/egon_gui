@@ -45,15 +45,15 @@ namespace SimGUI
 		
 		protected virtual void OnButton1Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface = new ErlInterface(this.entry1.Text, this.spinbutton8.ValueAsInt, this.spinbutton9.ValueAsInt, this.spinbutton10.ValueAsInt);
+			//this.simInterface = new ErlInterface(this.entry1.Text, this.spinbutton8.ValueAsInt, this.spinbutton9.ValueAsInt, this.spinbutton10.ValueAsInt);
 
 		}
 		protected virtual void OnButton2Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface.setCall("{es_core_server, burnup, " + this.spinbutton1.ValueAsInt + "}\n");
-			this.simInterface.setCall("{es_core_server, boron, " + this.spinbutton2.ValueAsInt + "}\n");
-			this.simInterface.setCall("{es_core_server, flux, " + this.spinbutton6.ValueAsInt + "}\n");
-			this.simInterface.setCall("{es_turbine_server, power, " + this.spinbutton6.ValueAsInt + "}\n");
+			this.simInterface.Call("{set, es_core_server, burnup, " + this.spinbutton1.ValueAsInt + "}\n");
+			this.simInterface.Call("{set, es_core_server, boron, " + this.spinbutton2.ValueAsInt + "}\n");
+			this.simInterface.Call("{set, es_core_server, flux, " + this.spinbutton6.ValueAsInt + "}\n");
+			this.simInterface.Call("{set, es_turbine_server, power, " + this.spinbutton6.ValueAsInt + "}\n");
 			
 			/*this.simInterface.Call("core:set(burnup, " + this.spinbutton1.ValueAsInt + ")\n");
 			this.simInterface.Call("core:set(boron, " + this.spinbutton2.ValueAsInt + ")\n");
