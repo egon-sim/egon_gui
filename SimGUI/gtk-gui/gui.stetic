@@ -662,6 +662,7 @@
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">Auto</property>
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
@@ -947,6 +948,10 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Upper">1000</property>
+                        <property name="PageIncrement">10</property>
+                        <property name="StepIncrement">1</property>
+                        <property name="ClimbRate">1</property>
+                        <property name="Numeric">True</property>
                       </widget>
                       <packing>
                         <property name="LeftAttach">1</property>
@@ -967,6 +972,10 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Upper">1000</property>
+                        <property name="PageIncrement">10</property>
+                        <property name="StepIncrement">1</property>
+                        <property name="ClimbRate">1</property>
+                        <property name="Numeric">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">1</property>
@@ -997,6 +1006,7 @@
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">Borate</property>
+                    <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -1494,6 +1504,10 @@
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Upper">228</property>
+                    <property name="PageIncrement">10</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="ClimbRate">1</property>
+                    <property name="Numeric">True</property>
                     <property name="Value">228</property>
                   </widget>
                   <packing>
@@ -1659,6 +1673,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">30000</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">150</property>
               </widget>
               <packing>
@@ -1680,6 +1698,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">5000</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">1711</property>
               </widget>
               <packing>
@@ -1703,6 +1725,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">350</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">305</property>
               </widget>
               <packing>
@@ -1726,6 +1752,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">350</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">302</property>
               </widget>
               <packing>
@@ -1749,6 +1779,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">200</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">100</property>
               </widget>
               <packing>
@@ -1772,6 +1806,10 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Upper">200</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="ClimbRate">1</property>
+                <property name="Numeric">True</property>
                 <property name="Value">100</property>
               </widget>
               <packing>
@@ -2176,22 +2214,7 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
-            <property name="MemberName" />
-            <property name="ShadowType">In</property>
-            <child>
-              <widget class="Gtk.TextView" id="textview1">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="ShowScrollbars">True</property>
-                <property name="Text" translatable="yes">Connect to server!</property>
-              </widget>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">2</property>
-            <property name="AutoSize">True</property>
-          </packing>
+          <placeholder />
         </child>
         <child>
           <widget class="Gtk.HBox" id="hbox4">
@@ -2234,7 +2257,7 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">Open</property>
+                <property name="Label" translatable="yes">Connect to selected</property>
                 <property name="UseUnderline">True</property>
                 <signal name="Clicked" handler="OnButton35Clicked" />
               </widget>
@@ -2246,17 +2269,7 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Entry" id="entry1">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Text" translatable="yes">1</property>
-                <property name="IsEditable">True</property>
-                <property name="InvisibleChar">•</property>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">True</property>
-              </packing>
+              <placeholder />
             </child>
           </widget>
           <packing>
