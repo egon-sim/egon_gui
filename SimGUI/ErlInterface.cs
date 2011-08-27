@@ -9,13 +9,16 @@ namespace SimGUI {
 	public class ErlInterface {
 		public NetworkStream stream;
 		public String username;
+		public String server;
 		
 		public ErlInterface(String username, String server, int port) {
 			TcpClient client;
 			
+			this.server = server;
+			this.username = username;
+
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
-			this.username = username;
 			
 		}
 		
@@ -35,6 +38,19 @@ namespace SimGUI {
 			}
 			return String.Join(" ", retval.Split(','));
 			
+		}
+		
+		public bool ConnectToSim(string simId) {
+			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
+			string pattern = "{connected,(.+)}";
+			
+			Match match = Regex.Matches(response, pattern)[0];
+			int port = int.Parse(match.Groups[1].Value);
+
+			TcpClient client = new TcpClient(this.server, port);
+			this.stream = client.GetStream();
+
+			return true;
 		}
 		
 		public String Call(String parameter) {

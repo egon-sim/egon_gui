@@ -46,6 +46,10 @@ namespace SimGUI
 
 		private global::Gtk.Button button2;
 
+		private global::Gtk.Button button35;
+
+		private global::Gtk.Entry entry1;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -247,22 +251,44 @@ namespace SimGUI
 			w19.Position = 1;
 			w19.Expand = false;
 			w19.Fill = false;
-			this.vbox1.Add (this.hbox4);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox4]));
-			w20.Position = 3;
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.button35 = new global::Gtk.Button ();
+			this.button35.CanFocus = true;
+			this.button35.Name = "button35";
+			this.button35.UseUnderline = true;
+			this.button35.Label = global::Mono.Unix.Catalog.GetString ("Open");
+			this.hbox4.Add (this.button35);
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.button35]));
+			w20.Position = 2;
 			w20.Expand = false;
 			w20.Fill = false;
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.entry1 = new global::Gtk.Entry ();
+			this.entry1.CanFocus = true;
+			this.entry1.Name = "entry1";
+			this.entry1.Text = global::Mono.Unix.Catalog.GetString ("1");
+			this.entry1.IsEditable = true;
+			this.entry1.InvisibleChar = '•';
+			this.hbox4.Add (this.entry1);
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.entry1]));
+			w21.Position = 3;
+			this.vbox1.Add (this.hbox4);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox4]));
+			w22.Position = 3;
+			w22.Expand = false;
+			w22.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 438;
+			this.DefaultWidth = 457;
 			this.DefaultHeight = 323;
 			this.Show ();
 			this.button1.Clicked += new global::System.EventHandler (this.OnButton1Clicked);
 			this.button4.Clicked += new global::System.EventHandler (this.OnButton4Clicked);
 			this.button3.Clicked += new global::System.EventHandler (this.OnButton3Clicked);
 			this.button2.Clicked += new global::System.EventHandler (this.OnButton2Clicked);
+			this.button35.Clicked += new global::System.EventHandler (this.OnButton35Clicked);
 		}
 	}
 }

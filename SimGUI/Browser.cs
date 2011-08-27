@@ -93,5 +93,16 @@ namespace SimGUI
 			this.simInterface.Disconnect();
 		}
 		
+		protected virtual void OnButton35Clicked (object sender, System.EventArgs e)
+		{
+			string simId = this.entry1.Text;
+			
+			this.simInterface.ConnectToSim(simId);
+			
+			Startup su = new Startup(this.simInterface);
+			su.ShowAll();
+		}
+		
+		
 	}
 }
