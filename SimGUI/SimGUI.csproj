@@ -75,6 +75,8 @@
     <Compile Include="ErlInterface.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="gtk-gui\SimGUI.Browser.cs" />
+    <Compile Include="gtk-gui\SimGUI.NewSimStarter.cs" />
+    <Compile Include="NewSimStarter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

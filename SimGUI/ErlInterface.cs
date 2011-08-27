@@ -29,6 +29,10 @@ namespace SimGUI {
 			foreach (Match match in matches) {
 				retval += match.Groups[1].Value + "\n";
 			}
+			
+			if (retval == "") {
+				return "No simulators.";
+			}
 			return String.Join(" ", retval.Split(','));
 			
 		}
@@ -44,6 +48,14 @@ namespace SimGUI {
 			Int32 bytes = this.stream.Read(data, 0, data.Length);
 			responseData = Encoding.ASCII.GetString(data, 0, bytes);
 			return responseData;
+		}
+		
+		public void Disconnect() {
+			this.stream.Close();
+		}
+		
+		~ErlInterface() {
+			this.Disconnect();
 		}
 	}
 }
