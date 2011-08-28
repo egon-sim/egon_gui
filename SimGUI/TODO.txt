@@ -1,0 +1,1 @@
+ErlInterface.Call() has limitation in "data = new Byte[10000];"

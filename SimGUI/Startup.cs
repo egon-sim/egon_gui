@@ -16,8 +16,8 @@ namespace SimGUI
 		}
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
-			this.Quit (o, args);
-			args.RetVal = true;
+			//this.Quit (o, args);
+			//args.RetVal = true;
 		}
 		
 		protected virtual void OnReactorActionActivated (object sender, System.EventArgs e)

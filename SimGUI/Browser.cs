@@ -1,8 +1,7 @@
 using Gtk;
 using System;
 
-namespace SimGUI
-{
+namespace SimGUI {
 
 	public partial class Browser : Gtk.Window {
 		ErlInterface simInterface;
@@ -13,23 +12,24 @@ namespace SimGUI
 			string server_address = this.entry2.Text;
 			int server_port = this.spinbutton1.ValueAsInt;
 			
+			if (this.simInterface != null) {
+				this.simInterface.Disconnect();
+			}
+			
 			try {
 				this.simInterface = new ErlInterface(username, server_address, server_port);
+				this.RefreshSimList();
 			} catch (System.Net.Sockets.SocketException) {
 				this.simInterface = null;
-				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close,
-				"Server not running on " + server_address + ":" + server_port + ".");
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Server not running on " + server_address + ":" + server_port + ".");
 				md.Run();
 				md.Destroy();
 			} catch {
 				this.simInterface = null;
-				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close,
-				"Connection error.");
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Connection error.");
 				md.Run();
 				md.Destroy();
 			}
-			this.RefreshSimList();
-			
 		}
 
 
@@ -76,16 +76,15 @@ namespace SimGUI
 		}
 
 		protected virtual void OnButton2Clicked(object sender, System.EventArgs e) {
-			NewSimStarter nss = new NewSimStarter(this.simInterface, this);
-			nss.ShowAll();
+			SimStarter ss = new SimStarter(this.simInterface, this);
+			ss.ShowAll();
 		}
 
 		public void RefreshSimList() {
 			if (this.simInterface != null) {
 				this.nodeview1.NodeStore = this.simInterface.generateStore();
 			} else {
-				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close,
-				"Not connected to a server.");
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Not connected to a server.");
 				md.Run();
 				md.Destroy();
 			}
@@ -101,13 +100,26 @@ namespace SimGUI
 
 		protected virtual void OnButton35Clicked(object sender, System.EventArgs e) {
 			if (this.selected != null) {
-				this.simInterface.ConnectToSim(this.selected.SimId);
+				ErlInterface newInterface = this.simInterface.ConnectToSim(this.selected.SimId);
 				
-				Startup su = new Startup(this.simInterface);
+				Startup su = new Startup(newInterface);
 				su.ShowAll();
 			}
-			
 		}
+
+		protected virtual void OnButton36Clicked(object sender, System.EventArgs e) {
+			if (this.selected != null) {
+				this.simInterface.StopSim(this.selected.SimId);
+				this.RefreshSimList();
+			}
+		}
+		
+		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
+		{
+			Application.Quit();
+		}
+		
+		
 		
 		
 	}

@@ -42,6 +42,8 @@ namespace SimGUI {
 
 		private global::Gtk.Button button35;
 
+		private global::Gtk.Button button36;
+
 		protected virtual void Build() {
 			global::Stetic.Gui.Initialize(this);
 			// Widget SimGUI.Browser
@@ -240,11 +242,22 @@ namespace SimGUI {
 			w18.Position = 2;
 			w18.Expand = false;
 			w18.Fill = false;
-			this.vbox1.Add(this.hbox4);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox4]));
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.button36 = new global::Gtk.Button();
+			this.button36.CanFocus = true;
+			this.button36.Name = "button36";
+			this.button36.UseUnderline = true;
+			this.button36.Label = global::Mono.Unix.Catalog.GetString("Stop selected");
+			this.hbox4.Add(this.button36);
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.button36]));
 			w19.Position = 3;
 			w19.Expand = false;
 			w19.Fill = false;
+			this.vbox1.Add(this.hbox4);
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox4]));
+			w20.Position = 3;
+			w20.Expand = false;
+			w20.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll();
@@ -252,11 +265,13 @@ namespace SimGUI {
 			this.DefaultWidth = 457;
 			this.DefaultHeight = 323;
 			this.Show();
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.button1.Clicked += new global::System.EventHandler(this.OnButton1Clicked);
 			this.button4.Clicked += new global::System.EventHandler(this.OnButton4Clicked);
 			this.button3.Clicked += new global::System.EventHandler(this.OnButton3Clicked);
 			this.button2.Clicked += new global::System.EventHandler(this.OnButton2Clicked);
 			this.button35.Clicked += new global::System.EventHandler(this.OnButton35Clicked);
+			this.button36.Clicked += new global::System.EventHandler(this.OnButton36Clicked);
 		}
 	}
 }

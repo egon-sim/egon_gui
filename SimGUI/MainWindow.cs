@@ -52,7 +52,7 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnExitActionActivated (object sender, System.EventArgs e)
 	{
-		Application.Quit();
+		//Application.Quit();
 	}
 	
 	protected virtual void OnButton4Clicked (object sender, System.EventArgs e)
@@ -97,12 +97,5 @@ public partial class MainWindow : Gtk.Window
 	{
 		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
