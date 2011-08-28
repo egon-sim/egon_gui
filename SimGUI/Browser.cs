@@ -104,6 +104,10 @@ namespace SimGUI {
 				
 				Startup su = new Startup(newInterface);
 				su.ShowAll();
+			} else {
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Please select a simulator.");
+				md.Run();
+				md.Destroy();
 			}
 		}
 
@@ -111,6 +115,10 @@ namespace SimGUI {
 			if (this.selected != null) {
 				this.simInterface.StopSim(this.selected.SimId);
 				this.RefreshSimList();
+			} else {
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Please select a simulator.");
+				md.Run();
+				md.Destroy();
 			}
 		}
 		
