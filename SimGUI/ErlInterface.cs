@@ -31,7 +31,6 @@ namespace SimGUI {
 			
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
-			
 		}
 
 		public ArrayList listSims() {
@@ -58,6 +57,14 @@ namespace SimGUI {
 			this.Call("{ask, stop_simulator, " + simId + "}");
 			
 			return true;
+		}
+		
+		public void StartClock() {
+			this.Call("{action, es_clock_server, start}");
+		}
+
+		public void StopClock() {
+			this.Call("{action, es_clock_server, stop}");
 		}
 
 		public ErlInterface ConnectToSim(string simId) {
