@@ -1,4 +1,3 @@
-
 using System;
 using Gtk;
 
@@ -14,68 +13,13 @@ namespace SimGUI
 			this.Build ();
 			this.simInterface = erlInterface;
 		}
-		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
-		{
-			//this.Quit (o, args);
-			//args.RetVal = true;
-		}
 		
-		protected virtual void OnReactorActionActivated (object sender, System.EventArgs e)
-		{
-			if (this.simInterface == null) {
-				throw new Exception("Simulation server not started.");
-			}
-			MainWindow win = new MainWindow (this.simInterface);
-			win.Show ();
-		}
-		
-		protected virtual void OnTurbineActionActivated (object sender, System.EventArgs e)
-		{
-		}
-		protected virtual void OnExitActionActivated (object sender, System.EventArgs e)
-		{
-			this.Quit (sender, e);
-
-		}
-		
-		protected virtual void OnButton1Clicked (object sender, System.EventArgs e)
-		{
-			//this.simInterface = new ErlInterface(this.entry1.Text, this.spinbutton8.ValueAsInt, this.spinbutton9.ValueAsInt, this.spinbutton10.ValueAsInt);
-
-		}
 		protected virtual void OnButton2Clicked (object sender, System.EventArgs e)
 		{
 			this.simInterface.Call("{set, es_core_server, burnup, " + this.spinbutton1.ValueAsInt + "}\n");
 			this.simInterface.Call("{set, es_core_server, boron, " + this.spinbutton2.ValueAsInt + "}\n");
-			this.simInterface.Call("{set, es_core_server, flux, " + this.spinbutton6.ValueAsInt + "}\n");
+			this.simInterface.Call("{set, es_core_server, flux, " + this.spinbutton8.ValueAsInt + "}\n");
 			this.simInterface.Call("{set, es_turbine_server, power, " + this.spinbutton6.ValueAsInt + "}\n");
-			
-			/*this.simInterface.Call("core:set(burnup, " + this.spinbutton1.ValueAsInt + ")\n");
-			this.simInterface.Call("core:set(boron, " + this.spinbutton2.ValueAsInt + ")\n");
-			this.simInterface.Call("core:set(flux, " + this.spinbutton6.ValueAsInt + ")\n");
-			this.simInterface.Call("turbine:set(power, " + this.spinbutton6.ValueAsInt + ")\n");*/
 		}
-		protected void Quit(object sender, System.EventArgs e)
-		{
-//			if (this.simInterface != null)
-//				this.simInterface.Call("interface:reset()\n");
-			Application.Quit ();
-		}
-		
-		protected virtual void OnButton40Clicked (object sender, System.EventArgs e)
-		{
-			MainWindow win = new MainWindow (this.simInterface);
-			win.Show ();
-		}
-		
-		protected virtual void OnButton41Clicked (object sender, System.EventArgs e)
-		{
-			SimGUI.Turbine win = new SimGUI.Turbine (this.simInterface);
-			win.Show ();
-		}
-		
-		
-		
-		
 	}
 }
