@@ -104,16 +104,6 @@ public partial class MainWindow : Gtk.Window
 		
 	}
 	
-	protected virtual void OnRadiobutton3Activated (object sender, System.EventArgs e)
-	{
-		//this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
-	}
-	
-	protected virtual void OnRadiobutton4Activated (object sender, System.EventArgs e)
-	{
-		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
-	}
-
 	protected virtual void OnRadiobutton3Clicked (object sender, System.EventArgs e)
 	{
 		this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");

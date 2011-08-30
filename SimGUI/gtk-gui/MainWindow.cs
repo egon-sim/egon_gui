@@ -1023,9 +1023,7 @@ public partial class MainWindow {
 		this.Show();
 		this.ExitAction.Activated += new global::System.EventHandler(this.OnExitActionActivated);
 		this.togglebutton2.Clicked += new global::System.EventHandler(this.OnTogglebutton2Clicked);
-		this.radiobutton3.Activated += new global::System.EventHandler(this.OnRadiobutton3Activated);
 		this.radiobutton3.Clicked += new global::System.EventHandler(this.OnRadiobutton3Clicked);
-		this.radiobutton4.Activated += new global::System.EventHandler(this.OnRadiobutton4Activated);
 		this.radiobutton4.Clicked += new global::System.EventHandler(this.OnRadiobutton4Clicked);
 		this.button5.Clicked += new global::System.EventHandler(this.OnButton5Clicked);
 		this.button4.Clicked += new global::System.EventHandler(this.OnButton4Clicked);

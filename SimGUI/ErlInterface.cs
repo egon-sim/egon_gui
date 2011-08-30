@@ -78,6 +78,7 @@ namespace SimGUI {
 		}
 
 		public String Call(String parameter) {
+			//Console.WriteLine(parameter);
 			
 			Byte[] data = Encoding.ASCII.GetBytes(parameter);
 			this.stream.Write(data, 0, data.Length);

@@ -507,6 +507,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Label" translatable="yes">Borate</property>
+                        <property name="Active">True</property>
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
@@ -905,11 +906,11 @@
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">Auto</property>
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
                             <property name="Group">group2</property>
-                            <signal name="Activated" handler="OnRadiobutton3Activated" />
                             <signal name="Clicked" handler="OnRadiobutton3Clicked" />
                           </widget>
                           <packing>
@@ -926,7 +927,6 @@
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
                             <property name="Group">group2</property>
-                            <signal name="Activated" handler="OnRadiobutton4Activated" />
                             <signal name="Clicked" handler="OnRadiobutton4Clicked" />
                           </widget>
                           <packing>
