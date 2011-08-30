@@ -12,6 +12,11 @@ namespace SimGUI
 		{
 			this.Build ();
 			this.simInterface = erlInterface;
+			
+			this.spinbutton1.Value = double.Parse(this.simInterface.Call("{get, es_core_server, burnup}"));
+			this.spinbutton2.Value = double.Parse(this.simInterface.Call("{get, es_core_server, boron}"));
+			this.spinbutton8.Value = double.Parse(this.simInterface.Call("{get, es_core_server, flux}"));
+			this.spinbutton6.Value = double.Parse(this.simInterface.Call("{get, es_turbine_server, power}"));                       
 		}
 		
 		protected virtual void OnButton2Clicked (object sender, System.EventArgs e)
