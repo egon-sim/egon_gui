@@ -22,8 +22,6 @@ namespace SimGUI {
 			this.browser.RefreshSimList();
 			this.Destroy();
 		}
-		
-		
 	}
 }
 

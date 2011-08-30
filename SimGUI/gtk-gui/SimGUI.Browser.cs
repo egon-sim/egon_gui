@@ -52,7 +52,6 @@ namespace SimGUI {
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child SimGUI.Browser.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
-			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.vbox2 = new global::Gtk.VBox();
@@ -146,7 +145,6 @@ namespace SimGUI {
 			this.entry3 = new global::Gtk.Entry();
 			this.entry3.CanFocus = true;
 			this.entry3.Name = "entry3";
-			this.entry3.Text = global::Mono.Unix.Catalog.GetString("Nikola");
 			this.entry3.IsEditable = true;
 			this.entry3.InvisibleChar = '●';
 			this.hbox3.Add(this.entry3);
