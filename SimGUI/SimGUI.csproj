@@ -79,6 +79,7 @@
     <Compile Include="gtk-gui\SimGUI.SimStarter.cs" />
     <Compile Include="SimPanel.cs" />
     <Compile Include="gtk-gui\SimGUI.SimPanel.cs" />
+    <Compile Include="Indicator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

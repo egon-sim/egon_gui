@@ -5,6 +5,7 @@ using SimGUI;
 public partial class MainWindow : Gtk.Window
 {
 	ErlInterface simInterface;
+	Indicator [] indicators;
 	
 	public MainWindow () : base(Gtk.WindowType.Toplevel)
 	{
@@ -14,17 +15,28 @@ public partial class MainWindow : Gtk.Window
 	public MainWindow(ErlInterface simInterface) : base(Gtk.WindowType.Toplevel) {
 		this.simInterface = simInterface;
 		Build();
+		
+		this.indicators = new Indicator[4] {
+			new Indicator("{get, es_core_server, flux}", this.simInterface, 0, 120, this.label28, this.vscale7),
+			new Indicator("{get, es_turbine_server, power}", this.simInterface, 0, 120, this.label30, this.vscale8),
+			new Indicator("{get, es_core_server, tavg}", this.simInterface, 280, 320, this.label32, this.vscale9),
+			new Indicator("{get, es_w7300_server, tref}", this.simInterface, 280, 320, this.label34, this.vscale10),
+		};
+		
 		this.Refresh();
 		GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 	}
-	
+
+	private string format(string call) {
+		return float.Parse(this.simInterface.Call(call)).ToString("F2");
+	}
 	public bool Refresh() {
-		this.label3.Text = this.simInterface.Call("{get, es_core_server, burnup}\n");
-		this.label5.Text = this.simInterface.Call("{get, es_core_server, boron}\n");
-		this.label10.Text = float.Parse(this.simInterface.Call("{get, es_core_server, tavg}\n")).ToString();
-		this.label11.Text = this.simInterface.Call("{get, es_w7300_server, tref}\n");
-		this.label12.Text = this.simInterface.Call("{get, es_core_server, flux}\n");
-		this.label13.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
+		this.label3.Text = this.format("{get, es_core_server, burnup}\n");
+		this.label5.Text = this.format("{get, es_core_server, boron}\n");
+		this.label10.Text = this.format("{get, es_core_server, tavg}\n");
+		this.label11.Text = this.format("{get, es_w7300_server, tref}\n");
+		this.label12.Text = this.format("{get, es_core_server, flux}\n");
+		this.label13.Text = this.format("{get, es_turbine_server, power}\n");
 		this.vscale1.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 1}\n"));
  		this.vscale2.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 2}\n"));
  		this.vscale3.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 3}\n"));
@@ -39,6 +51,10 @@ public partial class MainWindow : Gtk.Window
 		}
 		if (rod_controller_mode == "manual") {
 			this.radiobutton4.Activate();
+		}
+		
+		foreach (Indicator i in this.indicators) {
+			i.Refresh();
 		}
 		
 		return true;
