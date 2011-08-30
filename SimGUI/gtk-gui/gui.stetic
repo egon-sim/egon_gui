@@ -668,6 +668,7 @@
                             <property name="UseUnderline">True</property>
                             <property name="Group">group2</property>
                             <signal name="Activated" handler="OnRadiobutton3Activated" />
+                            <signal name="Clicked" handler="OnRadiobutton3Clicked" />
                           </widget>
                           <packing>
                             <property name="Position">0</property>
@@ -684,6 +685,7 @@
                             <property name="UseUnderline">True</property>
                             <property name="Group">group2</property>
                             <signal name="Activated" handler="OnRadiobutton4Activated" />
+                            <signal name="Clicked" handler="OnRadiobutton4Clicked" />
                           </widget>
                           <packing>
                             <property name="Position">1</property>
@@ -691,12 +693,30 @@
                           </packing>
                         </child>
                         <child>
+                          <placeholder />
+                        </child>
+                        <child>
+                          <placeholder />
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox3">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
                           <widget class="Gtk.Label" id="label25">
                             <property name="MemberName" />
                             <property name="LabelProp" translatable="yes">Speed: </property>
                           </widget>
                           <packing>
-                            <property name="Position">2</property>
+                            <property name="Position">0</property>
                             <property name="AutoSize">True</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
@@ -708,15 +728,18 @@
                             <property name="LabelProp" translatable="yes">no value</property>
                           </widget>
                           <packing>
-                            <property name="Position">3</property>
+                            <property name="Position">1</property>
                             <property name="AutoSize">True</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
                         </child>
+                        <child>
+                          <placeholder />
+                        </child>
                       </widget>
                       <packing>
-                        <property name="Position">2</property>
+                        <property name="Position">3</property>
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>

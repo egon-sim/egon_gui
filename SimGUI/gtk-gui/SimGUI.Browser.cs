@@ -52,6 +52,7 @@ namespace SimGUI {
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child SimGUI.Browser.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
+			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.vbox2 = new global::Gtk.VBox();
@@ -59,7 +60,6 @@ namespace SimGUI {
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.table1 = new global::Gtk.Table(((uint)(2)), ((uint)(3)), false);
-			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild

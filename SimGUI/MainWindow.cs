@@ -33,13 +33,13 @@ public partial class MainWindow : Gtk.Window
 		this.vscale6.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, 2}\n"));
 		this.label26.Text = this.simInterface.Call("{get, es_rod_controller_server, speed}\n").ToString();
 		
-		/*string rod_controller_mode = this.simInterface.Call("{get, es_rod_controller_server, mode}\n").Trim();
+		string rod_controller_mode = this.simInterface.Call("{get, es_rod_controller_server, mode}\n").Trim();
 		if (rod_controller_mode == "auto") {
 			this.radiobutton3.Activate();
 		}
 		if (rod_controller_mode == "manual") {
 			this.radiobutton4.Activate();
-		}*/
+		}
 		
 		return true;
 	}
@@ -90,7 +90,7 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnRadiobutton3Activated (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
+		//this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
 	}
 	
 	protected virtual void OnRadiobutton4Activated (object sender, System.EventArgs e)
@@ -98,4 +98,16 @@ public partial class MainWindow : Gtk.Window
 		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
 	}
 
+	protected virtual void OnRadiobutton3Clicked (object sender, System.EventArgs e)
+	{
+		this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
+	}
+	
+	protected virtual void OnRadiobutton4Clicked (object sender, System.EventArgs e)
+	{
+		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
+	}
+	
+	
+	
 }
