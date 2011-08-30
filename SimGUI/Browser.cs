@@ -12,10 +12,17 @@ namespace SimGUI {
 			string server_address = this.entry2.Text;
 			int server_port = this.spinbutton1.ValueAsInt;
 			
+			if (username == "") {
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Username not set.");
+				md.Run();
+				md.Destroy();
+				return;
+			}
+			
 			if (this.simInterface != null) {
 				this.simInterface.Disconnect();
 			}
-			
+
 			try {
 				this.simInterface = new ErlInterface(username, server_address, server_port);
 				this.RefreshSimList();
@@ -46,8 +53,6 @@ namespace SimGUI {
 			this.nodeview1.AppendColumn("Owner", new Gtk.CellRendererText(), "text", 3);
 			this.nodeview1.NodeSelection.Changed += new System.EventHandler(OnSelectionChanged);
 			this.nodeview1.ShowAll();
-			// Create our TreeView and add it as our child widget
-			
 			
 			this.DeleteEvent += this.Disconnect;
 		}
@@ -91,7 +96,8 @@ namespace SimGUI {
 		}
 
 		public void Disconnect(object obj, DeleteEventArgs args) {
-			this.simInterface.Disconnect();
+			if (this.simInterface != null)
+				this.simInterface.Disconnect();
 		}
 
 		~Browser() {
@@ -102,8 +108,8 @@ namespace SimGUI {
 			if (this.selected != null) {
 				ErlInterface newInterface = this.simInterface.ConnectToSim(this.selected.SimId);
 				
-				Startup su = new Startup(newInterface);
-				su.ShowAll();
+				SimPanel sp = new SimPanel(newInterface);
+				sp.ShowAll();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Please select a simulator.");
 				md.Run();
