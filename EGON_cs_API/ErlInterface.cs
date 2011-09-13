@@ -29,12 +29,12 @@ namespace SimGUI {
 			
 			MatchCollection matches = Regex.Matches(response, pattern);
 			
-			ArrayList sims = new ArrayList();
+			ArrayList simStrings = new ArrayList();
 			foreach (Match match in matches) {
-				sims.Add(new SimEntry(match.Groups[1].Value));
+				simStrings.Add(match.Groups[1].Value);
 			}
 			
-			return sims;
+			return simStrings;
 		}
 
 		public bool StartSim(string name, string description) {

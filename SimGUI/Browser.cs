@@ -136,8 +136,9 @@ namespace SimGUI {
 		public Gtk.NodeStore generateStore() {
 			Gtk.NodeStore store = new Gtk.NodeStore(typeof(SimEntry));
 			
-			foreach (SimEntry s in this.simInterface.listSims()) {
-				store.AddNode(s);
+			foreach (string s in this.simInterface.listSims()) {
+				
+				store.AddNode(new SimEntry(s));
 			}
 			return store;
 		}			
