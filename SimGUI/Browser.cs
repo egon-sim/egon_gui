@@ -87,7 +87,7 @@ namespace SimGUI {
 
 		public void RefreshSimList() {
 			if (this.simInterface != null) {
-				this.nodeview1.NodeStore = this.simInterface.generateStore();
+				this.nodeview1.NodeStore = this.generateStore();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Not connected to a server.");
 				md.Run();
@@ -133,8 +133,58 @@ namespace SimGUI {
 			Application.Quit();
 		}
 		
-		
-		
-		
+		public Gtk.NodeStore generateStore() {
+			Gtk.NodeStore store = new Gtk.NodeStore(typeof(SimEntry));
+			
+			foreach (SimEntry s in this.simInterface.listSims()) {
+				store.AddNode(s);
+			}
+			return store;
+		}			
+	}
+	
+	
+	[Gtk.TreeNode(ListOnly = true)]
+	public class SimEntry : Gtk.TreeNode {
+		string simId;
+		string name;
+		string description;
+		string owner;
+
+		public SimEntry() {
+			this.simId = "";
+			this.name = "";
+			this.description = "";
+			this.owner = "";
+		}
+
+		public SimEntry(string line) {
+			string[] parts = line.Split(',');
+			
+			this.simId = parts[1];
+			this.name = parts[3];
+			this.description = parts[4];
+			this.owner = parts[5];
+		}
+
+		[Gtk.TreeNodeValue(Column = 0)]
+		public string SimId {
+			get { return this.simId; }
+		}
+
+		[Gtk.TreeNodeValue(Column = 1)]
+		public string Name {
+			get { return this.name; }
+		}
+
+		[Gtk.TreeNodeValue(Column = 2)]
+		public string Description {
+			get { return this.description; }
+		}
+
+		[Gtk.TreeNodeValue(Column = 3)]
+		public string Owner {
+			get { return this.owner; }
+		}
 	}
 }

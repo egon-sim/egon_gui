@@ -13,16 +13,6 @@ namespace SimGUI {
 		public String username;
 		public String server;
 
-
-		public Gtk.NodeStore generateStore() {
-			Gtk.NodeStore store = new Gtk.NodeStore(typeof(SimEntry));
-			
-			foreach (SimEntry s in this.listSims()) {
-				store.AddNode(s);
-			}
-			return store;
-		}
-
 		public ErlInterface(String username, String server, int port) {
 			TcpClient client;
 			
@@ -45,7 +35,6 @@ namespace SimGUI {
 			}
 			
 			return sims;
-			
 		}
 
 		public bool StartSim(string name, string description) {
@@ -106,51 +95,5 @@ namespace SimGUI {
 		~ErlInterface() {
 			this.Disconnect();
 		}
-	}
-
-
-	[Gtk.TreeNode(ListOnly = true)]
-	public class SimEntry : Gtk.TreeNode {
-		string simId;
-		string name;
-		string description;
-		string owner;
-
-		public SimEntry() {
-			this.simId = "";
-			this.name = "";
-			this.description = "";
-			this.owner = "";
-		}
-
-		public SimEntry(string line) {
-			string[] parts = line.Split(',');
-			
-			this.simId = parts[1];
-			this.name = parts[3];
-			this.description = parts[4];
-			this.owner = parts[5];
-		}
-
-		[Gtk.TreeNodeValue(Column = 0)]
-		public string SimId {
-			get { return this.simId; }
-		}
-
-		[Gtk.TreeNodeValue(Column = 1)]
-		public string Name {
-			get { return this.name; }
-		}
-
-		[Gtk.TreeNodeValue(Column = 2)]
-		public string Description {
-			get { return this.description; }
-		}
-
-		[Gtk.TreeNodeValue(Column = 3)]
-		public string Owner {
-			get { return this.owner; }
-		}
-		
 	}
 }
