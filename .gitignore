@@ -1,5 +1,7 @@
 SimGUI.userprefs
 SimGUI/SimGUI.pidb
 SimGUI/bin/*
+SimGUI/obj/*
 EGON_cs_API/bin/*
+EGON_cs_API/obj/*
 *~
