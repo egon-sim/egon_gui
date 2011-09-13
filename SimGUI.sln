@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimGUI", "SimGUI\SimGUI.csproj", "{9CF079D4-CB4A-48CF-B666-D67A0DD88048}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EGON_cs_API", "EGON_cs_API\EGON_cs_API.csproj", "{ACB4263B-49E6-4F45-87F5-A725988733B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{9CF079D4-CB4A-48CF-B666-D67A0DD88048}.Debug|x86.Build.0 = Debug|x86
 		{9CF079D4-CB4A-48CF-B666-D67A0DD88048}.Release|x86.ActiveCfg = Release|x86
 		{9CF079D4-CB4A-48CF-B666-D67A0DD88048}.Release|x86.Build.0 = Release|x86
+		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Debug|x86.Build.0 = Debug|Any CPU
+		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SimGUI\SimGUI.csproj

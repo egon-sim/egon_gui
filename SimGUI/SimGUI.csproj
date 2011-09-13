@@ -72,7 +72,6 @@
     <Compile Include="gtk-gui\SimGUI.Turbine.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="gtk-gui\SimGUI.Startup.cs" />
-    <Compile Include="ErlInterface.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="gtk-gui\SimGUI.Browser.cs" />
     <Compile Include="SimStarter.cs" />
@@ -84,5 +83,11 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EGON_cs_API\EGON_cs_API.csproj">
+      <Project>{ACB4263B-49E6-4F45-87F5-A725988733B6}</Project>
+      <Name>EGON_cs_API</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
