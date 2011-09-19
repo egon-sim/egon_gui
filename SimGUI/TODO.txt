@@ -1,10 +1,5 @@
 GENERAL:
-*+ separate project into (i) erlang interface and (ii) pure GTK GUI so  (i) can be compiled on .NET Framework
 *0 move timeouts to ErlInterface and connect other classes with ErlInterface by events
-
-BUGS:
-%0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
-
 
 LEGEND:
 
