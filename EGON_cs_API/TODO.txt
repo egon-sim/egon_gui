@@ -1,0 +1,18 @@
+GENERAL:
+%0 wrap ErlInterface in a process separate from the rest of the API
+
+BUGS:
+%0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
+
+
+LEGEND:
+
+Importance:
+* - high
+% - medium
+# - low
+
+Complexity:
++ - high
+0 - medium
+- - low
