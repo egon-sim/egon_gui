@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
+using NUnit.Framework;
 
 namespace SimGUI {
 
@@ -94,6 +95,15 @@ namespace SimGUI {
 
 		~ErlInterface() {
 			this.Disconnect();
+		}
+	}
+	
+	[TestFixture]
+	public class ErlInterfaceTest {
+		[Test]
+		public void BurekTest() {
+			Assert.AreEqual(1, 1);
+			//Assert.AreEqual(1, 2);
 		}
 	}
 }
