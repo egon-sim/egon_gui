@@ -22,7 +22,7 @@ namespace SimGUI {
 			if (this.simInterface != null) {
 				this.simInterface.Disconnect();
 			}
-
+			
 			try {
 				this.simInterface = new ErlInterface(username, server_address, server_port);
 				this.RefreshSimList();

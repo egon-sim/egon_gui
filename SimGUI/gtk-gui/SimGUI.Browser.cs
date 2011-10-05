@@ -67,7 +67,7 @@ namespace SimGUI {
 			this.entry2 = new global::Gtk.Entry();
 			this.entry2.CanFocus = true;
 			this.entry2.Name = "entry2";
-			this.entry2.Text = global::Mono.Unix.Catalog.GetString("localhost");
+			this.entry2.Text = global::Mono.Unix.Catalog.GetString("127.0.0.1");
 			this.entry2.IsEditable = true;
 			this.entry2.InvisibleChar = '●';
 			this.table1.Add(this.entry2);

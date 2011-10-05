@@ -507,6 +507,7 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Label" translatable="yes">Borate</property>
+                        <property name="Active">True</property>
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
@@ -905,6 +906,7 @@
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">Auto</property>
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
@@ -2120,7 +2122,7 @@
                   <widget class="Gtk.Entry" id="entry2">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Text" translatable="yes">localhost</property>
+                    <property name="Text" translatable="yes">127.0.0.1</property>
                     <property name="IsEditable">True</property>
                     <property name="InvisibleChar">●</property>
                   </widget>
