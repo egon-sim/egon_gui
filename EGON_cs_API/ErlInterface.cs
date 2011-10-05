@@ -7,7 +7,7 @@ using System.Collections;
 using System.IO;
 using NUnit.Framework;
 
-namespace SimGUI {
+namespace EGON_cs_API {
 
 	public class ErlInterface : ICloneable {
 		public NetworkStream stream;

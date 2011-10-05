@@ -1,4 +1,6 @@
 using System;
+using EGON_cs_API;
+
 namespace SimGUI {
 	public partial class SimStarter : Gtk.Window {
 		ErlInterface erlInterface;

@@ -1,5 +1,6 @@
 using System;
 using Gtk;
+using EGON_cs_API;
 
 namespace SimGUI
 {
