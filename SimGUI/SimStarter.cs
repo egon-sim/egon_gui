@@ -12,14 +12,15 @@ namespace SimGUI {
 		}
 		
 		
-		public SimStarter(ErlInterface erlInterface, Browser browser) : base(Gtk.WindowType.Toplevel) {
-			this.erlInterface = erlInterface;
+		public SimStarter(EgonServer server, Browser browser) : base(Gtk.WindowType.Toplevel) {
+			this.erlInterface = server.erlInterface;
 			this.browser = browser;
 			
 			this.Build();
 		}
 		protected virtual void OnButton5Clicked (object sender, System.EventArgs e)
 		{
+			
 			this.erlInterface.StartSim(this.entry1.Text, this.entry2.Text);
 			this.browser.RefreshSimList();
 			this.Destroy();

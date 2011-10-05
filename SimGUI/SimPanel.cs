@@ -5,8 +5,8 @@ namespace SimGUI {
 	public partial class SimPanel : Gtk.Window {
 		ErlInterface erlInterface;
 		
-		public SimPanel(ErlInterface erlInterface) : base(Gtk.WindowType.Toplevel) {
-			this.erlInterface = erlInterface;
+		public SimPanel(Simulator sim) : base(Gtk.WindowType.Toplevel) {
+			this.erlInterface = sim.erlInterface;
 			this.Build();
 			this.refreshStatus();
 		}
@@ -20,7 +20,7 @@ namespace SimGUI {
 				this.button1.Label = "Stop";
 				this.label1.Text = "RUNNING";
 			} else {
-				throw new Exception("Simulator state invalid (not STOPPED nor RUNNING).");
+				throw new Exception("Simulator state invalid: '" + status + "' (not STOPPED nor RUNNING).");
 			}
 			return;
 		}

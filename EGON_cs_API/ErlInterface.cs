@@ -8,7 +8,6 @@ using System.IO;
 using NUnit.Framework;
 
 namespace EGON_cs_API {
-
 	public class ErlInterface : ICloneable {
 		public NetworkStream stream;
 		public String username;
@@ -36,6 +35,17 @@ namespace EGON_cs_API {
 			}
 			
 			return simStrings;
+		}
+		
+		public string[] simInfo(string simId) {
+			String response = this.Call("{ask, sim_info, " + simId + "}");
+			String pattern = @"{simulator_manifest,(.+)}";
+			
+			Match match = Regex.Match(response, pattern);
+			
+			String info = match.Groups[1].Value;
+			
+			return info.Split(',');
 		}
 
 		public bool StartSim(string name, string description) {
@@ -70,7 +80,7 @@ namespace EGON_cs_API {
 		public String Call(String parameter) {
 			//Console.WriteLine(parameter);
 			
-			Byte[] data = Encoding.ASCII.GetBytes(parameter);
+			Byte[] data = Encoding.ASCII.GetBytes("[" + parameter + "]\n");
 			this.stream.Write(data, 0, data.Length);
 			this.stream.Flush();
 			String responseData = String.Empty;
@@ -105,5 +115,10 @@ namespace EGON_cs_API {
 			Assert.AreEqual(1, 1);
 			//Assert.AreEqual(1, 2);
 		}
+
+		[Test]
+		public void ConnectFail() {
+			//Assert.Fail(new ErlInterface("Test user", "localhost", 1055));
+		}		
 	}
 }

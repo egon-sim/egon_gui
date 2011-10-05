@@ -5,7 +5,7 @@ using EGON_cs_API;
 namespace SimGUI {
 
 	public partial class Browser : Gtk.Window {
-		ErlInterface simInterface;
+		EgonServer server;
 		SimEntry selected;
 
 		protected virtual void OnButton1Clicked(object sender, System.EventArgs e) {
@@ -20,31 +20,29 @@ namespace SimGUI {
 				return;
 			}
 			
-			if (this.simInterface != null) {
-				this.simInterface.Disconnect();
+			if (this.server.Connected) {
+				this.server.Disconnect();
 			}
 			
 			try {
-				this.simInterface = new ErlInterface(username, server_address, server_port);
+				this.server.Connect(username, server_address, server_port);
 				this.RefreshSimList();
 			} catch (System.Net.Sockets.SocketException) {
-				this.simInterface = null;
+				this.server.Disconnect();
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Server not running on " + server_address + ":" + server_port + ".");
 				md.Run();
 				md.Destroy();
 			} catch {
-				this.simInterface = null;
+				this.server.Disconnect();
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Connection error.");
 				md.Run();
 				md.Destroy();
 			}
 		}
 
-
-
 		public Browser() : base(Gtk.WindowType.Toplevel) {
 			this.Build();
-			this.simInterface = null;
+			this.server = new EgonServer();
 			
 			this.selected = null;
 			
@@ -71,9 +69,8 @@ namespace SimGUI {
 		}
 
 		protected virtual void OnButton4Clicked(object sender, System.EventArgs e) {
-			if (this.simInterface != null) {
-				this.simInterface.Disconnect();
-				this.simInterface = null;
+			if (this.server.Connected) {
+				this.server.Disconnect();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Not connected to a server.");
 				md.Run();
@@ -82,12 +79,12 @@ namespace SimGUI {
 		}
 
 		protected virtual void OnButton2Clicked(object sender, System.EventArgs e) {
-			SimStarter ss = new SimStarter(this.simInterface, this);
+			SimStarter ss = new SimStarter(this.server, this);
 			ss.ShowAll();
 		}
 
 		public void RefreshSimList() {
-			if (this.simInterface != null) {
+			if (this.server.Connected) {
 				this.nodeview1.NodeStore = this.generateStore();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Not connected to a server.");
@@ -97,19 +94,19 @@ namespace SimGUI {
 		}
 
 		public void Disconnect(object obj, DeleteEventArgs args) {
-			if (this.simInterface != null)
-				this.simInterface.Disconnect();
+			if (this.server.Connected)
+				this.server.Disconnect();
 		}
 
 		~Browser() {
-			this.simInterface.Disconnect();
+			this.server.Disconnect();
 		}
 
 		protected virtual void OnButton35Clicked(object sender, System.EventArgs e) {
 			if (this.selected != null) {
-				ErlInterface newInterface = this.simInterface.ConnectToSim(this.selected.SimId);
+				Simulator sim = this.server.ConnectToSim(this.selected.SimId);
 				
-				SimPanel sp = new SimPanel(newInterface);
+				SimPanel sp = new SimPanel(sim);
 				sp.ShowAll();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Please select a simulator.");
@@ -120,7 +117,7 @@ namespace SimGUI {
 
 		protected virtual void OnButton36Clicked(object sender, System.EventArgs e) {
 			if (this.selected != null) {
-				this.simInterface.StopSim(this.selected.SimId);
+				this.server.StopSim(this.selected.SimId);
 				this.RefreshSimList();
 			} else {
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, "Please select a simulator.");
@@ -137,7 +134,7 @@ namespace SimGUI {
 		public Gtk.NodeStore generateStore() {
 			Gtk.NodeStore store = new Gtk.NodeStore(typeof(SimEntry));
 			
-			foreach (string s in this.simInterface.listSims()) {
+			foreach (string s in this.server.listSims()) {
 				
 				store.AddNode(new SimEntry(s));
 			}
