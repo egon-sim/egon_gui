@@ -43,6 +43,7 @@
     <Compile Include="ErlInterface.cs" />
     <Compile Include="Simulator.cs" />
     <Compile Include="EgonServer.cs" />
+    <Compile Include="Turbine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

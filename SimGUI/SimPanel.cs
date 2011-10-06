@@ -33,7 +33,7 @@ namespace SimGUI {
 		
 		protected virtual void OnButton41Clicked (object sender, System.EventArgs e)
 		{
-			SimGUI.Turbine win = new SimGUI.Turbine(this.simulator);
+			SimGUI.Turbine win = new SimGUI.Turbine(this.simulator.turbine);
 			win.Show ();
 		}
 		

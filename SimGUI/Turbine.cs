@@ -7,15 +7,15 @@ namespace SimGUI
 
 	public partial class Turbine : Gtk.Window
 	{
-		ErlInterface simInterface;
+		EGON_cs_API.Turbine turbine;
 		
 		public Turbine () : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
 		}
 		
-		public Turbine(Simulator sim) : base(Gtk.WindowType.Toplevel) {
-			this.simInterface = sim.erlInterface;
+		public Turbine(EGON_cs_API.Turbine turbine) : base(Gtk.WindowType.Toplevel) {
+			this.turbine = turbine;
 			Build();
 			this.Refresh();
 			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
@@ -24,11 +24,11 @@ namespace SimGUI
 		public bool Refresh() {
 			string go;
 			
-			this.label10.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
-			this.label11.Text = this.simInterface.Call("{get, es_turbine_server, power}\n");
-			this.label12.Text = this.simInterface.Call("{get, es_turbine_server, target}\n");
-			this.label13.Text = this.simInterface.Call("{get, es_turbine_server, rate}\n");
-			go = this.simInterface.Call("{get, es_turbine_server, go}\n").Trim();
+			this.label10.Text = this.turbine.Power.ToString();
+			this.label11.Text = this.turbine.Power.ToString();
+			this.label12.Text = this.turbine.Target.ToString();
+			this.label13.Text = this.turbine.Rate.ToString();
+			go = this.turbine.Go;
 			if (go == "true") {
 				this.label17.Text = "GO";
 			} else if (go == "false") {
@@ -43,21 +43,17 @@ namespace SimGUI
 
 		protected virtual void OnButton8Clicked (object sender, System.EventArgs e)
 		{
-			int val = int.Parse(this.entry2.Text);
-			this.simInterface.Call("{set, es_turbine_server, target, " + val.ToString() + "}\n");
-			
+			this.turbine.Target = int.Parse(this.entry2.Text);
 		}
 		
 		protected virtual void OnButton9Clicked (object sender, System.EventArgs e)
 		{
-			int val = int.Parse(this.entry4.Text);
-			this.simInterface.Call("{set, es_turbine_server, rate, " + val.ToString() + "}\n");
-
+			this.turbine.Rate = int.Parse(this.entry4.Text);
 		}
 		
 		protected virtual void OnButton7Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface.Call("{action, es_turbine_server, ramp, start}\n");
+			this.turbine.Start();
 		}
 		
 	}

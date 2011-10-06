@@ -63,7 +63,7 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnTurbineActionActivated (object sender, System.EventArgs e)
 	{
-		Turbine win = new Turbine();
+		SimGUI.Turbine win = new SimGUI.Turbine();
 		win.Show();
 	}
 	
