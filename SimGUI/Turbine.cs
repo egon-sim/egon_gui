@@ -14,8 +14,8 @@ namespace SimGUI
 			this.Build ();
 		}
 		
-		public Turbine(ErlInterface simInterface) : base(Gtk.WindowType.Toplevel) {
-			this.simInterface = simInterface;
+		public Turbine(Simulator sim) : base(Gtk.WindowType.Toplevel) {
+			this.simInterface = sim.erlInterface;
 			Build();
 			this.Refresh();
 			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));

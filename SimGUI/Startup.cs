@@ -9,10 +9,10 @@ namespace SimGUI
 	{
 		ErlInterface simInterface;
 		
-		public Startup (ErlInterface erlInterface) : base(Gtk.WindowType.Toplevel)
+		public Startup (Simulator sim) : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-			this.simInterface = erlInterface;
+			this.simInterface = sim.erlInterface;
 			
 			this.spinbutton1.Value = double.Parse(this.simInterface.Call("{get, es_core_server, burnup}"));
 			this.spinbutton2.Value = double.Parse(this.simInterface.Call("{get, es_core_server, boron}"));

@@ -13,8 +13,8 @@ public partial class MainWindow : Gtk.Window
 		Build ();
 	}
 	
-	public MainWindow(ErlInterface simInterface) : base(Gtk.WindowType.Toplevel) {
-		this.simInterface = simInterface;
+	public MainWindow(Simulator sim) : base(Gtk.WindowType.Toplevel) {
+		this.simInterface = sim.erlInterface;
 		Build();
 		
 		this.indicators = new Indicator[4] {

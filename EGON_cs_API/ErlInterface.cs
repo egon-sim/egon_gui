@@ -59,14 +59,6 @@ namespace EGON_cs_API {
 			return true;
 		}
 		
-		public void StartClock() {
-			this.Call("{action, es_clock_server, start}");
-		}
-
-		public void StopClock() {
-			this.Call("{action, es_clock_server, stop}");
-		}
-
 		public ErlInterface ConnectToSim(string simId) {
 			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
 			string pattern = "{connected,(.+)}";

@@ -33,14 +33,17 @@ namespace EGON_cs_API {
 			this.erlInterface = erlInterface;
 		}
 		
-		public void Start() {
-			this.erlInterface.Call("{action, es_clock_server, start}");
+		public string Start() {
+			return this.erlInterface.Call("{action, es_clock_server, start}");
 		}
 
-		public void Stop() {
-			this.erlInterface.Call("{action, es_clock_server, stop}");
+		public string Stop() {
+			return this.erlInterface.Call("{action, es_clock_server, stop}");
 		}
 
+		public string Status {
+			get { return this.erlInterface.Call("{get, es_clock_server, status}"); }
+		}
 
 	}
 }

@@ -3,16 +3,16 @@ using EGON_cs_API;
 
 namespace SimGUI {
 	public partial class SimPanel : Gtk.Window {
-		ErlInterface erlInterface;
+		Simulator simulator;
 		
 		public SimPanel(Simulator sim) : base(Gtk.WindowType.Toplevel) {
-			this.erlInterface = sim.erlInterface;
+			this.simulator = sim;
 			this.Build();
 			this.refreshStatus();
 		}
 		
 		public void refreshStatus() {
-			string status = this.erlInterface.Call("{get, es_clock_server, status}");
+			string status = this.simulator.clock.Status;
 			if (status == "stopped") {
 				this.button1.Label = "Start";
 				this.label1.Text = "STOPPED";
@@ -27,13 +27,13 @@ namespace SimGUI {
 
 		protected virtual void OnButton40Clicked (object sender, System.EventArgs e)
 		{
-			MainWindow win = new MainWindow (this.erlInterface);
+			MainWindow win = new MainWindow(this.simulator);
 			win.Show ();
 		}
 		
 		protected virtual void OnButton41Clicked (object sender, System.EventArgs e)
 		{
-			SimGUI.Turbine win = new SimGUI.Turbine (this.erlInterface);
+			SimGUI.Turbine win = new SimGUI.Turbine(this.simulator);
 			win.Show ();
 		}
 		
@@ -44,9 +44,9 @@ namespace SimGUI {
 			}
 
 			if (this.label1.Text == "RUNNING") {
-				this.erlInterface.StopClock();
+				this.simulator.clock.Stop();
 			} else if (this.label1.Text == "STOPPED") {
-				this.erlInterface.StartClock();
+				this.simulator.clock.Start();
 			} else {
 				throw new Exception("Simulator state invalid (not STOPPED nor RUNNING).");
 			}
@@ -55,7 +55,7 @@ namespace SimGUI {
 		
 		protected virtual void OnButton2Clicked (object sender, System.EventArgs e)
 		{
-			Startup su = new Startup(this.erlInterface);
+			Startup su = new Startup(this.simulator);
 			su.ShowAll();
 		}
 	}
