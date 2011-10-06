@@ -48,9 +48,15 @@ namespace EGON_cs_API {
 			return info.Split(',');
 		}
 
-		public bool StartSim(string name, string description) {
-			this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
-			return true;
+		public string StartSim(string name, string description) {
+			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
+			String pattern = @"{ok,(.+)}";
+			
+			Match match = Regex.Match(response, pattern);
+			
+			String simId = match.Groups[1].Value;
+			
+			return simId;
 		}
 
 		public bool StopSim(string simId) {

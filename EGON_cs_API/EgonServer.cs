@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace EGON_cs_API {
 	public class EgonServer {
@@ -12,6 +13,23 @@ namespace EGON_cs_API {
 		
 		public void Connect(String username, String server, int port) {
 			this.erlInterface = new ErlInterface(username, server, port);
+			this.simulators = this.listSims();
+		}
+		
+		public ArrayList listSims() {
+			String response = this.erlInterface.Call("{ask, list_sims}");
+			String pattern = @"{(.+)}";
+			
+			MatchCollection matches = Regex.Matches(response, pattern);
+			
+			ArrayList sims = new ArrayList();
+			foreach (Match match in matches) {				
+				string[] parts = match.Groups[1].Value.Split(',');
+				
+				sims.Add(new Simulator(this.erlInterface, parts[1], parts[3], parts[4], parts[5]));
+			}
+			
+			return sims;
 		}
 		
 		public bool Connected {
@@ -27,12 +45,10 @@ namespace EGON_cs_API {
 			}
 		}
 		
-		public void NewSimulator(string name, string description) {
-			this.simulators.Add(new Simulator(this.erlInterface, name, description));
-		}
-		
-		public ArrayList listSims() {
-			return this.erlInterface.listSims();
+		public Simulator NewSimulator(string name, string description) {
+			Simulator sim = new Simulator(this.erlInterface, name, description);
+			this.simulators.Add(sim);
+			return sim;
 		}
 		
 		public void StopSim(string simId) {
@@ -40,8 +56,12 @@ namespace EGON_cs_API {
 		}
 		
 		public Simulator ConnectToSim(string simId) {
-			string [] info = this.erlInterface.simInfo(simId);
-			return new Simulator(this.erlInterface.ConnectToSim(simId), info[2], info[3]);
+			foreach (Simulator sim in this.simulators) {
+				if (sim.simId == simId) {
+					return sim;
+				}
+			}
+			return null;
 		}
 	}
 }

@@ -134,8 +134,7 @@ namespace SimGUI {
 		public Gtk.NodeStore generateStore() {
 			Gtk.NodeStore store = new Gtk.NodeStore(typeof(SimEntry));
 			
-			foreach (string s in this.server.listSims()) {
-				
+			foreach (Simulator s in this.server.listSims()) {
 				store.AddNode(new SimEntry(s));
 			}
 			return store;
@@ -157,13 +156,11 @@ namespace SimGUI {
 			this.owner = "";
 		}
 
-		public SimEntry(string line) {
-			string[] parts = line.Split(',');
-			
-			this.simId = parts[1];
-			this.name = parts[3];
-			this.description = parts[4];
-			this.owner = parts[5];
+		public SimEntry(Simulator sim) {			
+			this.simId = sim.simId;
+			this.name = sim.name;
+			this.description = sim.description;
+			this.owner = sim.owner;
 		}
 
 		[Gtk.TreeNodeValue(Column = 0)]
