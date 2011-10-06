@@ -44,6 +44,7 @@
     <Compile Include="Simulator.cs" />
     <Compile Include="EgonServer.cs" />
     <Compile Include="Turbine.cs" />
+    <Compile Include="Clock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
