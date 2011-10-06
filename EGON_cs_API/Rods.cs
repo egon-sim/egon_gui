@@ -20,6 +20,10 @@ namespace EGON_cs_API {
 			return int.Parse(this.erlInterface.Call("{get, es_rod_position_server, control_position, " + rodgroup.ToString() + "}\n"));
 		}
 		
+		public string setCtrlRodPosition(string position) {
+			return this.erlInterface.Call("{set, es_rod_position_server, control_position_str, \"" + position + "\"}\n");
+		}
+		
 		public int getSdRodPosition(int rodgroup) {
 			return int.Parse(this.erlInterface.Call("{get, es_rod_position_server, shutdown_position, " + rodgroup.ToString() + "}\n"));
 		}

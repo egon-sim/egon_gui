@@ -50,7 +50,9 @@ namespace EGON_cs_API {
 
 		public string StartSim(string name, string description) {
 			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
-			String pattern = @"{ok,(.+)}";
+			String pattern = @"{connected,(.+),.+}";
+			
+			Console.WriteLine(response);
 			
 			Match match = Regex.Match(response, pattern);
 			
@@ -67,7 +69,7 @@ namespace EGON_cs_API {
 		
 		public ErlInterface ConnectToSim(string simId) {
 			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
-			string pattern = "{connected,(.+)}";
+			string pattern = @"{connected,.+,(.+)}";
 			
 			Match match = Regex.Matches(response, pattern)[0];
 			int port = int.Parse(match.Groups[1].Value);

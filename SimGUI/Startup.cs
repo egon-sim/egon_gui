@@ -7,27 +7,27 @@ namespace SimGUI
 
 	public partial class Startup : Gtk.Window
 	{
-		ErlInterface simInterface;
+		Simulator simulator;
 		
 		public Startup (Simulator sim) : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-			this.simInterface = sim.erlInterface;
+			this.simulator = sim;
 			
-			this.spinbutton1.Value = double.Parse(this.simInterface.Call("{get, es_core_server, burnup}"));
-			this.spinbutton2.Value = double.Parse(this.simInterface.Call("{get, es_core_server, boron}"));
-			this.spinbutton8.Value = double.Parse(this.simInterface.Call("{get, es_core_server, flux}"));
-			this.spinbutton6.Value = double.Parse(this.simInterface.Call("{get, es_turbine_server, power}"));                       
+			this.spinbutton1.Value = this.simulator.reactor.Burnup;
+			this.spinbutton2.Value = this.simulator.reactor.Boron;
+			this.spinbutton8.Value = this.simulator.reactor.Flux;
+			this.spinbutton6.Value = this.simulator.turbine.Power;
 		}
 		
 		protected virtual void OnButton2Clicked (object sender, System.EventArgs e)
 		{
-			this.simInterface.Call("{set, es_core_server, burnup, " + this.spinbutton1.ValueAsInt + "}\n");
-			this.simInterface.Call("{set, es_core_server, boron, " + this.spinbutton2.ValueAsInt + "}\n");
-			this.simInterface.Call("{set, es_core_server, flux, " + this.spinbutton8.ValueAsInt + "}\n");
-			this.simInterface.Call("{set, es_turbine_server, power, " + this.spinbutton6.ValueAsInt + "}\n");
+			this.simulator.reactor.Burnup = this.spinbutton1.ValueAsInt;
+			this.simulator.reactor.Boron = this.spinbutton2.ValueAsInt;
+			this.simulator.reactor.Flux = this.spinbutton8.ValueAsInt;
+			this.simulator.turbine.Power = this.spinbutton6.ValueAsInt;
 			string rods = this.entry2.Text + this.spinbutton7.ValueAsInt.ToString();
-			this.simInterface.Call("{set, es_rod_position_server, control_position, \"" + rods + "\"}\n");
+			this.simulator.reactor.rods.setCtrlRodPosition(rods);
 		}
 	}
 }

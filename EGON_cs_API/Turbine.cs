@@ -9,6 +9,7 @@ namespace EGON_cs_API {
 		
 		public float Power {
 			get { return float.Parse(this.erlInterface.Call("{get, es_turbine_server, power}")); }
+			set { this.erlInterface.Call("{set, es_turbine_server, power, " + value.ToString() + "}\n"); }
 		}
 
 		public float Tref {
