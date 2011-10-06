@@ -5,7 +5,6 @@ using SimGUI;
 
 public partial class MainWindow : Gtk.Window
 {
-	ErlInterface simInterface;
 	Indicator [] indicators;
 	EGON_cs_API.Reactor reactor;
 	EGON_cs_API.Rods rods;
@@ -17,17 +16,16 @@ public partial class MainWindow : Gtk.Window
 	}
 	
 	public MainWindow(Simulator sim) : base(Gtk.WindowType.Toplevel) {
-		this.simInterface = sim.erlInterface;
 		this.reactor = sim.reactor;
 		this.rods = this.reactor.rods;
 		this.turbine = sim.turbine;
 		Build();
 		
 		this.indicators = new Indicator[4] {
-			new Indicator("{get, es_core_server, flux}", this.simInterface, 0, 120, this.label28, this.vscale7),
-			new Indicator("{get, es_turbine_server, power}", this.simInterface, 0, 120, this.label30, this.vscale8),
-			new Indicator("{get, es_core_server, tavg}", this.simInterface, 280, 320, this.label32, this.vscale9),
-			new Indicator("{get, es_w7300_server, tref}", this.simInterface, 280, 320, this.label34, this.vscale10),
+			new Indicator(delegate { return this.reactor.Flux; }, 0, 120, this.label28, this.vscale7),
+			new Indicator(delegate { return this.turbine.Power; }, 0, 120, this.label30, this.vscale8),
+			new Indicator(delegate { return this.reactor.Tavg; }, 280, 320, this.label32, this.vscale9),
+			new Indicator(delegate { return this.turbine.Tref; }, 280, 320, this.label34, this.vscale10),
 		};
 		
 		this.Refresh();
