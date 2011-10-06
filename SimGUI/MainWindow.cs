@@ -7,6 +7,9 @@ public partial class MainWindow : Gtk.Window
 {
 	ErlInterface simInterface;
 	Indicator [] indicators;
+	EGON_cs_API.Reactor reactor;
+	EGON_cs_API.Rods rods;
+	EGON_cs_API.Turbine turbine;
 	
 	public MainWindow () : base(Gtk.WindowType.Toplevel)
 	{
@@ -15,6 +18,9 @@ public partial class MainWindow : Gtk.Window
 	
 	public MainWindow(Simulator sim) : base(Gtk.WindowType.Toplevel) {
 		this.simInterface = sim.erlInterface;
+		this.reactor = sim.reactor;
+		this.rods = this.reactor.rods;
+		this.turbine = sim.turbine;
 		Build();
 		
 		this.indicators = new Indicator[4] {
@@ -28,25 +34,22 @@ public partial class MainWindow : Gtk.Window
 		GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 	}
 
-	private string format(string call) {
-		return float.Parse(this.simInterface.Call(call)).ToString("F2");
-	}
 	public bool Refresh() {
-		this.label3.Text = this.format("{get, es_core_server, burnup}\n");
-		this.label5.Text = this.format("{get, es_core_server, boron}\n");
-		this.label10.Text = this.format("{get, es_core_server, tavg}\n");
-		this.label11.Text = this.format("{get, es_w7300_server, tref}\n");
-		this.label12.Text = this.format("{get, es_core_server, flux}\n");
-		this.label13.Text = this.format("{get, es_turbine_server, power}\n");
-		this.vscale1.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 1}\n"));
- 		this.vscale2.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 2}\n"));
- 		this.vscale3.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 3}\n"));
- 		this.vscale4.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, control_position, 4}\n"));
- 		this.vscale5.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, 1}\n"));
-		this.vscale6.Value = int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, 2}\n"));
-		this.label26.Text = this.simInterface.Call("{get, es_rod_controller_server, speed}\n").ToString();
+		this.label3.Text = this.reactor.Burnup.ToString("F2");
+		this.label5.Text = this.reactor.Boron.ToString("F2");
+		this.label10.Text = this.reactor.Tavg.ToString("F2");
+		this.label11.Text = this.turbine.Tref.ToString("F2");
+		this.label12.Text = this.reactor.Flux.ToString("F2");
+		this.label13.Text = this.turbine.Power.ToString();
+		this.vscale1.Value = this.rods.getCtrlRodPosition(1);
+ 		this.vscale2.Value = this.rods.getCtrlRodPosition(2);
+ 		this.vscale3.Value = this.rods.getCtrlRodPosition(3);
+ 		this.vscale4.Value = this.rods.getCtrlRodPosition(4);
+ 		this.vscale5.Value = this.rods.getSdRodPosition(1);
+		this.vscale6.Value = this.rods.getSdRodPosition(2);
+		this.label26.Text = this.rods.Speed.ToString();
 		
-		string rod_controller_mode = this.simInterface.Call("{get, es_rod_controller_server, mode}\n").Trim();
+		string rod_controller_mode = this.rods.Mode;
 		if (rod_controller_mode == "auto") {
 			this.radiobutton3.Activate();
 		}
@@ -74,14 +77,14 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnButton4Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("{action, es_rod_position_server, step_out}\n");
+		this.rods.StepOut();
 		this.Refresh();
 
 	}
 	
 	protected virtual void OnButton5Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("{action, es_rod_position_server, step_in}\n");
+		this.rods.StepIn();
 		this.Refresh();
 
 	}
@@ -92,27 +95,24 @@ public partial class MainWindow : Gtk.Window
 		int val;
 		
 		if (this.radiobutton1.Active) {
-			action = "borate";
 			val = (int)this.spinbutton1.Value;
+			this.reactor.Borate(val);
 		} else if (this.radiobutton2.Active) {
-			action = "dilute";
 			val = (int)this.spinbutton2.Value;
+			this.reactor.Dilute(val);
 		} else {
 			return;
-		}
-		String boron = this.simInterface.Call("{get, es_core_server, boron}\n").Trim();
-		this.simInterface.Call("{action, es_makeup_buffer_server, " + action + ", [" + boron + ", " + val + "]}\n");
-		
+		}		
 	}
 	
 	protected virtual void OnRadiobutton3Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("{set, es_rod_controller_server, mode, auto}\n");
+		this.rods.Mode = "auto";
 	}
 	
 	protected virtual void OnRadiobutton4Clicked (object sender, System.EventArgs e)
 	{
-		this.simInterface.Call("{set, es_rod_controller_server, mode, manual}\n");
+		this.rods.Mode = "manual";
 	}
 	
 	

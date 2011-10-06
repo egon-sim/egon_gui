@@ -8,6 +8,7 @@ namespace EGON_cs_API {
 		private string description;
 		public Clock clock;
 		public Turbine turbine;
+		public Reactor reactor;
 		
 		public Simulator(ErlInterface erlIterface, string name, string description) {
 			this.erlInterface = erlIterface;
@@ -15,6 +16,7 @@ namespace EGON_cs_API {
 			this.description = description;
 			this.clock = new Clock(this.erlInterface);
 			this.turbine = new Turbine(this.erlInterface);
+			this.reactor = new Reactor(this.erlInterface);
 		}
 		
 		public void Start() {

@@ -11,6 +11,10 @@ namespace EGON_cs_API {
 			get { return float.Parse(this.erlInterface.Call("{get, es_turbine_server, power}")); }
 		}
 
+		public float Tref {
+			get { return float.Parse(this.erlInterface.Call("{get, es_w7300_server, tref}")); }
+		}
+
 		public int Target {
 			get { return int.Parse(this.erlInterface.Call("{get, es_turbine_server, target}")); }
 			set { this.erlInterface.Call("{set, es_turbine_server, target, " + value.ToString() + "}\n"); }
