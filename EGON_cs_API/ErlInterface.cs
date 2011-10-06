@@ -23,30 +23,30 @@ namespace EGON_cs_API {
 			this.stream = client.GetStream();
 		}
 
-		public ArrayList listSims() {
-			String response = this.Call("{ask, list_sims}");
-			String pattern = @"{(.+)}";
-			
-			MatchCollection matches = Regex.Matches(response, pattern);
-			
-			ArrayList simStrings = new ArrayList();
-			foreach (Match match in matches) {
-				simStrings.Add(match.Groups[1].Value);
-			}
-			
-			return simStrings;
-		}
+//		public ArrayList listSims() {
+//			String response = this.Call("{ask, list_sims}");
+//			String pattern = @"{(.+)}";
+//			
+//			MatchCollection matches = Regex.Matches(response, pattern);
+//			
+//			ArrayList simStrings = new ArrayList();
+//			foreach (Match match in matches) {
+//				simStrings.Add(match.Groups[1].Value);
+//			}
+//			
+//			return simStrings;
+//		}
 		
-		public string[] simInfo(string simId) {
-			String response = this.Call("{ask, sim_info, " + simId + "}");
-			String pattern = @"{simulator_manifest,(.+)}";
-			
-			Match match = Regex.Match(response, pattern);
-			
-			String info = match.Groups[1].Value;
-			
-			return info.Split(',');
-		}
+//		public string[] simInfo(string simId) {
+//			String response = this.Call("{ask, sim_info, " + simId + "}");
+//			String pattern = @"{simulator_manifest,(.+)}";
+//			
+//			Match match = Regex.Match(response, pattern);
+//			
+//			String info = match.Groups[1].Value;
+//			
+//			return info.Split(',');
+//		}
 
 		public string StartSim(string name, string description) {
 			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
