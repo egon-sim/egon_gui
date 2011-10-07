@@ -52,7 +52,7 @@ namespace EGON_cs_API {
 			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
 			String pattern = @"{connected,(.+),.+}";
 			
-			Console.WriteLine(response);
+			//Console.WriteLine(response);
 			
 			Match match = Regex.Match(response, pattern);
 			

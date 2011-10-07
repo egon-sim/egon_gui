@@ -22,16 +22,14 @@ namespace SimGUI
 		}
 		
 		public bool Refresh() {
-			string go;
-			
 			this.label10.Text = this.turbine.Power.ToString();
 			this.label11.Text = this.turbine.Power.ToString();
 			this.label12.Text = this.turbine.Target.ToString();
 			this.label13.Text = this.turbine.Rate.ToString();
-			go = this.turbine.Go;
-			if (go == "true") {
+			bool go = this.turbine.Go;
+			if (go == true) {
 				this.label17.Text = "GO";
-			} else if (go == "false") {
+			} else if (go == false) {
 				this.label17.Text = "STOP";
 			} else {
 				this.label17.Text = "ERROR: '" + go.ToString() + "'";

@@ -41,6 +41,10 @@ namespace EGON_cs_API {
 			int simId = 1;
 			this.erlInterface.Call("{ask, stop_simulator, " + simId + "}");
 		}
+		
+		public override string ToString() {
+			return this.simId + " | " + this.name + " | " + this.description + " | " + this.owner + " | " + this.clock.Status;
+		}
 	}
 }
 

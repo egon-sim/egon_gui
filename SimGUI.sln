@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimGUI", "SimGUI\SimGUI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EGON_cs_API", "EGON_cs_API\EGON_cs_API.csproj", "{ACB4263B-49E6-4F45-87F5-A725988733B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EGON_cs_test", "EGON_cs_test\EGON_cs_test.csproj", "{D32F2E6E-CCAC-4A16-A599-FBEA9110C1D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,8 +21,12 @@ Global
 		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Debug|x86.Build.0 = Debug|Any CPU
 		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{ACB4263B-49E6-4F45-87F5-A725988733B6}.Release|x86.Build.0 = Release|Any CPU
+		{D32F2E6E-CCAC-4A16-A599-FBEA9110C1D6}.Debug|x86.ActiveCfg = Debug|x86
+		{D32F2E6E-CCAC-4A16-A599-FBEA9110C1D6}.Debug|x86.Build.0 = Debug|x86
+		{D32F2E6E-CCAC-4A16-A599-FBEA9110C1D6}.Release|x86.ActiveCfg = Release|x86
+		{D32F2E6E-CCAC-4A16-A599-FBEA9110C1D6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = SimGUI\SimGUI.csproj
+		StartupItem = EGON_cs_test\EGON_cs_test.csproj
 	EndGlobalSection
 EndGlobal

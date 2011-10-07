@@ -19,7 +19,6 @@ namespace EGON_cs_API {
 		}
 		public float Tavg {
 			get { return float.Parse(this.erlInterface.Call("{get, es_core_server, tavg}")); }
-			set { this.erlInterface.Call("{set, es_core_server, tavg, " + value.ToString() + "}\n"); }
 		}
 		public float Flux {
 			get { return float.Parse(this.erlInterface.Call("{get, es_core_server, flux}")); }
