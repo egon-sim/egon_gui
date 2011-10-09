@@ -106,6 +106,14 @@ namespace EGON_cs_API {
 		~ErlInterface() {
 			this.Disconnect();
 		}
+		
+		public static string BoolToString(bool val) {
+			return val.ToString().ToLower();
+		}
+
+		public static bool StringToBool(string val) {
+			return bool.Parse(val.Substring(0,1).ToUpper() + val.Substring(1));
+		}
 	}
 	
 	[TestFixture]

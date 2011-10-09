@@ -27,8 +27,10 @@ namespace EGON_cs_API {
 		}
 
 		public bool Go {
-			get { return bool.Parse(this.erlInterface.Call("{get, es_turbine_server, go}").Trim()); }
-			set { this.erlInterface.Call("{set, es_turbine_server, go, " + value.ToString() + "}"); }
+			get { return ErlInterface.StringToBool(this.erlInterface.Call("{get, es_turbine_server, go}")); }
+			set {
+				this.erlInterface.Call("{set, es_turbine_server, go, " + ErlInterface.BoolToString(value) + "}");
+			}
 		}
 		
 		public string Start() {
