@@ -42,6 +42,12 @@ namespace EGON_cs_test {
 			sim1.turbine.Target = 85;
 			sim1.turbine.Rate = 1;
 			sim1.turbine.Go = true;
+
+			
+			Console.WriteLine(sim1.reactor.Flux == 80);
+			Console.WriteLine(sim1.reactor.Burnup == 5000);
+			Console.WriteLine(sim1.reactor.rods.Mode == "auto");
+		
 		}
 	}
 }
