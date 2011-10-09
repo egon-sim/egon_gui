@@ -7,6 +7,11 @@ namespace EGON_cs_API {
 			this.erlInterface = erlInterface;
 		}
 		
+		public bool LogTicks {
+			get { return ErlInterface.StringToBool(this.erlInterface.Call("{get, es_clock_server, log_ticks}")); }
+			set { this.erlInterface.Call("{set, es_clock_server, log_ticks, " + ErlInterface.BoolToString(value) + "}"); }
+		}
+		
 		public string Start() {
 			return this.erlInterface.Call("{action, es_clock_server, start}");
 		}
