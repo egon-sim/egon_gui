@@ -30,7 +30,7 @@ namespace EGON_cs_test {
 			sim1.clock.Start();
 			sim1.clock.Stop();
 			sim1.clock.Stop();
-			//sim1.clock.Start();
+			sim1.clock.Start();
 			
 			sim1.reactor.Flux = 80;
 			sim1.reactor.Burnup = 5000;
@@ -47,8 +47,14 @@ namespace EGON_cs_test {
 			Console.WriteLine(sim1.reactor.Flux == 80);
 			Console.WriteLine(sim1.reactor.Burnup == 5000);
 			Console.WriteLine(sim1.reactor.rods.Mode == "auto");
+
+			while (true) {
+			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4) + " | " + sim1.reactor.rods.Speed);
+			      Console.ReadLine();
+			}
 		
 		}
+
 	}
 }
 
