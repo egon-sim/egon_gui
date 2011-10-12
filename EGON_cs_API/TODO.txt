@@ -1,8 +1,10 @@
 GENERAL:
+*+ send/receive all state values as single TCP packet
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
 
 BUGS:
+*0 float values on windows are wrong
 *- Turbine.Target and Turbine.Rate are float
 *0 should classes in Simulator.cs receive reference to ErlInterface?
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"

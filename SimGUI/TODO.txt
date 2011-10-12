@@ -1,5 +1,11 @@
 GENERAL:
 *0 move timeouts to ErlInterface and connect other classes with ErlInterface by events
+*++ graphs: ability to graphicaly represent parameter value throuhg time
+*0 borate/dilute button should be able to stop make-up in progress
+*? ability to easily use two simulators at once
+*+ single user version (C# project should contain egon_server release and start/stop it by it self)
+*+ simple installation process
+#- changing of refresh frequency
 
 LEGEND:
 
