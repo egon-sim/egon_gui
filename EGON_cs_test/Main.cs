@@ -49,7 +49,8 @@ namespace EGON_cs_test {
 			Console.WriteLine(sim1.reactor.rods.Mode == "auto");
 
 			while (true) {
-			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4) + " | " + sim1.reactor.rods.Speed);
+			      sim1.erlInterface.Refresh();
+			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.flux + " | " + sim1.reactor.Tavg + " | " + sim1.reactor.tavg);
 			      Console.ReadLine();
 			}
 		

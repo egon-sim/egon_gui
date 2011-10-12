@@ -5,13 +5,32 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
-using NUnit.Framework;
+//using NUnit.Framework;
 
 namespace EGON_cs_API {
+	public class Connector {
+		public delegate void Setter(string val);
+
+		public Setter setter;
+		public string call;
+		public ErlInterface erlInterface;
+
+		public Connector(ErlInterface erlInterface, Setter setter, string call) {
+			this.setter = setter;
+			this.call = call;
+			this.erlInterface = erlInterface;
+		}
+
+		public void Set() {
+			this.setter(this.erlInterface.Call(this.call));
+		}
+	}
+
 	public class ErlInterface : ICloneable {
 		public NetworkStream stream;
 		public String username;
 		public String server;
+		protected ArrayList setters;
 
 		public ErlInterface(String username, String server, int port) {
 			TcpClient client;
@@ -21,6 +40,22 @@ namespace EGON_cs_API {
 			
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
+			this.setters = new ArrayList();
+		}
+
+		public void Register(Connector.Setter setter, string call) {
+			setters.Add(new Connector(this, setter, call));
+		}
+
+		public void Refresh() {
+		        string call = "[";
+			foreach (Connector conn in this.setters) {
+				call += conn.call + ",";
+				conn.Set();
+			}
+			call = call.Trim(',') + "]";
+			string retval = this.Call(call);
+			Console.WriteLine(retval);			
 		}
 
 //		public ArrayList listSims() {
@@ -116,15 +151,15 @@ namespace EGON_cs_API {
 		}
 	}
 	
-	[TestFixture]
+//	[TestFixture]
 	public class ErlInterfaceTest {
-		[Test]
+//		[Test]
 		public void BurekTest() {
-			Assert.AreEqual(1, 1);
+//			Assert.AreEqual(1, 1);
 			//Assert.AreEqual(1, 2);
 		}
 
-		[Test]
+//		[Test]
 		public void ConnectFail() {
 			//Assert.Fail(new ErlInterface("Test user", "localhost", 1055));
 		}		
