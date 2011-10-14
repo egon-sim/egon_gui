@@ -36,7 +36,7 @@ namespace EGON_cs_API {
 			this.turbine = new Turbine(this.erlInterface);
 			this.reactor = new Reactor(this.erlInterface);
 		}
-		
+
 		public void Stop() {
 			int simId = 1;
 			this.erlInterface.Call("{ask, stop_simulator, " + simId + "}");

@@ -24,6 +24,10 @@ namespace EGON_cs_API {
 		public void Set() {
 			this.setter(this.erlInterface.Call(this.call));
 		}
+
+		public void Set(string val) {
+			this.setter(val);
+		}
 	}
 
 	public class ErlInterface : ICloneable {
@@ -51,11 +55,15 @@ namespace EGON_cs_API {
 		        string call = "[";
 			foreach (Connector conn in this.setters) {
 				call += conn.call + ",";
-				conn.Set();
+				//conn.Set();
 			}
 			call = call.Trim(',') + "]";
 			string retval = this.Call(call);
-			Console.WriteLine(retval);			
+			string[] parts = retval.Trim('[').Trim(']').Split(',');
+
+			for (int i = 0; i < this.setters.Count; i++) {
+				((Connector)this.setters[i]).Set(parts[i]);
+			}
 		}
 
 //		public ArrayList listSims() {

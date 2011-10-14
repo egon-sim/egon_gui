@@ -1,5 +1,6 @@
 GENERAL:
 *+ send/receive all state values as single TCP packet
+*- destructors should unregister variables from erlInterface
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
 

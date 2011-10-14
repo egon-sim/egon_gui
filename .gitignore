@@ -8,3 +8,4 @@ EGON_cs_test/bin/*
 EGON_cs_test/obj/*
 *~
 *test-results/
+*.cache
