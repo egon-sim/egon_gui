@@ -89,7 +89,6 @@ public partial class MainWindow : Gtk.Window
 	
 	protected virtual void OnTogglebutton2Clicked (object sender, System.EventArgs e)
 	{
-		string action = "";
 		int val;
 		
 		if (this.radiobutton1.Active) {
