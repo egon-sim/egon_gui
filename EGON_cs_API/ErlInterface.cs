@@ -59,7 +59,7 @@ namespace EGON_cs_API {
 				return true;
 			}
 			
-		    string call = "[";
+			string call = "[";
 			
 			foreach (Connector conn in this.setters) {
 				call += conn.call + ",";
@@ -68,7 +68,7 @@ namespace EGON_cs_API {
 			call = call.Trim(',') + "]";
 			string retval = this.Call(call);
 			string[] parts = retval.Trim('[').Trim(']').Split(',');
-
+			
 			for (int i = 0; i < this.setters.Count; i++) {
 				((Connector)this.setters[i]).Set(parts[i]);
 			}
@@ -89,7 +89,7 @@ namespace EGON_cs_API {
 //			
 //			return simStrings;
 //		}
-		
+
 //		public string[] simInfo(string simId) {
 //			String response = this.Call("{ask, sim_info, " + simId + "}");
 //			String pattern = @"{simulator_manifest,(.+)}";
@@ -119,7 +119,7 @@ namespace EGON_cs_API {
 			
 			return true;
 		}
-		
+
 		public ErlInterface ConnectToSim(string simId) {
 			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
 			string pattern = @"{connected,.+,(.+)}";
@@ -138,9 +138,9 @@ namespace EGON_cs_API {
 			this.stream.Flush();
 			String responseData = String.Empty;
 			
-			/*StreamReader reader = new StreamReader(this.stream);
-			responseData = reader.ReadToEnd();*/
-
+//			StreamReader reader = new StreamReader(this.stream);
+//			responseData = reader.ReadToEnd();
+			
 			data = new Byte[10000];
 			Int32 bytes = this.stream.Read(data, 0, data.Length);
 			responseData = Encoding.ASCII.GetString(data, 0, bytes);
@@ -151,7 +151,7 @@ namespace EGON_cs_API {
 		public void Disconnect() {
 			this.stream.Close();
 		}
-		
+
 		public object Clone() {
 			return this.MemberwiseClone();
 		}
@@ -159,16 +159,16 @@ namespace EGON_cs_API {
 		~ErlInterface() {
 			this.Disconnect();
 		}
-		
+
 		public static string BoolToString(bool val) {
 			return val.ToString().ToLower();
 		}
 
 		public static bool StringToBool(string val) {
-			return bool.Parse(val.Substring(0,1).ToUpper() + val.Substring(1));
+			return bool.Parse(val.Substring(0, 1).ToUpper() + val.Substring(1));
 		}
 	}
-	
+
 //	[TestFixture]
 	public class ErlInterfaceTest {
 //		[Test]
@@ -180,6 +180,6 @@ namespace EGON_cs_API {
 //		[Test]
 		public void ConnectFail() {
 			//Assert.Fail(new ErlInterface("Test user", "localhost", 1055));
-		}		
+		}
 	}
 }
