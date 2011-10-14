@@ -51,7 +51,7 @@ namespace EGON_cs_test {
 
 			while (true) {
 			      sim1.erlInterface.Refresh();
-			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.Tavg + " | " + sim1.reactor.Boron);
+			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.Tavg + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4));
 			      Console.ReadLine();
 			}
 		
