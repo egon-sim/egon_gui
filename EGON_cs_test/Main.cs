@@ -6,7 +6,7 @@ namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
 			EgonServer server = new EgonServer();
-			server.Connect("Nikola", "127.0.0.1", 1057);
+			server.Connect("Nikola", "127.0.0.1", 1055);
 			
 			ArrayList sims = server.listSims();
 			
