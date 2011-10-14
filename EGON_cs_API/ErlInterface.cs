@@ -45,14 +45,22 @@ namespace EGON_cs_API {
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
 			this.setters = new ArrayList();
+			
+			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 		}
 
 		public void Register(Connector.Setter setter, string call) {
 			setters.Add(new Connector(this, setter, call));
 		}
 
-		public void Refresh() {
-		        string call = "[";
+		public bool Refresh() {
+			if (this.setters.Count == 0) {
+				Console.WriteLine("Nothing to refresh");
+				return true;
+			}
+			
+		    string call = "[";
+			
 			foreach (Connector conn in this.setters) {
 				call += conn.call + ",";
 				//conn.Set();
@@ -64,6 +72,8 @@ namespace EGON_cs_API {
 			for (int i = 0; i < this.setters.Count; i++) {
 				((Connector)this.setters[i]).Set(parts[i]);
 			}
+			
+			return true;
 		}
 
 //		public ArrayList listSims() {

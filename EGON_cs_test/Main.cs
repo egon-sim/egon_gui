@@ -6,7 +6,7 @@ namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
 			EgonServer server = new EgonServer();
-			server.Connect("Nikola", "127.0.0.1", 1056);
+			server.Connect("Nikola", "127.0.0.1", 1057);
 			
 			ArrayList sims = server.listSims();
 			
@@ -49,12 +49,9 @@ namespace EGON_cs_test {
 			Console.WriteLine(sim1.reactor.Burnup == 5000);
 			Console.WriteLine(sim1.reactor.rods.Mode == "auto");
 
-			while (true) {
-			      sim1.erlInterface.Refresh();
-			      Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.Tavg + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4));
-			      Console.ReadLine();
-			}
-		
+			System.Threading.Thread.Sleep(1000);
+			Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.Tavg + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4));
+			
 		}
 
 	}
