@@ -20,11 +20,11 @@ namespace EGON_cs_API {
 		}
 		
 		public string Start() {
-			return this.erlInterface.Call("{action, es_clock_server, start}");
+			return this.erlInterface.Call("{action, es_clock_server, ticking, start}");
 		}
 
 		public string Stop() {
-			return this.erlInterface.Call("{action, es_clock_server, stop}");
+			return this.erlInterface.Call("{action, es_clock_server, ticking, stop}");
 		}
 
 		public string Status {
