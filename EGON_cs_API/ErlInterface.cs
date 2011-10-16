@@ -46,7 +46,7 @@ namespace EGON_cs_API {
 			this.stream = client.GetStream();
 			this.setters = new ArrayList();
 			
-			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
+			//GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 		}
 
 		public void Register(Connector.Setter setter, string call) {
