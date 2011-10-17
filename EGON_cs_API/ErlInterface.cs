@@ -85,7 +85,7 @@ namespace EGON_cs_API {
 			}
 			call = call.Trim(',') + "]";
 			string retval = this.Call(call);
-			string[] parts = retval.Trim('[').Trim(']').Split(',');
+			string[] parts = ErlInterface.StringToArray(retval);
 			
 			for (int i = 0; i < this.setters.Count; i++) {
 				((Connector)this.setters[i]).Set(parts[i]);
@@ -184,6 +184,11 @@ namespace EGON_cs_API {
 
 		public static bool StringToBool(string val) {
 			return bool.Parse(val.Substring(0, 1).ToUpper() + val.Substring(1));
+		}
+
+		public static string[] StringToArray(string val) {
+			Console.WriteLine(val);
+			return val.Trim('[').Trim(']').Split(',');
 		}
 	}
 
