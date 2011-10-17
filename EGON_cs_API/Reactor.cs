@@ -2,7 +2,6 @@ using System;
 namespace EGON_cs_API {
 	public class Reactor {
 		private ErlInterface erlInterface;
-		public Rods rods;
 		private float burnup;
 		private float boron;
 		private float flux;
@@ -10,7 +9,6 @@ namespace EGON_cs_API {
 
 		public Reactor(ErlInterface erlInterface) {
 			this.erlInterface = erlInterface;
-			this.rods = new Rods(this.erlInterface);
 
 			erlInterface.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
 			erlInterface.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
@@ -61,4 +59,3 @@ namespace EGON_cs_API {
 		}
 	}
 }
-

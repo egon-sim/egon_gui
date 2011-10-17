@@ -13,8 +13,8 @@ namespace EGON_cs_test {
 			if (sims.Count < 4) {
 				server.NewSimulator("Test1", "Test simulator no. 1");
 				server.NewSimulator("Test2", "Test simulator no. 2");
-				server.NewSimulator("Test3", "Test simulator no. 3");
-				server.NewSimulator("Test4", "Test simulator no. 4");
+//				server.NewSimulator("Test3", "Test simulator no. 3");
+//				server.NewSimulator("Test4", "Test simulator no. 4");
 
 				sims = server.listSims();
 			}
@@ -25,32 +25,40 @@ namespace EGON_cs_test {
 			}
 			
 			Simulator sim1 = (Simulator)sims[1];
+
+			Clock clock = sim1.getClock();
+			Reactor reactor = sim1.getReactor();
+			Rods rods = sim1.getRods();
+			Turbine turbine = sim1.getTurbine();
+
+			clock.Start();
+			clock.Start();
+			clock.Stop();
+			clock.Stop();
+			clock.Start();
 			
-			sim1.clock.Start();
-			sim1.clock.Start();
-			sim1.clock.Stop();
-			sim1.clock.Stop();
-			sim1.clock.Start();
+			reactor.Flux = 80;
+			reactor.Burnup = 5000;
 			
-			sim1.reactor.Flux = 80;
-			sim1.reactor.Burnup = 5000;
+			rods.Mode = "auto";
+			rods.setCtrlRodPosition("D200");
 			
-			sim1.reactor.rods.Mode = "auto";
-			sim1.reactor.rods.setCtrlRodPosition("D200");
-			
-			sim1.turbine.Power = 75;
-			sim1.turbine.Target = 85;
-			sim1.turbine.Rate = 1;
-			sim1.turbine.Go = true;
+			turbine.Power = 75;
+			turbine.Target = 85;
+			turbine.Rate = 1;
+			turbine.Go = true;
 
 			sim1.erlInterface.Refresh();
 			
-			Console.WriteLine(sim1.reactor.Flux == 80);
-			Console.WriteLine(sim1.reactor.Burnup == 5000);
-			Console.WriteLine(sim1.reactor.rods.Mode == "auto");
+			Console.WriteLine(reactor.Flux == 80);
+			Console.WriteLine(reactor.Burnup == 5000);
+			Console.WriteLine(rods.Mode == "auto");
 
-			System.Threading.Thread.Sleep(1000);
-			Console.WriteLine(sim1.reactor.Flux + " | " + sim1.reactor.Tavg + " | " + sim1.turbine.Power + " | " + sim1.reactor.rods.getCtrlRodPosition(4));
+
+			while (true) {
+			      Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(4));
+			      System.Threading.Thread.Sleep(1000);
+			}
 			
 		}
 

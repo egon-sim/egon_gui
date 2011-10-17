@@ -4,15 +4,18 @@ using EGON_cs_API;
 namespace SimGUI {
 	public partial class SimPanel : Gtk.Window {
 		Simulator simulator;
+		Clock clock;
 		
 		public SimPanel(Simulator sim) : base(Gtk.WindowType.Toplevel) {
 			this.simulator = sim;
+			this.clock = sim.getClock();
+
 			this.Build();
 			this.refreshStatus();
 		}
 		
 		public void refreshStatus() {
-			string status = this.simulator.clock.Status;
+			string status = this.clock.Status;
 			if (status == "stopped") {
 				this.button1.Label = "Start";
 				this.label1.Text = "STOPPED";
@@ -33,7 +36,7 @@ namespace SimGUI {
 		
 		protected virtual void OnButton41Clicked (object sender, System.EventArgs e)
 		{
-			SimGUI.Turbine win = new SimGUI.Turbine(this.simulator.turbine);
+			SimGUI.Turbine win = new SimGUI.Turbine(this.simulator);
 			win.Show ();
 		}
 		
@@ -44,9 +47,9 @@ namespace SimGUI {
 			}
 
 			if (this.label1.Text == "RUNNING") {
-				this.simulator.clock.Stop();
+				this.clock.Stop();
 			} else if (this.label1.Text == "STOPPED") {
-				this.simulator.clock.Start();
+				this.clock.Start();
 			} else {
 				throw new Exception("Simulator state invalid (not STOPPED nor RUNNING).");
 			}

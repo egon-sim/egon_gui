@@ -8,22 +8,15 @@ namespace EGON_cs_API {
 		public string description;
 		public string simId;
 		public string owner;
-		public Clock clock;
-		public Turbine turbine;
-		public Reactor reactor;
 		
 		public Simulator(ErlInterface serverInterface, string name, string description) {
 			this.name = name;
 			this.description = description;
 
 			this.simId = serverInterface.StartSim(name, description);
-			this.erlInterface = serverInterface.ConnectToSim(this.simId);
-			
-			this.clock = new Clock(this.erlInterface);
-			this.turbine = new Turbine(this.erlInterface);
-			this.reactor = new Reactor(this.erlInterface);
+			this.erlInterface = serverInterface.ConnectToSim(this.simId);			
 		}
-		
+
 		public Simulator(ErlInterface serverInterface, string simId, string name, string description, string owner) {
 			this.name = name;
 			this.description = description;
@@ -31,10 +24,6 @@ namespace EGON_cs_API {
 
 			this.simId = simId;
 			this.erlInterface = serverInterface.ConnectToSim(this.simId);
-			
-			this.clock = new Clock(this.erlInterface);
-			this.turbine = new Turbine(this.erlInterface);
-			this.reactor = new Reactor(this.erlInterface);
 		}
 
 		public void Stop() {
@@ -42,8 +31,24 @@ namespace EGON_cs_API {
 			this.erlInterface.Call("{ask, stop_simulator, " + simId + "}");
 		}
 		
+		public Clock getClock() {
+		        return new Clock(this.erlInterface);
+		}
+
+		public Turbine getTurbine() {
+		        return new Turbine(this.erlInterface);
+		}
+		
+		public Reactor getReactor() {
+		        return new Reactor(this.erlInterface);
+		}
+		
+		public Rods getRods() {
+		        return new Rods(this.erlInterface);
+		}
+		
 		public override string ToString() {
-			return this.simId + " | " + this.name + " | " + this.description + " | " + this.owner + " | " + this.clock.Status;
+			return this.simId + " | " + this.name + " | " + this.description + " | " + this.owner;
 		}
 	}
 }

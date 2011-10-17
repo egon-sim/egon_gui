@@ -16,9 +16,9 @@ public partial class MainWindow : Gtk.Window
 	}
 	
 	public MainWindow(Simulator sim) : base(Gtk.WindowType.Toplevel) {
-		this.reactor = sim.reactor;
-		this.rods = this.reactor.rods;
-		this.turbine = sim.turbine;
+		this.reactor = sim.getReactor();
+		this.rods = sim.getRods();
+		this.turbine = sim.getTurbine();
 		Build();
 		
 		this.indicators = new Indicator[4] {
