@@ -49,7 +49,6 @@ namespace EGON_cs_API {
 			this.setters = new ArrayList();
 			
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
-//			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 		}
 
 		public void Register(Connector.Setter setter, string call) {
