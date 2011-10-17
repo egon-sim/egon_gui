@@ -56,7 +56,7 @@ namespace EGON_cs_test {
 
 
 			while (true) {
-			      Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(4));
+			      Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
 			      System.Threading.Thread.Sleep(1000);
 			}
 			

@@ -1,14 +1,18 @@
 GENERAL:
-*+ all classes calling ErlInterface.Register should be subclassed from base class which handles registering and which unregisteres in destructor
 *+ send/receive all state values as single TCP packet
-*- destructors should unregister variables from erlInterface
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
+
+(UN)REGISTERING:
+*- destructors should unregister variables from erlInterface
+*- all classes calling ErlInterface.Register should be subclassed from base class which handles registering and which unregisteres in destructor
+#+ if call is already registered with a different delegate, just add delegate to the same Connector instance; when unregistering remove Connector instance only if it holds only one delegate, otherwise just remove a delegate
 
 BUGS:
 *0 should classes in Simulator.cs receive reference to ErlInterface?
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 *0 ErlInterface.Refresh, ErlInterface.Register and ErlInterface.Unregister should lock this.setters
+*0 ErlInterface.StringToArray is a dirty hack
 
 
 LEGEND:
