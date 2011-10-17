@@ -56,6 +56,17 @@ namespace EGON_cs_API {
 			setters.Add(new Connector(this, setter, call));
 		}
 
+		public void Unregister(Connector.Setter setter) {
+		        Connector c = null;
+			foreach (Connector conn in this.setters) {
+				if (conn.setter == setter) {
+					c = conn;
+					break;
+				}
+			}
+			this.setters.Remove(c);
+		}
+
 		public void Refresh() {
 		        this.Refresh(null);
 		}
