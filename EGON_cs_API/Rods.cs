@@ -17,7 +17,17 @@ namespace EGON_cs_API {
 		}
 		
 		public int getCtrlRodPosition(int rodgroup) {
-			return int.Parse(this.erlInterface.Call("{get, es_rod_position_server, control_position, " + rodgroup.ToString() + "}\n"));
+			return this.getCtrlRodPosition()[rodgroup - 1];
+		}
+		
+		public Int32[] getCtrlRodPosition() {
+			string[] parts = ErlInterface.StringToArray(this.erlInterface.Call("{get, es_rod_position_server, control_position}\n"));
+			Int32[] retval = new Int32[parts.Length];
+			for (Int32 i = 0; i < parts.Length; i++) { // TODO: rewrite this as a map
+				retval[i] = int.Parse(parts[i]);
+			}
+
+			return retval;
 		}
 		
 		public string setCtrlRodPosition(string position) {
