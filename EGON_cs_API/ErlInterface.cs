@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
+using System.Threading;
 //using NUnit.Framework;
 
 namespace EGON_cs_API {
@@ -35,6 +36,7 @@ namespace EGON_cs_API {
 		public String username;
 		public String server;
 		protected ArrayList setters;
+		protected Timer refresher;
 
 		public ErlInterface(String username, String server, int port) {
 			TcpClient client;
@@ -46,17 +48,22 @@ namespace EGON_cs_API {
 			this.stream = client.GetStream();
 			this.setters = new ArrayList();
 			
-			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
+			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
+//			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 		}
 
 		public void Register(Connector.Setter setter, string call) {
 			setters.Add(new Connector(this, setter, call));
 		}
 
-		public bool Refresh() {
+		public void Refresh() {
+		        this.Refresh(null);
+		}
+
+		public void Refresh(Object o) {
 			if (this.setters.Count == 0) {
 				Console.WriteLine("Nothing to refresh");
-				return true;
+				return;
 			}
 			
 			string call = "[";
@@ -73,7 +80,7 @@ namespace EGON_cs_API {
 				((Connector)this.setters[i]).Set(parts[i]);
 			}
 			
-			return true;
+			return;
 		}
 
 //		public ArrayList listSims() {
