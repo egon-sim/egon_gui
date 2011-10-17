@@ -1,5 +1,5 @@
 GENERAL:
-*+ send/receive all state values as single TCP packet
+*+ send/receive all state values as single TCP packet (TODO: Rods.cs)
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
 
@@ -7,6 +7,7 @@ GENERAL:
 *- destructors should unregister variables from erlInterface
 *- all classes calling ErlInterface.Register should be subclassed from base class which handles registering and which unregisteres in destructor
 #+ if call is already registered with a different delegate, just add delegate to the same Connector instance; when unregistering remove Connector instance only if it holds only one delegate, otherwise just remove a delegate
+*- replace delegates with references to variables
 
 BUGS:
 *0 should classes in Simulator.cs receive reference to ErlInterface?
