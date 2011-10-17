@@ -3,15 +3,21 @@ namespace EGON_cs_API {
 	public class Clock {
 		private ErlInterface erlInterface;
 		private bool logTicks;
+		private string status;
 
 		public Clock(ErlInterface erlInterface) {
 			this.erlInterface = erlInterface;
 
 			erlInterface.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
+			erlInterface.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
 		}
 
 		public void setLogTicks(string val) {
 			this.logTicks = ErlInterface.StringToBool(val);
+		}
+		
+		public void setStatus(string val) {
+			this.status = val;
 		}
 		
 		public bool LogTicks {
@@ -28,7 +34,7 @@ namespace EGON_cs_API {
 		}
 
 		public string Status {
-			get { return this.erlInterface.Call("{get, es_clock_server, status}"); }
+			get { return this.status; }
 		}
 	}
 }
