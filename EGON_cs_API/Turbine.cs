@@ -21,23 +21,23 @@ namespace EGON_cs_API {
 		}
 		
 		public void setPower(string val) {
-			this.power = float.Parse(val.Replace('.', ','));
+			this.power = Lib.StringToFloat(val);
 		}
 		
 		public void setTref(string val) {
-			this.tref = float.Parse(val.Replace('.', ','));
+			this.tref = Lib.StringToFloat(val);
 		}
 		
 		public void setTarget(string val) {
-			this.target = float.Parse(val.Replace('.', ','));
+			this.target = Lib.StringToFloat(val);
 		}
 		
 		public void setRate(string val) {
-			this.rate = float.Parse(val.Replace('.', ','));
+			this.rate = Lib.StringToFloat(val);
 		}
 		
 		public void setGo(string val) {
-			this.go = ErlInterface.StringToBool(val);
+			this.go = Lib.StringToBool(val);
 		}
 		
 
@@ -63,7 +63,7 @@ namespace EGON_cs_API {
 		public bool Go {
 			get { return this.go; }
 			set {
-				this.erlInterface.Call("{set, es_turbine_server, go, " + ErlInterface.BoolToString(value) + "}");
+				this.erlInterface.Call("{set, es_turbine_server, go, " + Lib.BoolToString(value) + "}");
 			}
 		}
 		

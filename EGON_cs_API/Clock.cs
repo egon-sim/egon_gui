@@ -13,7 +13,7 @@ namespace EGON_cs_API {
 		}
 
 		public void setLogTicks(string val) {
-			this.logTicks = ErlInterface.StringToBool(val);
+			this.logTicks = Lib.StringToBool(val);
 		}
 		
 		public void setStatus(string val) {
@@ -22,7 +22,7 @@ namespace EGON_cs_API {
 		
 		public bool LogTicks {
 			get { return this.logTicks; }
-			set { this.erlInterface.Call("{set, es_clock_server, log_ticks, " + ErlInterface.BoolToString(value) + "}"); }
+			set { this.erlInterface.Call("{set, es_clock_server, log_ticks, " + Lib.BoolToString(value) + "}"); }
 		}
 		
 		public string Start() {

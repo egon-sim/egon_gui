@@ -2,6 +2,7 @@ GENERAL:
 *+ send/receive all state values as single TCP packet (TODO: Rods.cs)
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
+%0 split ErlInterface to ServerInterface (doesn't have timer) and SimulatorInterface (has timer)
 
 (UN)REGISTERING:
 *- destructors should unregister variables from erlInterface
@@ -14,6 +15,7 @@ BUGS:
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 *0 ErlInterface.Refresh, ErlInterface.Register and ErlInterface.Unregister should lock this.setters
 *0 ErlInterface.StringToArray is a dirty hack
+*- Lib.StringToFloat should check if replace('.', ',') is needed
 
 
 LEGEND:

@@ -17,19 +17,19 @@ namespace EGON_cs_API {
 		}
 
 		public void setBurnup(string val) {
-			this.burnup = float.Parse(val.Replace('.', ','));
+			this.burnup = Lib.StringToFloat(val);
 		}
 		
 		public void setBoron(string val) {
-			this.boron = float.Parse(val.Replace('.', ','));
+			this.boron = Lib.StringToFloat(val);
 		}
 		
 		public void setFlux(string val) {
-			this.flux = float.Parse(val.Replace('.', ','));
+			this.flux = Lib.StringToFloat(val);
 		}
 		
 		public void setTavg(string val) {
-			this.tavg = float.Parse(val.Replace('.', ','));
+			this.tavg = Lib.StringToFloat(val);
 		}
 		
 		public float Burnup {

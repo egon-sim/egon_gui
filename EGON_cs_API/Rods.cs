@@ -21,7 +21,7 @@ namespace EGON_cs_API {
 		}
 		
 		public Int32[] getCtrlRodPosition() {
-			string[] parts = ErlInterface.StringToArray(this.erlInterface.Call("{get, es_rod_position_server, control_position_array_str}\n").Trim('"'));
+			string[] parts = Lib.StringToArray(this.erlInterface.Call("{get, es_rod_position_server, control_position_array_str}\n").Trim('"'));
 			Int32[] retval = new Int32[parts.Length];
 			for (Int32 i = 0; i < parts.Length; i++) { // TODO: rewrite this as a map
 				retval[i] = int.Parse(parts[i]);
