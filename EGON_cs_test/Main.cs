@@ -13,8 +13,8 @@ namespace EGON_cs_test {
 			if (sims.Count < 4) {
 				server.NewSimulator("Test1", "Test simulator no. 1");
 				server.NewSimulator("Test2", "Test simulator no. 2");
-//				server.NewSimulator("Test3", "Test simulator no. 3");
-//				server.NewSimulator("Test4", "Test simulator no. 4");
+				server.NewSimulator("Test3", "Test simulator no. 3");
+				server.NewSimulator("Test4", "Test simulator no. 4");
 
 				sims = server.listSims();
 			}
