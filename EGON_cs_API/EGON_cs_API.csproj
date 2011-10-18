@@ -48,6 +48,7 @@
     <Compile Include="Reactor.cs" />
     <Compile Include="Rods.cs" />
     <Compile Include="Lib.cs" />
+    <Compile Include="StateClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

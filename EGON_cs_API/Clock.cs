@@ -1,13 +1,10 @@
 using System;
 namespace EGON_cs_API {
-	public class Clock {
-		private ErlInterface erlInterface;
+	public class Clock : StateClass {
 		private bool logTicks;
 		private string status;
 
-		public Clock(ErlInterface erlInterface) {
-			this.erlInterface = erlInterface;
-
+		public Clock(ErlInterface erlInterface) : base (erlInterface) {
 			erlInterface.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
 			erlInterface.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
 		}

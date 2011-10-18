@@ -1,15 +1,12 @@
 using System;
 namespace EGON_cs_API {
-	public class Reactor {
-		private ErlInterface erlInterface;
+	public class Reactor : StateClass {
 		private float burnup;
 		private float boron;
 		private float flux;
 		private float tavg;
 
-		public Reactor(ErlInterface erlInterface) {
-			this.erlInterface = erlInterface;
-
+		public Reactor(ErlInterface erlInterface) : base(erlInterface) {
 			erlInterface.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
 			erlInterface.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
 			erlInterface.Register(new Connector.Setter(setFlux), "{get, es_core_server, flux}");

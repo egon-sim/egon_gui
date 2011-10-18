@@ -1,10 +1,7 @@
 using System;
 namespace EGON_cs_API {
-	public class Rods {
-		private ErlInterface erlInterface;
-
-		public Rods(ErlInterface erlInterface) {
-			this.erlInterface = erlInterface;
+	public class Rods : StateClass {
+		public Rods(ErlInterface erlInterface) : base(erlInterface) {
 		}
 		
 		public string Mode {
