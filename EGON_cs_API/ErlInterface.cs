@@ -20,9 +20,11 @@ namespace EGON_cs_API {
 			this.setter = setter;
 			this.call = call;
 			this.erlInterface = erlInterface;
+			
+			this.Initialize();
 		}
 
-		public void Set() {
+		public void Initialize() {
 			this.setter(this.erlInterface.Call(this.call));
 		}
 
