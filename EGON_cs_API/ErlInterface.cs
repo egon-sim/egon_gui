@@ -54,22 +54,27 @@ namespace EGON_cs_API {
 		}
 
 		public void Register(Connector.Setter setter, string call) {
-			setters.Add(new Connector(this, setter, call));
+			lock (this.setters) {
+				this.setters.Add(new Connector(this, setter, call));
+			}
 		}
 
 		public void Unregister(Connector.Setter setter) {
-		        Connector c = null;
-			foreach (Connector conn in this.setters) {
-				if (conn.setter == setter) {
-					c = conn;
-					break;
+			Connector c = null;
+			
+			lock (this.setters) {
+				foreach (Connector conn in this.setters) {
+					if (conn.setter == setter) {
+						c = conn;
+						break;
+					}
 				}
+				this.setters.Remove(c);
 			}
-			this.setters.Remove(c);
 		}
 
 		public void Refresh() {
-		        this.Refresh(null);
+			this.Refresh(null);
 		}
 
 		public void Refresh(Object o) {
@@ -80,16 +85,18 @@ namespace EGON_cs_API {
 			
 			string call = "[";
 			
-			foreach (Connector conn in this.setters) {
-				call += conn.call + ",";
-				//conn.Set();
-			}
-			call = call.Trim(',') + "]";
-			string retval = this.Call(call);
-			string[] parts = Lib.StringToArray(retval);
-			
-			for (int i = 0; i < this.setters.Count; i++) {
-				((Connector)this.setters[i]).Set(parts[i]);
+			lock (this.setters) {
+				foreach (Connector conn in this.setters) {
+					call += conn.call + ",";
+					//conn.Set();
+				}
+				call = call.Trim(',') + "]";
+				string retval = this.Call(call);
+				string[] parts = Lib.StringToArray(retval);
+				
+				for (int i = 0; i < this.setters.Count; i++) {
+					((Connector)this.setters[i]).Set(parts[i]);
+				}
 			}
 			
 			return;
