@@ -3,14 +3,18 @@ namespace EGON_cs_API {
 	public class Reactor : StateClass {
 		private float burnup;
 		private float boron;
-		private float flux;
+		private string flux;
 		private float tavg;
 
 		public Reactor(ErlInterface erlInterface) : base(erlInterface) {
+			this.flux = "";
+
 			erlInterface.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
 			erlInterface.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
-			erlInterface.Register(new Connector.Setter(setFlux), "{get, es_core_server, flux}");
+			erlInterface.Register(ref this.flux, "{get, es_core_server, flux}");
 			erlInterface.Register(new Connector.Setter(setTavg), "{get, es_core_server, tavg}");
+			Console.WriteLine("B: {0}", this.flux);
+
 		}
 
 		public void setBurnup(string val) {
@@ -22,7 +26,7 @@ namespace EGON_cs_API {
 		}
 		
 		public void setFlux(string val) {
-			this.flux = Lib.StringToFloat(val);
+			this.flux = val;
 		}
 		
 		public void setTavg(string val) {
@@ -41,7 +45,7 @@ namespace EGON_cs_API {
 			get { return this.tavg; }
 		}
 		public float Flux {
-			get { return this.flux; }
+			get { return Lib.StringToFloat(this.flux); }
 			set { this.erlInterface.Call("{set, es_core_server, flux, " + value.ToString() + "}\n"); }
 		}
 		

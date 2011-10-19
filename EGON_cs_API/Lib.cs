@@ -7,7 +7,7 @@ namespace EGON_cs_API {
 		public static float StringToFloat(string val) {
 			string clean;
 			
-			if (true) {
+			if (false) {
 				clean = val;
 			} else {
 				clean = val.Replace('.', ',');

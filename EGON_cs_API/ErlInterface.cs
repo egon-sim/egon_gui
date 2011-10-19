@@ -15,21 +15,37 @@ namespace EGON_cs_API {
 		public Setter setter;
 		public string call;
 		public ErlInterface erlInterface;
+		public object parameter;
 
 		public Connector(ErlInterface erlInterface, Setter setter, string call) {
 			this.setter = setter;
 			this.call = call;
 			this.erlInterface = erlInterface;
+			this.parameter = null;
 			
 			this.Initialize();
 		}
 
+		public Connector(ErlInterface erlInterface, ref string parameter, string call) {
+			this.setter = null;
+			this.call = call;
+			this.erlInterface = erlInterface;
+			this.parameter = parameter;
+			
+			this.Initialize();
+			Console.WriteLine("A: {0}", this.parameter);
+		}
+
 		public void Initialize() {
-			this.setter(this.erlInterface.Call(this.call));
+			this.Set(this.erlInterface.Call(this.call));
 		}
 
 		public void Set(string val) {
-			this.setter(val);
+			if (this.setter == null) {
+				this.parameter = val;
+			} else {
+				this.setter(val);
+			}
 		}
 	}
 
@@ -56,6 +72,18 @@ namespace EGON_cs_API {
 		public void Register(Connector.Setter setter, string call) {
 			lock (this.setters) {
 				this.setters.Add(new Connector(this, setter, call));
+			}
+		}
+
+		public void Register(ref string parameter, string call) {
+			Connector conn = new Connector(this, ref parameter, call);
+			Console.WriteLine("A.1: {0}", conn.parameter);
+			Console.WriteLine("A.2: {0}", parameter);
+
+			parameter = "50";
+
+			lock (this.setters) {
+				this.setters.Add(conn);
 			}
 		}
 
