@@ -1,5 +1,4 @@
 GENERAL:
-*+ send/receive all state values as single TCP packet (TODO: Rods.cs)
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
 %0 split ErlInterface to ServerInterface (doesn't have timer) and SimulatorInterface (has timer)
@@ -9,6 +8,7 @@ GENERAL:
 *- all classes calling ErlInterface.Register should be subclassed from base class which handles registering and which unregisteres in destructor
 #+ if call is already registered with a different delegate, just add delegate to the same Connector instance; when unregistering remove Connector instance only if it holds only one delegate, otherwise just remove a delegate
 *- replace delegates with references to variables
+*+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
 
 BUGS:
 *0 should classes in Simulator.cs receive reference to ErlInterface?

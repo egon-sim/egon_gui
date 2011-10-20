@@ -31,8 +31,7 @@ namespace SimGUI
 			this.reactor.Boron = this.spinbutton2.ValueAsInt;
 			this.reactor.Flux = this.spinbutton8.ValueAsInt;
 			this.turbine.Power = this.spinbutton6.ValueAsInt;
-			string rods = this.entry2.Text + this.spinbutton7.ValueAsInt.ToString();
-			this.rods.setCtrlRodPosition(rods);
+			this.rods.AlphaNumCtrlRodPosition = this.entry2.Text + this.spinbutton7.ValueAsInt.ToString();
 		}
 	}
 }

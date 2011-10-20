@@ -41,7 +41,7 @@ namespace EGON_cs_test {
 			reactor.Burnup = 5000;
 			
 			rods.Mode = "auto";
-			rods.setCtrlRodPosition("D200");
+			rods.AlphaNumCtrlRodPosition = "D200";
 			
 			turbine.Power = 75;
 			turbine.Target = 85;
