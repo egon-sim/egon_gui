@@ -22,9 +22,9 @@ namespace EGON_cs_API {
 		}
 
 		public Rods(ErlInterface erlInterface) : base(erlInterface) {
-			erlInterface.Register(new Connector.Setter(setMode), "{get, es_rod_controller_server, mode}");
-			erlInterface.Register(new Connector.Setter(setSpeed), "{get, es_rod_controller_server, speed}");
-//			erlInterface.Register(new Connector.Setter(setCtrlRodPosition), "{get, es_rod_position_server, control_position_array_str}"); // TODO: this should be uncomented when Lib.StringToArray learns to parse subarrays
+			this.Register(new Connector.Setter(setMode), "{get, es_rod_controller_server, mode}");
+			this.Register(new Connector.Setter(setSpeed), "{get, es_rod_controller_server, speed}");
+//			this.Register(new Connector.Setter(setCtrlRodPosition), "{get, es_rod_position_server, control_position_array_str}"); // TODO: this should be uncomented when Lib.StringToArray learns to parse subarrays
 		}
 		
 		public string Mode {
@@ -63,6 +63,7 @@ namespace EGON_cs_API {
 		public string StepOut() {
 			return this.erlInterface.Call("{action, es_rod_position_server, step_out}\n");
 		}
+
 	}
 }
 

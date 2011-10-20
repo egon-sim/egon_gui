@@ -7,10 +7,10 @@ namespace EGON_cs_API {
 		private float tavg;
 
 		public Reactor(ErlInterface erlInterface) : base(erlInterface) {
-			erlInterface.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
-			erlInterface.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
-			erlInterface.Register(new Connector.Setter(setFlux), "{get, es_core_server, flux}");
-			erlInterface.Register(new Connector.Setter(setTavg), "{get, es_core_server, tavg}");
+			this.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
+			this.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
+			this.Register(new Connector.Setter(setFlux), "{get, es_core_server, flux}");
+			this.Register(new Connector.Setter(setTavg), "{get, es_core_server, tavg}");
 		}
 
 		public void setBurnup(string val) {
@@ -54,5 +54,6 @@ namespace EGON_cs_API {
 			string boron = this.boron.ToString();
 			return this.erlInterface.Call("{action, es_makeup_buffer_server, dilute, [" + boron + ", " + litres + "]}\n");
 		}
+
 	}
 }

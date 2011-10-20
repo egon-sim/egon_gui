@@ -62,6 +62,7 @@ namespace EGON_cs_API {
 		public void Unregister(Connector.Setter setter) {
 			Connector c = null;
 			
+			Console.WriteLine("Unregistering setter {0}", setter);
 			lock (this.setters) {
 				foreach (Connector conn in this.setters) {
 					if (conn.setter == setter) {
@@ -69,6 +70,7 @@ namespace EGON_cs_API {
 						break;
 					}
 				}
+				Console.WriteLine("Removing {0}", c.call);
 				this.setters.Remove(c);
 			}
 		}

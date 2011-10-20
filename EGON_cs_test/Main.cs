@@ -54,10 +54,17 @@ namespace EGON_cs_test {
 			Console.WriteLine(reactor.Burnup == 5000);
 			Console.WriteLine(rods.Mode == "auto");
 
+			for (int i = 0; i < 3; i++) {
+				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
+				System.Threading.Thread.Sleep(1000);
+			}
+
+			clock = null;
+			rods = null;
 
 			while (true) {
-			      Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
-			      System.Threading.Thread.Sleep(1000);
+				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power);
+				System.Threading.Thread.Sleep(1000);
 			}
 			
 		}

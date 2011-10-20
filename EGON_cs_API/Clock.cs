@@ -5,8 +5,8 @@ namespace EGON_cs_API {
 		private string status;
 
 		public Clock(ErlInterface erlInterface) : base (erlInterface) {
-			erlInterface.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
-			erlInterface.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
+			this.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
+			this.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
 		}
 
 		public void setLogTicks(string val) {
@@ -33,6 +33,7 @@ namespace EGON_cs_API {
 		public string Status {
 			get { return this.status; }
 		}
+
 	}
 }
 

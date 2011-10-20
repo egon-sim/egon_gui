@@ -1,7 +1,6 @@
 using System;
 namespace EGON_cs_API {
-	public class Turbine {
-		private ErlInterface erlInterface;
+	public class Turbine : StateClass {
 		private float power;
 		private float tref;
 		private float target;
@@ -9,14 +8,12 @@ namespace EGON_cs_API {
 		private bool go;
 
 
-		public Turbine(ErlInterface erlInterface) {
-			this.erlInterface = erlInterface;
-
-			erlInterface.Register(new Connector.Setter(setPower), "{get, es_turbine_server, power}");
-			erlInterface.Register(new Connector.Setter(setTref), "{get, es_turbine_server, tref}");
-			erlInterface.Register(new Connector.Setter(setTarget), "{get, es_turbine_server, target}");
-			erlInterface.Register(new Connector.Setter(setRate), "{get, es_turbine_server, rate}");
-			erlInterface.Register(new Connector.Setter(setGo), "{get, es_turbine_server, go}");
+		public Turbine(ErlInterface erlInterface) : base(erlInterface) {
+			this.Register(new Connector.Setter(setPower), "{get, es_turbine_server, power}");
+			this.Register(new Connector.Setter(setTref), "{get, es_turbine_server, tref}");
+			this.Register(new Connector.Setter(setTarget), "{get, es_turbine_server, target}");
+			this.Register(new Connector.Setter(setRate), "{get, es_turbine_server, rate}");
+			this.Register(new Connector.Setter(setGo), "{get, es_turbine_server, go}");
 
 		}
 		
