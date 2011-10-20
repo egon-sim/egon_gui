@@ -5,14 +5,7 @@ namespace EGON_cs_API {
 		}
 		
 		public static float StringToFloat(string val) {
-			string clean;
-			
-			if (true) {
-				clean = val;
-			} else {
-				clean = val.Replace('.', ',');
-			}
-			return float.Parse(clean);
+			return float.Parse(val, System.Globalization.CultureInfo.InvariantCulture);
 		}
 		
 		public static string BoolToString(bool val) {

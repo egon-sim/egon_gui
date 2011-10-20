@@ -15,7 +15,6 @@ BUGS:
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 *0 ErlInterface.Refresh, ErlInterface.Register and ErlInterface.Unregister should lock this.setters (check lock syntax)
 *0 Lib.StringToArray is a dirty hack
-*- Lib.StringToFloat should check if replace('.', ',') is needed
 
 
 LEGEND:
