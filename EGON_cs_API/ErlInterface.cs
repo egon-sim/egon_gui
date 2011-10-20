@@ -33,30 +33,53 @@ namespace EGON_cs_API {
 		}
 	}
 
-	public class ServerInterface : ErlInterface_ {
-		public ServerInterface(String username, String server, int port) : base(username, server, port) {
+	public class ServerInterface : ErlInterface {
+		public ServerInterface(String username, String server, int port) {
+			TcpClient client;
+			
+			this.server = server;
+			this.username = username;
+			
+			client = new TcpClient(server, port);
+			this.stream = client.GetStream();
 		}
+
+		public string StartSim(string name, string description) {
+			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
+			String pattern = @"{connected,(.+),.+}";
+			
+			//Console.WriteLine(response);
+			
+			Match match = Regex.Match(response, pattern);
+			
+			String simId = match.Groups[1].Value;
+			
+			return simId;
+		}
+
+		public bool StopSim(string simId) {
+			this.Call("{ask, stop_simulator, " + simId + "}");
+			
+			return true;
+		}
+
+		public SimulatorInterface ConnectToSim(string simId) {
+			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
+			string pattern = @"{connected,.+,(.+)}";
+			
+			Match match = Regex.Matches(response, pattern)[0];
+			int port = int.Parse(match.Groups[1].Value);
+			
+			return new SimulatorInterface(this.username, this.server, port);
+		}
+
 	}
 
-	public class SimulatorInterface : ErlInterface_ {
-		public SimulatorInterface(String username, String server, int port) : base(username, server, port) {
-		}
-		public void Register(Connector.Setter setter, string call) {
-			lock (this.setters) {
-				this.setters.Add(new Connector(this, setter, call));
-			}
-		}
-
-	}
-
-	public class ErlInterface_ : ICloneable {
-		public NetworkStream stream;
-		public String username;
-		public String server;
+	public class SimulatorInterface : ErlInterface {
 		protected ArrayList setters;
 		protected Timer refresher;
 
-		public ErlInterface_(String username, String server, int port) {
+		public SimulatorInterface(String username, String server, int port) {
 			TcpClient client;
 			
 			this.server = server;
@@ -67,6 +90,12 @@ namespace EGON_cs_API {
 			this.setters = new ArrayList();
 			
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
+		}
+
+		public void Register(Connector.Setter setter, string call) {
+			lock (this.setters) {
+				this.setters.Add(new Connector(this, setter, call));
+			}
 		}
 
 		public void Unregister(Connector.Setter setter) {
@@ -114,59 +143,12 @@ namespace EGON_cs_API {
 			return;
 		}
 
-//		public ArrayList listSims() {
-//			String response = this.Call("{ask, list_sims}");
-//			String pattern = @"{(.+)}";
-//			
-//			MatchCollection matches = Regex.Matches(response, pattern);
-//			
-//			ArrayList simStrings = new ArrayList();
-//			foreach (Match match in matches) {
-//				simStrings.Add(match.Groups[1].Value);
-//			}
-//			
-//			return simStrings;
-//		}
+	}
 
-//		public string[] simInfo(string simId) {
-//			String response = this.Call("{ask, sim_info, " + simId + "}");
-//			String pattern = @"{simulator_manifest,(.+)}";
-//			
-//			Match match = Regex.Match(response, pattern);
-//			
-//			String info = match.Groups[1].Value;
-//			
-//			return info.Split(',');
-//		}
-
-		public string StartSim(string name, string description) {
-			String response = this.Call("{ask, start_new_simulator, [\"" + name + "\", \"" + description + "\", \"" + this.username + "\"]}");
-			String pattern = @"{connected,(.+),.+}";
-			
-			//Console.WriteLine(response);
-			
-			Match match = Regex.Match(response, pattern);
-			
-			String simId = match.Groups[1].Value;
-			
-			return simId;
-		}
-
-		public bool StopSim(string simId) {
-			this.Call("{ask, stop_simulator, " + simId + "}");
-			
-			return true;
-		}
-
-		public SimulatorInterface ConnectToSim(string simId) {
-			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
-			string pattern = @"{connected,.+,(.+)}";
-			
-			Match match = Regex.Matches(response, pattern)[0];
-			int port = int.Parse(match.Groups[1].Value);
-			
-			return new SimulatorInterface(this.username, this.server, port);
-		}
+	public class ErlInterface : ICloneable {
+		public NetworkStream stream;
+		public String username;
+		public String server;
 
 		public String Call(String parameter) {
 			//Console.WriteLine(parameter);
@@ -194,7 +176,7 @@ namespace EGON_cs_API {
 			return this.MemberwiseClone();
 		}
 
-		~ErlInterface_() {
+		~ErlInterface() {
 			this.Disconnect();
 		}
 	}

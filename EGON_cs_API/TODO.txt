@@ -1,7 +1,6 @@
 GENERAL:
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
-%0 split ErlInterface to ServerInterface (doesn't have timer) and SimulatorInterface (has timer)
 
 (UN)REGISTERING:
 *- destructors should unregister variables from erlInterface
