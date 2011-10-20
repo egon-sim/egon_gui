@@ -21,7 +21,7 @@ namespace EGON_cs_API {
 			}
 		}
 
-		public Rods(ErlInterface erlInterface) : base(erlInterface) {
+		public Rods(SimulatorInterface simInterface) : base(simInterface) {
 			this.Register(new Connector.Setter(setMode), "{get, es_rod_controller_server, mode}");
 			this.Register(new Connector.Setter(setSpeed), "{get, es_rod_controller_server, speed}");
 //			this.Register(new Connector.Setter(setCtrlRodPosition), "{get, es_rod_position_server, control_position_array_str}"); // TODO: this should be uncomented when Lib.StringToArray learns to parse subarrays
@@ -29,7 +29,7 @@ namespace EGON_cs_API {
 		
 		public string Mode {
 			get { return this.mode; }
-			set { this.erlInterface.Call("{set, es_rod_controller_server, mode, " + value + "}\n"); }
+			set { this.simInterface.Call("{set, es_rod_controller_server, mode, " + value + "}\n"); }
 		}
 		
 		public float Speed {
@@ -38,7 +38,7 @@ namespace EGON_cs_API {
 		
 		public Int32[] CtrlRodPosition {
 			get { 
-				string val = this.erlInterface.Call("{get, es_rod_position_server, control_position_array_str}\n"); // TODO: this should be comented when Lib.StringToArray learns to parse subarrays
+				string val = this.simInterface.Call("{get, es_rod_position_server, control_position_array_str}\n"); // TODO: this should be comented when Lib.StringToArray learns to parse subarrays
 				this.setCtrlRodPosition(val); // TODO: this should be comented when Lib.StringToArray learns to parse subarrays
 				return this.ctrlRodPosition;
 			}
@@ -49,19 +49,19 @@ namespace EGON_cs_API {
 		}
 		
 		public string AlphaNumCtrlRodPosition {
-			set { this.erlInterface.Call("{set, es_rod_position_server, control_position_str, \"" + value + "\"}\n"); }
+			set { this.simInterface.Call("{set, es_rod_position_server, control_position_str, \"" + value + "\"}\n"); }
 		}
 		
 		public int getSdRodPosition(int rodgroup) {
-			return int.Parse(this.erlInterface.Call("{get, es_rod_position_server, shutdown_position, " + rodgroup.ToString() + "}\n"));
+			return int.Parse(this.simInterface.Call("{get, es_rod_position_server, shutdown_position, " + rodgroup.ToString() + "}\n"));
 		}
 		
 		public string StepIn() {
-			return this.erlInterface.Call("{action, es_rod_position_server, step_in}\n");
+			return this.simInterface.Call("{action, es_rod_position_server, step_in}\n");
 		}
 
 		public string StepOut() {
-			return this.erlInterface.Call("{action, es_rod_position_server, step_out}\n");
+			return this.simInterface.Call("{action, es_rod_position_server, step_out}\n");
 		}
 
 	}

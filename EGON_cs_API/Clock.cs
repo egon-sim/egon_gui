@@ -1,10 +1,11 @@
 using System;
+
 namespace EGON_cs_API {
 	public class Clock : StateClass {
 		private bool logTicks;
 		private string status;
 
-		public Clock(ErlInterface erlInterface) : base (erlInterface) {
+		public Clock(SimulatorInterface simInterface) : base (simInterface) {
 			this.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
 			this.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
 		}
@@ -19,15 +20,15 @@ namespace EGON_cs_API {
 		
 		public bool LogTicks {
 			get { return this.logTicks; }
-			set { this.erlInterface.Call("{set, es_clock_server, log_ticks, " + Lib.BoolToString(value) + "}"); }
+			set { this.simInterface.Call("{set, es_clock_server, log_ticks, " + Lib.BoolToString(value) + "}"); }
 		}
 		
 		public string Start() {
-			return this.erlInterface.Call("{action, es_clock_server, ticking, start}");
+			return this.simInterface.Call("{action, es_clock_server, ticking, start}");
 		}
 
 		public string Stop() {
-			return this.erlInterface.Call("{action, es_clock_server, ticking, stop}");
+			return this.simInterface.Call("{action, es_clock_server, ticking, stop}");
 		}
 
 		public string Status {

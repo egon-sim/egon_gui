@@ -14,18 +14,18 @@ namespace EGON_cs_API {
 
 		public Setter setter;
 		public string call;
-		public ErlInterface erlInterface;
+		public SimulatorInterface simInterface;
 
-		public Connector(ErlInterface erlInterface, Setter setter, string call) {
+		public Connector(SimulatorInterface simInterface, Setter setter, string call) {
 			this.setter = setter;
 			this.call = call;
-			this.erlInterface = erlInterface;
+			this.simInterface = simInterface;
 			
 			this.Initialize();
 		}
 
 		public void Initialize() {
-			this.setter(this.erlInterface.Call(this.call));
+			this.setter(this.simInterface.Call(this.call));
 		}
 
 		public void Set(string val) {
@@ -33,14 +33,30 @@ namespace EGON_cs_API {
 		}
 	}
 
-	public class ErlInterface : ICloneable {
+	public class ServerInterface : ErlInterface_ {
+		public ServerInterface(String username, String server, int port) : base(username, server, port) {
+		}
+	}
+
+	public class SimulatorInterface : ErlInterface_ {
+		public SimulatorInterface(String username, String server, int port) : base(username, server, port) {
+		}
+		public void Register(Connector.Setter setter, string call) {
+			lock (this.setters) {
+				this.setters.Add(new Connector(this, setter, call));
+			}
+		}
+
+	}
+
+	public class ErlInterface_ : ICloneable {
 		public NetworkStream stream;
 		public String username;
 		public String server;
 		protected ArrayList setters;
 		protected Timer refresher;
 
-		public ErlInterface(String username, String server, int port) {
+		public ErlInterface_(String username, String server, int port) {
 			TcpClient client;
 			
 			this.server = server;
@@ -51,12 +67,6 @@ namespace EGON_cs_API {
 			this.setters = new ArrayList();
 			
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
-		}
-
-		public void Register(Connector.Setter setter, string call) {
-			lock (this.setters) {
-				this.setters.Add(new Connector(this, setter, call));
-			}
 		}
 
 		public void Unregister(Connector.Setter setter) {
@@ -148,14 +158,14 @@ namespace EGON_cs_API {
 			return true;
 		}
 
-		public ErlInterface ConnectToSim(string simId) {
+		public SimulatorInterface ConnectToSim(string simId) {
 			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
 			string pattern = @"{connected,.+,(.+)}";
 			
 			Match match = Regex.Matches(response, pattern)[0];
 			int port = int.Parse(match.Groups[1].Value);
 			
-			return new ErlInterface(this.username, this.server, port);
+			return new SimulatorInterface(this.username, this.server, port);
 		}
 
 		public String Call(String parameter) {
@@ -184,7 +194,7 @@ namespace EGON_cs_API {
 			return this.MemberwiseClone();
 		}
 
-		~ErlInterface() {
+		~ErlInterface_() {
 			this.Disconnect();
 		}
 	}

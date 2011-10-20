@@ -8,7 +8,7 @@ namespace EGON_cs_API {
 		private bool go;
 
 
-		public Turbine(ErlInterface erlInterface) : base(erlInterface) {
+		public Turbine(SimulatorInterface simInterface) : base(simInterface) {
 			this.Register(new Connector.Setter(setPower), "{get, es_turbine_server, power}");
 			this.Register(new Connector.Setter(setTref), "{get, es_turbine_server, tref}");
 			this.Register(new Connector.Setter(setTarget), "{get, es_turbine_server, target}");
@@ -40,7 +40,7 @@ namespace EGON_cs_API {
 
 		public float Power {
 			get { return this.power; }
-			set { this.erlInterface.Call("{set, es_turbine_server, power, " + value.ToString() + "}\n"); }
+			set { this.simInterface.Call("{set, es_turbine_server, power, " + value.ToString() + "}\n"); }
 		}
 
 		public float Tref {
@@ -49,23 +49,23 @@ namespace EGON_cs_API {
 
 		public float Target {
 			get { return this.target; }
-			set { this.erlInterface.Call("{set, es_turbine_server, target, " + value.ToString() + "}\n"); }
+			set { this.simInterface.Call("{set, es_turbine_server, target, " + value.ToString() + "}\n"); }
 		}
 
 		public float Rate {
 			get { return this.rate; }
-			set { this.erlInterface.Call("{set, es_turbine_server, rate, " + value.ToString() + "}\n"); }
+			set { this.simInterface.Call("{set, es_turbine_server, rate, " + value.ToString() + "}\n"); }
 		}
 
 		public bool Go {
 			get { return this.go; }
 			set {
-				this.erlInterface.Call("{set, es_turbine_server, go, " + Lib.BoolToString(value) + "}");
+				this.simInterface.Call("{set, es_turbine_server, go, " + Lib.BoolToString(value) + "}");
 			}
 		}
 		
 		public string Start() {
-			return this.erlInterface.Call("{action, es_turbine_server, ramp, start}\n");
+			return this.simInterface.Call("{action, es_turbine_server, ramp, start}\n");
 		}
 
 	}

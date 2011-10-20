@@ -48,7 +48,7 @@ namespace EGON_cs_test {
 			turbine.Rate = 1;
 			turbine.Go = true;
 
-			sim1.erlInterface.Refresh();
+			sim1.simInterface.Refresh();
 			
 			Console.WriteLine(reactor.Flux == 80);
 			Console.WriteLine(reactor.Burnup == 5000);

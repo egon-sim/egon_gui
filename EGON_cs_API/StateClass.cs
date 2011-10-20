@@ -3,22 +3,22 @@ using System.Collections;
 
 namespace EGON_cs_API {
 	public class StateClass {
-		protected ErlInterface erlInterface;
+		protected SimulatorInterface simInterface;
 		protected ArrayList parameters;
 		
-		public StateClass(ErlInterface erlInterface) {
-			this.erlInterface = erlInterface;
+		public StateClass(SimulatorInterface simInterface) {
+			this.simInterface = simInterface;
 			this.parameters = new ArrayList();
 		}
 
 		public void Register(Connector.Setter setter, string call) {
 			this.parameters.Add(setter);
-			this.erlInterface.Register(setter, call);
+			this.simInterface.Register(setter, call);
 		}
 
 		public void UnregisterAll() {
 			foreach (Connector.Setter s in this.parameters) {
-				this.erlInterface.Unregister(s);
+				this.simInterface.Unregister(s);
 			}
 			this.parameters.Clear();
 		}
