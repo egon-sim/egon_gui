@@ -15,7 +15,7 @@ namespace EGON_cs_API {
 		public Setter setter;
 		public string call;
 		public ErlInterface erlInterface;
-		public object parameter;
+		public string parameter;
 
 		public Connector(ErlInterface erlInterface, Setter setter, string call) {
 			this.setter = setter;
