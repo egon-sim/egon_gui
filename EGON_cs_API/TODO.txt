@@ -3,16 +3,13 @@ GENERAL:
 %0 wrap ErlInterface in a process separate from the rest of the API
 
 (UN)REGISTERING:
-*- destructors should unregister variables from erlInterface
-*- all classes calling ErlInterface.Register should be subclassed from base class which handles registering and which unregisteres in destructor
 #+ if call is already registered with a different delegate, just add delegate to the same Connector instance; when unregistering remove Connector instance only if it holds only one delegate, otherwise just remove a delegate
 *- replace delegates with references to variables
 *+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
 
 BUGS:
-*0 should classes in Simulator.cs receive reference to ErlInterface?
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
-*0 ErlInterface.Refresh, ErlInterface.Register and ErlInterface.Unregister should lock this.setters (check lock syntax)
+*0 check lock syntax in SimulatorInterface.Refresh, SimulatorInterface.Register and SimulatorInterface.Unregister
 
 
 LEGEND:

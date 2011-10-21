@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 
 namespace EGON_cs_API {
-	public class StateClass {
+	public class StateClass : IDisposable {
 		protected SimulatorInterface simInterface;
 		protected ArrayList parameters;
 		
@@ -16,7 +16,7 @@ namespace EGON_cs_API {
 			this.simInterface.Register(setter, call);
 		}
 
-		public void UnregisterAll() {
+		public void Dispose() {
 			foreach (Connector.Setter s in this.parameters) {
 				this.simInterface.Unregister(s);
 			}
@@ -24,8 +24,7 @@ namespace EGON_cs_API {
 		}
 
 		~StateClass() {
-			Console.WriteLine("Destructor.");
-			this.UnregisterAll();
+			this.Dispose();
 		}
 	}
 }

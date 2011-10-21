@@ -59,8 +59,8 @@ namespace EGON_cs_test {
 				System.Threading.Thread.Sleep(1000);
 			}
 
-			clock = null;
-			rods = null;
+			clock.Dispose();
+			rods.Dispose();
 
 			while (true) {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power);
