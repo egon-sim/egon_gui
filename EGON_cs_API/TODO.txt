@@ -8,8 +8,8 @@ GENERAL:
 *+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
 
 BUGS:
-%0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 *0 check lock syntax in SimulatorInterface.Refresh, SimulatorInterface.Register and SimulatorInterface.Unregister
+%0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 
 
 LEGEND:

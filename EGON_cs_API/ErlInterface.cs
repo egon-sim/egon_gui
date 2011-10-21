@@ -143,7 +143,7 @@ namespace EGON_cs_API {
 
 	}
 
-	public class ErlInterface : ICloneable {
+	public class ErlInterface {
 		public NetworkStream stream;
 		public String username;
 		public String server;
@@ -168,10 +168,6 @@ namespace EGON_cs_API {
 
 		public void Disconnect() {
 			this.stream.Close();
-		}
-
-		public object Clone() {
-			return this.MemberwiseClone();
 		}
 
 		~ErlInterface() {
