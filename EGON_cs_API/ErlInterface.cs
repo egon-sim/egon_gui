@@ -77,6 +77,7 @@ namespace EGON_cs_API {
 
 	public class SimulatorInterface : ErlInterface {
 		protected ArrayList setters;
+		protected ArrayList parameters;
 		protected Timer refresher;
 
 		public SimulatorInterface(String username, String server, int port) {
@@ -88,6 +89,7 @@ namespace EGON_cs_API {
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
 			this.setters = new ArrayList();
+			this.parameters = new ArrayList();
 			
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
 		}
@@ -95,6 +97,12 @@ namespace EGON_cs_API {
 		public void Register(Connector.Setter setter, string call) {
 			lock (this.setters) {
 				this.setters.Add(new Connector(this, setter, call));
+			}
+		}
+
+		public void Register(Parameter parameter) {
+			lock (this.parameters) {
+				this.parameters.Add(parameter);
 			}
 		}
 
@@ -112,19 +120,33 @@ namespace EGON_cs_API {
 			}
 		}
 
+		public void Unregister(Parameter parameter) {
+			Parameter p = null;
+			
+			lock (this.parameters) {
+				foreach (Parameter param in this.parameters) {
+					if (param.Call == parameter.Call) {
+						p = param;
+						break;
+					}
+				}
+				this.parameters.Remove(p);
+			}
+		}
+
 		public void Refresh() {
 			this.Refresh(null);
 		}
 
 		public void Refresh(Object o) {
-			if (this.setters.Count == 0) {
+			if ((this.setters.Count == 0) && (this.parameters.Count == 0)) {
 				Console.WriteLine("Nothing to refresh");
 				return;
 			}
 			
-			string call = "[";
-			
+			if (this.setters.Count > 0) {
 			lock (this.setters) {
+				string call = "[";
 				foreach (Connector conn in this.setters) {
 					call += conn.call + ",";
 					//conn.Set();
@@ -136,6 +158,23 @@ namespace EGON_cs_API {
 				for (int i = 0; i < this.setters.Count; i++) {
 					((Connector)this.setters[i]).Set(parts[i]);
 				}
+			}
+			}
+			
+			if (this.parameters.Count > 0) {
+			lock (this.parameters) {
+				string call = "[";
+				foreach (Parameter param in this.parameters) {
+					call += param.Call + ",";
+				}
+				call = call.Trim(',') + "]";
+				string retval = this.Call(call);
+				string[] parts = Lib.StringToArray(retval);
+				
+				for (int i = 0; i < this.parameters.Count; i++) {
+					((Parameter)this.parameters[i]).Set(parts[i]);
+				}
+			}
 			}
 			
 			return;

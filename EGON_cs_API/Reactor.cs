@@ -2,57 +2,41 @@ using System;
 
 namespace EGON_cs_API {
 	public class Reactor : StateClass {
-		private float burnup;
-		private float boron;
-		private float flux;
-		private float tavg;
+		private Parameter burnup;
+		private Parameter boron;
+		private Parameter flux;
+		private Parameter tavg;
 
 		public Reactor(SimulatorInterface simInterface) : base(simInterface) {
-			this.Register(new Connector.Setter(setBurnup), "{get, es_core_server, burnup}");
-			this.Register(new Connector.Setter(setBoron), "{get, es_core_server, boron}");
-			this.Register(new Connector.Setter(setFlux), "{get, es_core_server, flux}");
-			this.Register(new Connector.Setter(setTavg), "{get, es_core_server, tavg}");
+			this.burnup = this.Register("{get, es_core_server, burnup}");
+			this.boron = this.Register("{get, es_core_server, boron}");
+			this.flux = this.Register("{get, es_core_server, flux}");
+			this.tavg = this.Register("{get, es_core_server, tavg}");
 		}
 
-		public void setBurnup(string val) {
-			this.burnup = Lib.StringToFloat(val);
-		}
-		
-		public void setBoron(string val) {
-			this.boron = Lib.StringToFloat(val);
-		}
-		
-		public void setFlux(string val) {
-			this.flux = Lib.StringToFloat(val);
-		}
-		
-		public void setTavg(string val) {
-			this.tavg = Lib.StringToFloat(val);
-		}
-		
 		public float Burnup {
-			get { return this.burnup; }
+			get { return this.burnup.Value; }
 			set { this.simInterface.Call("{set, es_core_server, burnup, " + value.ToString() + "}\n"); }
 		}
 		public float Boron {
-			get { return this.boron; }
+			get { return this.boron.Value; }
 			set { this.simInterface.Call("{set, es_core_server, boron, " + value.ToString() + "}\n"); }
 		}
 		public float Tavg {
-			get { return this.tavg; }
+			get { return this.tavg.Value; }
 		}
 		public float Flux {
-			get { return this.flux; }
+			get { return this.flux.Value; }
 			set { this.simInterface.Call("{set, es_core_server, flux, " + value.ToString() + "}\n"); }
 		}
 		
 		public string Borate(int litres) {
-			string boron = this.boron.ToString();
+			string boron = this.boron.Value.ToString();
 			return this.simInterface.Call("{action, es_makeup_buffer_server, borate, [" + boron + ", " + litres + "]}\n");
 		}
 
 		public string Dilute(int litres) {
-			string boron = this.boron.ToString();
+			string boron = this.boron.Value.ToString();
 			return this.simInterface.Call("{action, es_makeup_buffer_server, dilute, [" + boron + ", " + litres + "]}\n");
 		}
 

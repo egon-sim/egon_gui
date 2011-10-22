@@ -28,7 +28,6 @@ namespace EGON_cs_test {
 			foreach (Simulator s in sims) {
 				Console.WriteLine(s.ToString());
 			}
-			return;
 			
 			Simulator sim1 = (Simulator)sims[0];
 			
@@ -60,7 +59,7 @@ namespace EGON_cs_test {
 			Console.WriteLine(reactor.Burnup == 5000);
 			Console.WriteLine(rods.Mode == "auto");
 
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 2; i++) {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
 				System.Threading.Thread.Sleep(1000);
 			}
@@ -68,8 +67,15 @@ namespace EGON_cs_test {
 			clock.Dispose();
 			rods.Dispose();
 
-			while (true) {
+			for (int i = 0; i < 2; i++) {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power);
+				System.Threading.Thread.Sleep(1000);
+			}
+
+			turbine.Dispose();
+
+			while (true) {
+				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg);
 				System.Threading.Thread.Sleep(1000);
 			}
 			
