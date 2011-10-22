@@ -100,9 +100,25 @@ namespace EGON_cs_API {
 			}
 		}
 
-		public void Register(Parameter parameter) {
-			lock (this.parameters) {
-				this.parameters.Add(parameter);
+		public Parameter Register(string call) {
+			Parameter existing_parameter = null;
+
+			foreach (Parameter p in this.parameters) {
+				if (p.Call == call) {
+					existing_parameter = p;
+				}
+			}
+
+			if (existing_parameter != null) {
+				existing_parameter.AddRef();
+				return existing_parameter;
+			} else {
+				Parameter parameter = new Parameter(call);
+				parameter.AddRef();
+				lock (this.parameters) {
+					this.parameters.Add(parameter);
+				}
+				return parameter;
 			}
 		}
 
@@ -130,7 +146,15 @@ namespace EGON_cs_API {
 						break;
 					}
 				}
-				this.parameters.Remove(p);
+
+				if (p == null) {
+					throw new Exception("Cannot unregister Parameter: Parameter is not registered.");
+				} else {
+					p.RemRef();
+					if (p.Orphan) {
+						this.parameters.Remove(p);
+					}
+				}
 			}
 		}
 

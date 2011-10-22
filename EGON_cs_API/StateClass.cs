@@ -5,9 +5,27 @@ namespace EGON_cs_API {
 	public class Parameter {
 		private float value;
 		private string call;
+		private int ref_counter;
 
 		public Parameter(string call) {
 			this.call = call;
+			this.ref_counter = 0;
+		}
+
+		public void AddRef() {
+			this.ref_counter++;
+		}
+
+		public void RemRef() {
+			if (this.Orphan) {
+				throw new Exception("Cannot remove reference from Parameter: Parameter is orphan.");
+			} else {
+ 				this.ref_counter--;
+			}
+		}
+
+		public bool Orphan {
+			get { return this.ref_counter <= 0; }
 		}
 
 		public void Set(string value) {
@@ -20,6 +38,10 @@ namespace EGON_cs_API {
 
 		public string Call {
 			get { return this.call; }
+		}
+
+		public bool Equals(Parameter param) {
+			return this.call == param.call;
 		}
 	}
 
@@ -40,9 +62,8 @@ namespace EGON_cs_API {
 		}
 
 		public Parameter Register(string call) {
-			Parameter parameter = new Parameter(call);
+			Parameter parameter = this.simInterface.Register(call);
 			this.parameters2.Add(parameter);
-			this.simInterface.Register(parameter);
 			return parameter;
 		}
 

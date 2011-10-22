@@ -33,6 +33,7 @@ namespace EGON_cs_test {
 			
 			Clock clock = sim1.getClock();
 			Reactor reactor = sim1.getReactor();
+			Reactor reactor2 = sim1.getReactor();
 			Rods rods = sim1.getRods();
 			Turbine turbine = sim1.getTurbine();
 
@@ -42,6 +43,8 @@ namespace EGON_cs_test {
 			clock.Stop();
 			clock.Start();
 			
+			reactor2.Flux = 90;
+			reactor2.Burnup = 4000;
 			reactor.Flux = 80;
 			reactor.Burnup = 5000;
 			
@@ -57,10 +60,12 @@ namespace EGON_cs_test {
 			
 			Console.WriteLine(reactor.Flux == 80);
 			Console.WriteLine(reactor.Burnup == 5000);
+			Console.WriteLine(reactor2.Flux == 80);
+			Console.WriteLine(reactor2.Burnup == 5000);
 			Console.WriteLine(rods.Mode == "auto");
 
 			for (int i = 0; i < 2; i++) {
-				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
+				Console.WriteLine(reactor.Flux + " | " + reactor2.Tavg + " | " + turbine.Power + " | " + clock.Status + " | " + rods.getCtrlRodPosition(3) + " | " + rods.getCtrlRodPosition(4));
 				System.Threading.Thread.Sleep(1000);
 			}
 
@@ -68,11 +73,12 @@ namespace EGON_cs_test {
 			rods.Dispose();
 
 			for (int i = 0; i < 2; i++) {
-				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg + " | " + turbine.Power);
+				Console.WriteLine(reactor.Flux + " | " + reactor2.Tavg + " | " + turbine.Power);
 				System.Threading.Thread.Sleep(1000);
 			}
 
 			turbine.Dispose();
+			reactor2.Dispose();
 
 			while (true) {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg);
