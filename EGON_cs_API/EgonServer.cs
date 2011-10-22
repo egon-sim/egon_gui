@@ -13,23 +13,40 @@ namespace EGON_cs_API {
 		
 		public void Connect(String username, String server, int port) {
 			this.servInterface = new ServerInterface(username, server, port);
-			this.simulators = this.listSims();
+			this.simulators = new ArrayList();
+			this.refreshSimsList();
+		}
+
+		public ArrayList listSims() {
+			return this.simulators;
 		}
 		
-		public ArrayList listSims() {
+		public ArrayList refreshSimsList() {
 			String response = this.servInterface.Call("{ask, list_sims}");
 			String pattern = @"{(.+)}";
 			
 			MatchCollection matches = Regex.Matches(response, pattern);
-			
-			ArrayList sims = new ArrayList();
-			foreach (Match match in matches) {				
+			ArrayList newSimList = new ArrayList();
+			Simulator foundSim = null;
+			foreach (Match match in matches) {
 				string[] parts = match.Groups[1].Value.Split(',');
-				
-				sims.Add(new Simulator(this.servInterface, parts[1], parts[3], parts[4], parts[5]));
+				string simId = parts[1];
+				foundSim = null;
+				foreach (Simulator sim in this.simulators) {
+					if (sim.simId == simId) {
+						foundSim = sim;
+					}
+				}
+				if (foundSim != null) {
+					newSimList.Add(foundSim);
+					this.simulators.Remove(foundSim);
+				} else {
+					newSimList.Add(new Simulator(this.servInterface, parts[1], parts[3], parts[4], parts[5]));
+				}
 			}
-			
-			return sims;
+
+			this.simulators = newSimList;
+			return listSims();
 		}
 		
 		public bool Connected {
