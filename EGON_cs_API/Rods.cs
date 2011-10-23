@@ -1,4 +1,5 @@
 using System;
+
 namespace EGON_cs_API {
 	public class Rods : StateClass {
 		private Parameter<string> mode;

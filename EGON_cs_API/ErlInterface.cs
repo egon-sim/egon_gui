@@ -3,36 +3,12 @@ using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 //using NUnit.Framework;
 
 namespace EGON_cs_API {
-/*	public class Connector {
-		public delegate void Setter(string val);
-
-		public Setter setter;
-		public string call;
-		public SimulatorInterface simInterface;
-
-		public Connector(SimulatorInterface simInterface, Setter setter, string call) {
-			this.setter = setter;
-			this.call = call;
-			this.simInterface = simInterface;
-			
-			this.Initialize();
-		}
-
-		public void Initialize() {
-			this.setter(this.simInterface.Call(this.call));
-		}
-
-		public void Set(string val) {
-			this.setter(val);
-		}
-	}*/
-
 	public class ServerInterface : ErlInterface {
 		public ServerInterface(String username, String server, int port) {
 			TcpClient client;
@@ -76,8 +52,7 @@ namespace EGON_cs_API {
 	}
 
 	public class SimulatorInterface : ErlInterface {
-		protected ArrayList setters;
-		protected ArrayList parameters;
+		protected List<Parameter> parameters;
 		protected Timer refresher;
 
 		public SimulatorInterface(String username, String server, int port) {
@@ -88,17 +63,10 @@ namespace EGON_cs_API {
 			
 			client = new TcpClient(server, port);
 			this.stream = client.GetStream();
-			this.setters = new ArrayList();
-			this.parameters = new ArrayList();
+			this.parameters = new List<Parameter>();
 			
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
 		}
-
-/*		public void Register(Connector.Setter setter, string call) {
-			lock (this.setters) {
-				this.setters.Add(new Connector(this, setter, call));
-			}
-		}*/
 
 		public Parameter<T> Register<T>(string call) {
 			Parameter<T> existing_parameter = null;
@@ -122,20 +90,6 @@ namespace EGON_cs_API {
 			}
 		}
 
-/*		public void Unregister(Connector.Setter setter) {
-			Connector c = null;
-			
-			lock (this.setters) {
-				foreach (Connector conn in this.setters) {
-					if (conn.setter == setter) {
-						c = conn;
-						break;
-					}
-				}
-				this.setters.Remove(c);
-			}
-		}*/
-
 		public void Unregister(Parameter parameter) {
 			lock (this.parameters) {
 				int i = this.parameters.IndexOf(parameter);
@@ -157,29 +111,11 @@ namespace EGON_cs_API {
 		}
 
 		public void Refresh(Object o) {
-			if ((this.setters.Count == 0) && (this.parameters.Count == 0)) {
+			if (this.parameters.Count == 0) {
 				Console.WriteLine("Nothing to refresh");
 				return;
 			}
 			
-/*			if (this.setters.Count > 0) {
-			lock (this.setters) {
-				string call = "[";
-				foreach (Connector conn in this.setters) {
-					call += conn.call + ",";
-					//conn.Set();
-				}
-				call = call.Trim(',') + "]";
-				string retval = this.Call(call);
-				string[] parts = Lib.StringToArray(retval);
-				
-				for (int i = 0; i < this.setters.Count; i++) {
-					((Connector)this.setters[i]).Set(parts[i]);
-				}
-			}
-			}*/
-			
-			if (this.parameters.Count > 0) {
 			lock (this.parameters) {
 				string call = "[";
 				foreach (Parameter param in this.parameters) {
@@ -193,11 +129,9 @@ namespace EGON_cs_API {
 					((Parameter)this.parameters[i]).Set(parts[i]);
 				}
 			}
-			}
 			
 			return;
 		}
-
 	}
 
 	public class ErlInterface {

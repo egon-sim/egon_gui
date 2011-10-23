@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace EGON_cs_API {
 	public class Parameter {
@@ -63,31 +63,21 @@ namespace EGON_cs_API {
 	
 	public class StateClass : IDisposable {
 		protected SimulatorInterface simInterface;
-		protected ArrayList parameters;
-		protected ArrayList parameters2;
+		protected List<Parameter> parameters;
 		
 		public StateClass(SimulatorInterface simInterface) {
 			this.simInterface = simInterface;
-			this.parameters = new ArrayList();
-			this.parameters2 = new ArrayList();
+			this.parameters = new List<Parameter>();
 		}
-
-/*		public void Register(Connector.Setter setter, string call) {
-			this.parameters.Add(setter);
-			this.simInterface.Register(setter, call);
-		}*/
 
 		public Parameter<T> Register<T>(string call) {
 			Parameter<T> parameter = this.simInterface.Register<T>(call);
-			this.parameters2.Add(parameter);
+			this.parameters.Add(parameter);
 			return parameter;
 		}
 
 		public void Dispose() {
-/*			foreach (Connector.Setter s in this.parameters) {
-				this.simInterface.Unregister(s);
-			}*/
-			foreach (Parameter p in this.parameters2) {
+			foreach (Parameter p in this.parameters) {
 				this.simInterface.Unregister(p);
 			}
 			this.parameters.Clear();

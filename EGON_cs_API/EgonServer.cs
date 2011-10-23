@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace EGON_cs_API {
 	public class EgonServer {
 		public ServerInterface servInterface;
-		private ArrayList simulators;
+		private List<Simulator> simulators;
 		
 		public EgonServer() {
 			this.servInterface = null;
@@ -13,20 +13,20 @@ namespace EGON_cs_API {
 		
 		public void Connect(String username, String server, int port) {
 			this.servInterface = new ServerInterface(username, server, port);
-			this.simulators = new ArrayList();
+			this.simulators = new List<Simulator>();
 			this.refreshSimsList();
 		}
 
-		public ArrayList listSims() {
+		public List<Simulator> listSims() {
 			return this.simulators;
 		}
 		
-		public ArrayList refreshSimsList() {
+		public List<Simulator> refreshSimsList() {
 			String response = this.servInterface.Call("{ask, list_sims}");
 			String pattern = @"{(.+)}";
 			
 			MatchCollection matches = Regex.Matches(response, pattern);
-			ArrayList newSimList = new ArrayList();
+			List<Simulator> newSimList = new List<Simulator>();
 			Simulator foundSim = null;
 			foreach (Match match in matches) {
 				string[] parts = match.Groups[1].Value.Split(',');

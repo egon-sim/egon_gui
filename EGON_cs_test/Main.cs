@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using EGON_cs_API;
 
 namespace EGON_cs_test {
@@ -8,7 +8,7 @@ namespace EGON_cs_test {
 			EgonServer server = new EgonServer();
 			server.Connect("Nikola", "127.0.0.1", 1055);
 			
-			ArrayList sims = server.listSims();
+			List<Simulator> sims = server.listSims();
 			Console.WriteLine("Number of sims at start: {0}", sims.Count);
 			
 			if (sims.Count < 1) {
