@@ -3,8 +3,8 @@ GENERAL:
 %0 wrap ErlInterface in a process separate from the rest of the API
 
 (UN)REGISTERING:
-*- replace delegates with references to variables
 *+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
+#+ move type conversion from Parameter.Value to Parameter.Set
 
 BUGS:
 *0 check lock syntax in SimulatorInterface.Refresh, SimulatorInterface.Register and SimulatorInterface.Unregister
