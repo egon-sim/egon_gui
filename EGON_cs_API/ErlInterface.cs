@@ -137,19 +137,13 @@ namespace EGON_cs_API {
 		}
 
 		public void Unregister(Parameter parameter) {
-			Parameter p = null;
-			
 			lock (this.parameters) {
-				foreach (Parameter param in this.parameters) {
-					if (param.Call == parameter.Call) {
-						p = param;
-						break;
-					}
-				}
+				int i = this.parameters.IndexOf(parameter);
 
-				if (p == null) {
+				if (i == -1) {
 					throw new Exception("Cannot unregister Parameter: Parameter is not registered.");
 				} else {
+					Parameter p = (Parameter)this.parameters[i];
 					p.RemRef();
 					if (p.Orphan) {
 						this.parameters.Remove(p);
