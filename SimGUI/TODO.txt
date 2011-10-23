@@ -5,6 +5,8 @@ GENERAL:
 *+ single user version (C# project should contain egon_server release and start/stop it by it self)
 *+ simple installation process
 #- changing of refresh frequency
+*0 bundling libraries with application
+%0 check if egon_server release has erl.ini, if not then generate it
 
 LEGEND:
 

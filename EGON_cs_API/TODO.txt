@@ -1,6 +1,7 @@
 GENERAL:
 *+ implement methods which start erlang release and stop it automatically
 %0 wrap ErlInterface in a process separate from the rest of the API
+%+ LogRetriever class which receives list of parameters, time span and frequency and returns a field of values (able to export it to CSV formated for easy display in Excell)
 
 (UN)REGISTERING:
 *+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
