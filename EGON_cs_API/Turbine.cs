@@ -5,7 +5,7 @@ namespace EGON_cs_API {
 		private Parameter<float> tref;
 		private Parameter<float> target;
 		private Parameter<float> rate;
-		private bool go;
+		private Parameter<bool> go;
 
 
 		public Turbine(SimulatorInterface simInterface) : base(simInterface) {
@@ -13,15 +13,10 @@ namespace EGON_cs_API {
 			this.tref = this.Register<float>("{get, es_turbine_server, tref}");
 			this.target = this.Register<float>("{get, es_turbine_server, target}");
 			this.rate = this.Register<float>("{get, es_turbine_server, rate}");
-			this.Register(new Connector.Setter(setGo), "{get, es_turbine_server, go}");
+			this.go = this.Register<bool>("{get, es_turbine_server, go}");
 
 		}
 		
-		public void setGo(string val) {
-			this.go = Lib.StringToBool(val);
-		}
-		
-
 		public float Power {
 			get { return this.power.Value; }
 			set { this.simInterface.Call("{set, es_turbine_server, power, " + value.ToString() + "}\n"); }
@@ -42,10 +37,8 @@ namespace EGON_cs_API {
 		}
 
 		public bool Go {
-			get { return this.go; }
-			set {
-				this.simInterface.Call("{set, es_turbine_server, go, " + Lib.BoolToString(value) + "}");
-			}
+			get { return this.go.Value; }
+			set { this.simInterface.Call("{set, es_turbine_server, go, " + Lib.BoolToString(value) + "}"); }
 		}
 		
 		public string Start() {

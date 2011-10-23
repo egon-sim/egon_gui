@@ -2,24 +2,16 @@ using System;
 
 namespace EGON_cs_API {
 	public class Clock : StateClass {
-		private bool logTicks;
-		private string status;
+		private Parameter<bool> logTicks;
+		private Parameter<string> status;
 
 		public Clock(SimulatorInterface simInterface) : base (simInterface) {
-			this.Register(new Connector.Setter(setLogTicks), "{get, es_clock_server, log_ticks}");
-			this.Register(new Connector.Setter(setStatus), "{get, es_clock_server, status}");
-		}
-
-		public void setLogTicks(string val) {
-			this.logTicks = Lib.StringToBool(val);
-		}
-		
-		public void setStatus(string val) {
-			this.status = val;
+			this.logTicks = this.Register<bool>("{get, es_clock_server, log_ticks}");
+			this.status = this.Register<string>("{get, es_clock_server, status}");
 		}
 		
 		public bool LogTicks {
-			get { return this.logTicks; }
+			get { return this.logTicks.Value; }
 			set { this.simInterface.Call("{set, es_clock_server, log_ticks, " + Lib.BoolToString(value) + "}"); }
 		}
 		
@@ -32,7 +24,7 @@ namespace EGON_cs_API {
 		}
 
 		public string Status {
-			get { return this.status; }
+			get { return this.status.Value; }
 		}
 
 	}

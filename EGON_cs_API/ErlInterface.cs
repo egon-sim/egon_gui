@@ -9,7 +9,7 @@ using System.Threading;
 //using NUnit.Framework;
 
 namespace EGON_cs_API {
-	public class Connector {
+/*	public class Connector {
 		public delegate void Setter(string val);
 
 		public Setter setter;
@@ -31,7 +31,7 @@ namespace EGON_cs_API {
 		public void Set(string val) {
 			this.setter(val);
 		}
-	}
+	}*/
 
 	public class ServerInterface : ErlInterface {
 		public ServerInterface(String username, String server, int port) {
@@ -94,11 +94,11 @@ namespace EGON_cs_API {
 			this.refresher = new Timer(new TimerCallback(Refresh), null, 0, 1000);
 		}
 
-		public void Register(Connector.Setter setter, string call) {
+/*		public void Register(Connector.Setter setter, string call) {
 			lock (this.setters) {
 				this.setters.Add(new Connector(this, setter, call));
 			}
-		}
+		}*/
 
 		public Parameter<T> Register<T>(string call) {
 			Parameter<T> existing_parameter = null;
@@ -122,7 +122,7 @@ namespace EGON_cs_API {
 			}
 		}
 
-		public void Unregister(Connector.Setter setter) {
+/*		public void Unregister(Connector.Setter setter) {
 			Connector c = null;
 			
 			lock (this.setters) {
@@ -134,7 +134,7 @@ namespace EGON_cs_API {
 				}
 				this.setters.Remove(c);
 			}
-		}
+		}*/
 
 		public void Unregister(Parameter parameter) {
 			lock (this.parameters) {
@@ -162,7 +162,7 @@ namespace EGON_cs_API {
 				return;
 			}
 			
-			if (this.setters.Count > 0) {
+/*			if (this.setters.Count > 0) {
 			lock (this.setters) {
 				string call = "[";
 				foreach (Connector conn in this.setters) {
@@ -177,7 +177,7 @@ namespace EGON_cs_API {
 					((Connector)this.setters[i]).Set(parts[i]);
 				}
 			}
-			}
+			}*/
 			
 			if (this.parameters.Count > 0) {
 			lock (this.parameters) {

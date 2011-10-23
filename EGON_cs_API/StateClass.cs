@@ -50,6 +50,12 @@ namespace EGON_cs_API {
 				if (this is Parameter<float>) {
 					return (T)Convert.ChangeType(Lib.StringToFloat(this.val), typeof(T));
 				}
+				if (this is Parameter<bool>) {
+					return (T)Convert.ChangeType(Lib.StringToBool(this.val), typeof(T));
+				}
+				if (this is Parameter<string>) {
+					return (T)Convert.ChangeType(this.val, typeof(T));
+				}
 				return default(T);
 			}
 		}
@@ -66,10 +72,10 @@ namespace EGON_cs_API {
 			this.parameters2 = new ArrayList();
 		}
 
-		public void Register(Connector.Setter setter, string call) {
+/*		public void Register(Connector.Setter setter, string call) {
 			this.parameters.Add(setter);
 			this.simInterface.Register(setter, call);
-		}
+		}*/
 
 		public Parameter<T> Register<T>(string call) {
 			Parameter<T> parameter = this.simInterface.Register<T>(call);
@@ -78,9 +84,9 @@ namespace EGON_cs_API {
 		}
 
 		public void Dispose() {
-			foreach (Connector.Setter s in this.parameters) {
+/*			foreach (Connector.Setter s in this.parameters) {
 				this.simInterface.Unregister(s);
-			}
+			}*/
 			foreach (Parameter p in this.parameters2) {
 				this.simInterface.Unregister(p);
 			}
