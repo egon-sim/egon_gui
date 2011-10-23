@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace EGON_cs_API {
 	public class Parameter {
-		private float value;
+		protected string val;
 		private string call;
 		private int ref_counter;
 
@@ -28,23 +28,33 @@ namespace EGON_cs_API {
 			get { return this.ref_counter <= 0; }
 		}
 
-		public void Set(string value) {
-			this.value = Lib.StringToFloat(value);
-		}
-
-		public float Value {
-			get { return this.value; }
+		public void Set(string val) {
+			this.val = val;
 		}
 
 		public string Call {
 			get { return this.call; }
 		}
-
+		
 		public bool Equals(Parameter param) {
 			return this.call == param.call;
 		}
 	}
 
+	public class Parameter<T> : Parameter {
+		public Parameter(string call) : base(call) {
+		}
+		
+		public T Value {
+			get {
+				if (this is Parameter<float>) {
+					return (T)Convert.ChangeType(Lib.StringToFloat(this.val), typeof(T));
+				}
+				return default(T);
+			}
+		}
+	}
+	
 	public class StateClass : IDisposable {
 		protected SimulatorInterface simInterface;
 		protected ArrayList parameters;
@@ -61,8 +71,8 @@ namespace EGON_cs_API {
 			this.simInterface.Register(setter, call);
 		}
 
-		public Parameter Register(string call) {
-			Parameter parameter = this.simInterface.Register(call);
+		public Parameter<T> Register<T>(string call) {
+			Parameter<T> parameter = this.simInterface.Register<T>(call);
 			this.parameters2.Add(parameter);
 			return parameter;
 		}

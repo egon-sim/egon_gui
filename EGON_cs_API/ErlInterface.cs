@@ -100,12 +100,12 @@ namespace EGON_cs_API {
 			}
 		}
 
-		public Parameter Register(string call) {
-			Parameter existing_parameter = null;
+		public Parameter<T> Register<T>(string call) {
+			Parameter<T> existing_parameter = null;
 
 			foreach (Parameter p in this.parameters) {
 				if (p.Call == call) {
-					existing_parameter = p;
+					existing_parameter = (Parameter<T>)p;
 				}
 			}
 
@@ -113,7 +113,7 @@ namespace EGON_cs_API {
 				existing_parameter.AddRef();
 				return existing_parameter;
 			} else {
-				Parameter parameter = new Parameter(call);
+				Parameter<T> parameter = new Parameter<T>(call);
 				parameter.AddRef();
 				lock (this.parameters) {
 					this.parameters.Add(parameter);

@@ -2,16 +2,16 @@ using System;
 
 namespace EGON_cs_API {
 	public class Reactor : StateClass {
-		private Parameter burnup;
-		private Parameter boron;
-		private Parameter flux;
-		private Parameter tavg;
+		private Parameter<float> burnup;
+		private Parameter<float> boron;
+		private Parameter<float> flux;
+		private Parameter<float> tavg;
 
 		public Reactor(SimulatorInterface simInterface) : base(simInterface) {
-			this.burnup = this.Register("{get, es_core_server, burnup}");
-			this.boron = this.Register("{get, es_core_server, boron}");
-			this.flux = this.Register("{get, es_core_server, flux}");
-			this.tavg = this.Register("{get, es_core_server, tavg}");
+			this.burnup = this.Register<float>("{get, es_core_server, burnup}");
+			this.boron = this.Register<float>("{get, es_core_server, boron}");
+			this.flux = this.Register<float>("{get, es_core_server, flux}");
+			this.tavg = this.Register<float>("{get, es_core_server, tavg}");
 		}
 
 		public float Burnup {

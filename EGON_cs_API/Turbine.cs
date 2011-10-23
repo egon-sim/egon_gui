@@ -1,18 +1,18 @@
 using System;
 namespace EGON_cs_API {
 	public class Turbine : StateClass {
-		private Parameter power;
-		private Parameter tref;
-		private Parameter target;
-		private Parameter rate;
+		private Parameter<float> power;
+		private Parameter<float> tref;
+		private Parameter<float> target;
+		private Parameter<float> rate;
 		private bool go;
 
 
 		public Turbine(SimulatorInterface simInterface) : base(simInterface) {
-			this.power = this.Register("{get, es_turbine_server, power}");
-			this.tref = this.Register("{get, es_turbine_server, tref}");
-			this.target = this.Register("{get, es_turbine_server, target}");
-			this.rate = this.Register("{get, es_turbine_server, rate}");
+			this.power = this.Register<float>("{get, es_turbine_server, power}");
+			this.tref = this.Register<float>("{get, es_turbine_server, tref}");
+			this.target = this.Register<float>("{get, es_turbine_server, target}");
+			this.rate = this.Register<float>("{get, es_turbine_server, rate}");
 			this.Register(new Connector.Setter(setGo), "{get, es_turbine_server, go}");
 
 		}

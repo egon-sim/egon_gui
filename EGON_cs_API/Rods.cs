@@ -2,7 +2,7 @@ using System;
 namespace EGON_cs_API {
 	public class Rods : StateClass {
 		private string mode;
-		private Parameter speed;
+		private Parameter<float> speed;
 		private int[] ctrlRodPosition;
 
 		public void setMode(string val) {
@@ -19,7 +19,7 @@ namespace EGON_cs_API {
 
 		public Rods(SimulatorInterface simInterface) : base(simInterface) {
 			this.Register(new Connector.Setter(setMode), "{get, es_rod_controller_server, mode}");
-			this.speed = this.Register("{get, es_rod_controller_server, speed}");
+			this.speed = this.Register<float>("{get, es_rod_controller_server, speed}");
 //			this.Register(new Connector.Setter(setCtrlRodPosition), "{get, es_rod_position_server, control_position_array_str}"); // TODO: this should be uncomented when Lib.StringToArray learns to parse subarrays
 		}
 		
