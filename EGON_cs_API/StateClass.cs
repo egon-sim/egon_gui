@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace EGON_cs_API {
-	public class Parameter {
-		protected string val;
+	public abstract class Parameter {
 		private string call;
 		private int ref_counter;
 
@@ -28,9 +27,7 @@ namespace EGON_cs_API {
 			get { return this.ref_counter <= 0; }
 		}
 
-		public void Set(string val) {
-			this.val = val;
-		}
+		public abstract void Set(string val);
 
 		public string Call {
 			get { return this.call; }
@@ -42,21 +39,57 @@ namespace EGON_cs_API {
 	}
 
 	public class Parameter<T> : Parameter {
+		protected string s_val;
+		private T val;
+
 		public Parameter(string call) : base(call) {
 		}
 		
+		public override void Set(string val) {
+			this.Set1(val);
+		}
+
 		public T Value {
 			get {
+				return this.Value1;
+			}
+		}
+
+		public void Set1(string val) {
+			this.s_val = val;
+		}
+
+		public T Value1 {
+			get {
 				if (this is Parameter<float>) {
-					return (T)Convert.ChangeType(Lib.StringToFloat(this.val), typeof(T));
+					return (T)Convert.ChangeType(Lib.StringToFloat(this.s_val), typeof(T));
 				}
 				if (this is Parameter<bool>) {
-					return (T)Convert.ChangeType(Lib.StringToBool(this.val), typeof(T));
+					return (T)Convert.ChangeType(Lib.StringToBool(this.s_val), typeof(T));
 				}
 				if (this is Parameter<string>) {
-					return (T)Convert.ChangeType(this.val, typeof(T));
+					return (T)Convert.ChangeType(this.s_val, typeof(T));
 				}
 				return default(T);
+			}
+		}
+
+		public void Set2(string val) {
+				if (this is Parameter<float>) {
+					this.val = (T)Convert.ChangeType(Lib.StringToFloat(val), typeof(T));
+				}
+				if (this is Parameter<bool>) {
+					this.val = (T)Convert.ChangeType(Lib.StringToBool(val), typeof(T));
+				}
+				if (this is Parameter<string>) {
+					this.val = (T)Convert.ChangeType(val, typeof(T));
+				}
+				this.val = default(T);
+		}
+
+		public T Value2 {
+			get {
+				return this.val;
 			}
 		}
 	}
