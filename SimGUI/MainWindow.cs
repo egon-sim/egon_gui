@@ -27,7 +27,7 @@ public partial class MainWindow : Gtk.Window
 			new Indicator(delegate { return this.reactor.Tavg; }, 280, 320, this.label32, this.vscale9),
 			new Indicator(delegate { return this.turbine.Tref; }, 280, 320, this.label34, this.vscale10),
 		};
-		
+		sim.Refresh();
 		this.Refresh();
 		GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 	}

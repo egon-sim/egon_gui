@@ -17,6 +17,7 @@ namespace SimGUI
 		public Turbine(EGON_cs_API.Simulator sim) : base(Gtk.WindowType.Toplevel) {
 			this.turbine = sim.getTurbine();
 			Build();
+			sim.Refresh();
 			this.Refresh();
 			GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Refresh));
 		}
