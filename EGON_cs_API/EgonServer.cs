@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -11,6 +12,26 @@ namespace EGON_cs_API {
 			this.servInterface = null;
 		}
 		
+		public string CurrentPath() {
+			return System.IO.Directory.GetCurrentDirectory();
+		}
+
+		public void GenerateIni() {
+			this.GenerateIni("egon_server-0.1", "erts-5.6.4");
+		}
+
+		public void GenerateIni(string releasePath, string ertsPath) {
+			string pathToIni = this.CurrentPath() + "/" + releasePath + "/" + ertsPath + "/bin/erl.ini";
+			StreamWriter sw = new StreamWriter(pathToIni);
+
+			sw.WriteLine("[erlang]");
+			sw.WriteLine("Bindir=E:/User_files/nskoric/bin/Git/code/egon_gui/EGON_cs_test/bin/Debug/" + releasePath + "/" + ertsPath + "/bin");
+			sw.WriteLine("Progname=erl");
+			sw.WriteLine("Rootdir=E:/User_files/nskoric/bin/Git/code/egon_gui/EGON_cs_test/bin/Debug/" + releasePath);
+
+			sw.Close();
+		}
+
 		public void Connect(String username, String server, int port) {
 			this.servInterface = new ServerInterface(username, server, port);
 			this.simulators = new List<Simulator>();
@@ -79,6 +100,27 @@ namespace EGON_cs_API {
 				}
 			}
 			return null;
+		}
+
+		public void Shutdown() {
+			this.servInterface.Call("{shutdown_server}");
+		}
+
+		public void StartServer() {
+			System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo("cmd", "/c start.bat\n");
+
+			procStartInfo.WorkingDirectory = "E:\\User_files\\nskoric\\bin\\Git\\code\\egon_gui\\EGON_cs_test\\bin\\Debug\\egon_release";
+			procStartInfo.RedirectStandardOutput = true;
+			procStartInfo.UseShellExecute = false;
+			procStartInfo.CreateNoWindow = true;
+			System.Diagnostics.Process proc = new System.Diagnostics.Process();
+			proc.StartInfo = procStartInfo;
+			proc.Start();
+
+			System.Threading.Thread.Sleep(1000);
+
+//			string result = proc.StandardOutput.ReadToEnd();
+//			Console.WriteLine(result);
 		}
 	}
 }

@@ -42,10 +42,16 @@ namespace EGON_cs_API {
 		public SimulatorInterface ConnectToSim(string simId) {
 			string response = this.Call("{ask, connect_to_simulator, [" + simId + ", \"" + username + "\"]}");
 			string pattern = @"{connected,.+,(.+)}";
+			Match match;
 			
-			Match match = Regex.Matches(response, pattern)[0];
-			int port = int.Parse(match.Groups[1].Value);
-			
+			try {
+				match = Regex.Matches(response, pattern)[0];
+			} catch (ArgumentOutOfRangeException) {
+				Console.WriteLine("Response doesn't match: {0}", response);
+				return null;
+			}
+
+			int port = int.Parse(match.Groups[1].Value);	
 			return new SimulatorInterface(this.username, this.server, port);
 		}
 

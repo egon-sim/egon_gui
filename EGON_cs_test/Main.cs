@@ -6,7 +6,15 @@ namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
 			EgonServer server = new EgonServer();
+
+			server.GenerateIni();
+//			return;
+
+			server.StartServer();
+
 			server.Connect("Nikola", "127.0.0.1", 1055);
+//			server.Shutdown();
+//			return;
 			
 			List<Simulator> sims = server.listSims();
 			Console.WriteLine("Number of sims at start: {0}", sims.Count);
@@ -80,11 +88,12 @@ namespace EGON_cs_test {
 			turbine.Dispose();
 			reactor2.Dispose();
 
-			while (true) {
+			for (int i = 0; i < 7; i++) {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg);
 				System.Threading.Thread.Sleep(1000);
 			}
 			
+			server.Shutdown();
 		}
 
 	}
