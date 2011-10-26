@@ -25,6 +25,10 @@ namespace EGON_cs_API {
 			this.simId = simId;
 			this.simInterface = serverInterface.ConnectToSim(this.simId);
 		}
+		
+		public void Refresh() {
+			this.simInterface.Refresh();
+		}
 
 		public void Stop() {
 			int simId = 1;
