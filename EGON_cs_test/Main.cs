@@ -10,7 +10,7 @@ namespace EGON_cs_test {
 			server.GenerateIni();
 //			return;
 
-			server.StartServer();
+//			server.StartServer();
 
 			server.Connect("Nikola", "127.0.0.1", 1055);
 //			server.Shutdown();
@@ -37,8 +37,17 @@ namespace EGON_cs_test {
 				Console.WriteLine(s.ToString());
 			}
 			
-			Simulator sim1 = (Simulator)sims[0];
+			Simulator sim1 = sims[0];
+			SimulatorLog log = sim1.Log;
 			
+			Console.WriteLine(log.AvailableParameters());
+			log.ClearParameters();
+			Console.WriteLine(log.AvailableParameters());
+			log.AddParameter("Tavg", "es_core_server", "{get, tavg}");
+			log.AddParameter("Neutron flux", "es_core_server", "{get, flux}");
+			Console.WriteLine(log.AvailableParameters());
+			Console.WriteLine(log.CycleLen);
+
 			Clock clock = sim1.getClock();
 			Reactor reactor = sim1.getReactor();
 			Reactor reactor2 = sim1.getReactor();
@@ -50,6 +59,9 @@ namespace EGON_cs_test {
 			clock.Stop();
 			clock.Stop();
 			clock.Start();
+
+			log.CycleLen = "1000";
+			log.Start();
 			
 			reactor2.Flux = 90;
 			reactor2.Burnup = 4000;
@@ -92,6 +104,8 @@ namespace EGON_cs_test {
 				Console.WriteLine(reactor.Flux + " | " + reactor.Tavg);
 				System.Threading.Thread.Sleep(1000);
 			}
+
+			Console.WriteLine(log.GetCurrentValues());
 			
 			server.Shutdown();
 		}
