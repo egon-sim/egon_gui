@@ -5,12 +5,19 @@ using EGON_cs_API;
 namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
-			EgonServer server = new EgonServer();
+/*			foreach (string s in Lib.StringToArray2("[1,   2, [3,  [4, 5]], 6, [7, 8]]")) {
+//			foreach (string s in Lib.StringToArray2("[1, 2, [3, [4, 5], 6], 7]")) {
+//			foreach (string s in Lib.StringToArray2("[1, 2, 3, 4, 5, 6, 7]")) {
+				Console.WriteLine("|{0}", s);
+			}
+			return;*/
+
+			EgonServer server = new EgonServer("egon_server-0.1");
 
 			server.GenerateIni();
 //			return;
 
-//			server.StartServer();
+			server.StartServer();
 
 			server.Connect("Nikola", "127.0.0.1", 1055);
 //			server.Shutdown();
@@ -40,6 +47,7 @@ namespace EGON_cs_test {
 			Simulator sim1 = sims[0];
 			SimulatorLog log = sim1.Log;
 			
+			Console.WriteLine(log.syncData.ToString());
 			Console.WriteLine(log.AvailableParameters());
 			log.ClearParameters();
 			Console.WriteLine(log.AvailableParameters());
