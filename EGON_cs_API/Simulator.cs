@@ -2,10 +2,34 @@ using System;
 using EGON_cs_API;
 
 namespace EGON_cs_API {
+	public class SyncData {
+		SimulatorInterface simInterface;
+		string erlStamp;
+		DateTime csharpStamp;
+
+		public SyncData(SimulatorInterface simInterface) {
+			this.simInterface = simInterface;
+			this.Sync();
+		}
+
+		public void Sync() {
+			this.erlStamp = this.simInterface.Call("{get, es_log_server, timestamp}");
+			this.csharpStamp = DateTime.Now;
+		}
+
+		public string ToString() {
+			return this.erlStamp + " | " + this.csharpStamp.ToString();
+		}
+	}
+
+
 	public class SimulatorLog {
 		public SimulatorInterface simInterface;
+		public SyncData syncData;
+
 		public SimulatorLog(SimulatorInterface simInterface) {
 			this.simInterface = simInterface;
+			this.syncData = new SyncData(this.simInterface);
 		}
 
 		public void Start() {
