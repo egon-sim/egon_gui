@@ -7,10 +7,14 @@ namespace EGON_cs_API {
 	public class EgonServer {
 		public ServerInterface servInterface;
 		private List<Simulator> simulators;
+		private string releasePath;
 		
-		public EgonServer() {
+		public EgonServer(string releasePath) {
 			this.servInterface = null;
+			this.releasePath = releasePath;
 		}
+		
+		public EgonServer() :this("egon_server-0.1") {}
 		
 		public string CurrentPath() {
 			return System.IO.Directory.GetCurrentDirectory();
@@ -109,7 +113,7 @@ namespace EGON_cs_API {
 		public void StartServer() {
 			System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo("cmd", "/c start.bat\n");
 
-			procStartInfo.WorkingDirectory = "E:\\User_files\\nskoric\\bin\\Git\\code\\egon_gui\\EGON_cs_test\\bin\\Debug\\egon_release";
+			procStartInfo.WorkingDirectory = "E:\\User_files\\nskoric\\bin\\Git\\code\\egon_gui\\EGON_cs_test\\bin\\Debug\\" + this.releasePath;
 			procStartInfo.RedirectStandardOutput = true;
 			procStartInfo.UseShellExecute = false;
 			procStartInfo.CreateNoWindow = true;
