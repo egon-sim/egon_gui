@@ -5,12 +5,27 @@ using EGON_cs_API;
 namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
-/*			foreach (string s in Lib.StringToArray2("[1,   2, [3,  [4, 5]], 6, [7, 8]]")) {
-//			foreach (string s in Lib.StringToArray2("[1, 2, [3, [4, 5], 6], 7]")) {
-//			foreach (string s in Lib.StringToArray2("[1, 2, 3, 4, 5, 6, 7]")) {
-				Console.WriteLine("|{0}", s);
+			string[] tests = new string[] {
+				"[1, 2, 3, 4, 5, 6, 7]",
+				"[1,   2, [3,  [4, 5]], 6, [7, 8]]",
+				"[1, 2, [3, [4, 5], 6], 7]",
+				"[1, 2, {3, [4, 5], 6}, 7]",
+				"[1, 2, {3, {4, 5}, 6}, 7]",
+				"[1, 2, [3, {4, 5}, 6], 7]",
+				"[{1, 2, {3, {4, 5}}, 6}, 7]"
+			};
+
+			foreach (string test in tests) {
+				foreach (string s in Lib.StringToArray(test)) {
+					Console.WriteLine("|{0}", s);
+				}
+				Console.WriteLine("-----");
+				foreach (string s in Lib.StringToArray(test, new char[] {'[', '{'}, new char[] {']', '}'})) {
+					Console.WriteLine("|{0}", s);
+				}
+				Console.WriteLine("xxxxx");
 			}
-			return;*/
+			return;
 
 			EgonServer server = new EgonServer("egon_server-0.1");
 
