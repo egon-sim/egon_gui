@@ -5,7 +5,7 @@ using EGON_cs_API;
 namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
-			string[] tests = new string[] {
+/*			string[] tests = new string[] {
 				"[1, 2, 3, 4, 5, 6, 7]",
 				"[1,   2, [3,  [4, 5]], 6, [7, 8]]",
 				"[1, 2, [3, [4, 5], 6], 7]",
@@ -25,7 +25,7 @@ namespace EGON_cs_test {
 				}
 				Console.WriteLine("xxxxx");
 			}
-			return;
+			return;*/
 
 			EgonServer server = new EgonServer("egon_server-0.1");
 
@@ -63,12 +63,12 @@ namespace EGON_cs_test {
 			SimulatorLog log = sim1.Log;
 			
 			Console.WriteLine(log.syncData.ToString());
-			Console.WriteLine(log.AvailableParameters());
+			Console.WriteLine(log.AvailableParameters().Count);
 			log.ClearParameters();
-			Console.WriteLine(log.AvailableParameters());
+			Console.WriteLine(log.AvailableParameters().Count);
 			log.AddParameter("Tavg", "es_core_server", "{get, tavg}");
 			log.AddParameter("Neutron flux", "es_core_server", "{get, flux}");
-			Console.WriteLine(log.AvailableParameters());
+			Console.WriteLine(log.AvailableParameters().Count);
 			Console.WriteLine(log.CycleLen);
 
 			Clock clock = sim1.getClock();
@@ -128,7 +128,12 @@ namespace EGON_cs_test {
 				System.Threading.Thread.Sleep(1000);
 			}
 
-			Console.WriteLine(log.GetCurrentValues());
+			foreach (string param in log.AvailableParameters()) {
+				Console.WriteLine(param);
+			}
+			foreach (LogEntry line in log.CsvDump()) {
+				Console.WriteLine(line.ToString());
+			}
 			
 			server.Shutdown();
 		}
