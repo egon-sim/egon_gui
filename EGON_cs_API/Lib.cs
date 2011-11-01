@@ -23,14 +23,22 @@ namespace EGON_cs_API {
 		}
 
 		public static string[] StringToArray(string val, char[] startBraces, char[] endBraces) {
+			return Lib.StringToList(val, startBraces, endBraces).ToArray();
+		}
+
+		public static List<string> StringToList(string val) {
+			return Lib.StringToList(val, new char[]{'['}, new char[]{']'});
+		}
+
+		public static List<string> StringToList(string val, char[] startBraces, char[] endBraces) {
 			foreach (char brace in startBraces) {
 				if (val.IndexOf(brace, 1) > -1) {
-					return Lib.Flatten(new List<string>(), "", val.Trim(), startBraces, endBraces, -1).ToArray();
+					return Lib.Flatten(new List<string>(), "", val.Trim(), startBraces, endBraces, -1);
 				}
 			}
 			foreach (char brace in endBraces) {
 				if (val.IndexOf(brace) < val.Length - 1) {
-					return Lib.Flatten(new List<string>(), "", val.Trim(), startBraces, endBraces, -1).ToArray();
+					return Lib.Flatten(new List<string>(), "", val.Trim(), startBraces, endBraces, -1);
 				}
 			}
 
@@ -52,15 +60,15 @@ namespace EGON_cs_API {
 				parts[i] = parts[i].Trim();
 			}
 
-			return parts;
+			return new List<string>(parts);
 		}
 
 		private static List<string> Flatten(List<string> done, string current, string val, char[] startBraces, char[] endBraces, int depth) {
-			if (depth == -1) { // entering the method for the first time, first character should be '['
+			if (depth == -1) { // entering the method for the first time, first character should be in startBraces
 				if ((done.Count == 0) && (current == "") && (Array.IndexOf(startBraces, val[0]) > -1)) {
 					return Flatten(done, "", val.Substring(1), startBraces, endBraces, depth + 1);
 				} else {
-					throw new Exception("Array not correctly formatted.");
+					throw new Exception("Array not correctly formatted: first character not a brace.");
 				}
 			}
 			if ((depth == 0) && (Array.IndexOf(endBraces, val[0]) > -1) && (val.Length == 1)) { //ending the recursion
