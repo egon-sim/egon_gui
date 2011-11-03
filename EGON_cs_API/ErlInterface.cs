@@ -117,6 +117,8 @@ namespace EGON_cs_API {
 		}
 
 		public void Refresh(Object o) {
+			string retval;
+
 			if (this.parameters.Count == 0) {
 				Console.WriteLine("Nothing to refresh");
 				return;
@@ -128,11 +130,15 @@ namespace EGON_cs_API {
 					call += param.Call + ",";
 				}
 				call = call.Trim(',') + "]";
-				string retval = this.Call(call);
+				lock(this) {
+					retval = this.Call(call);
+				}
 				string[] parts = Lib.StringToArray(retval);
 				
-				for (int i = 0; i < this.parameters.Count; i++) {
-					((Parameter)this.parameters[i]).Set(parts[i]);
+				lock(this.parameters) {
+					for (int i = 0; i < this.parameters.Count; i++) {
+						((Parameter)this.parameters[i]).Set(parts[i]);
+					}
 				}
 			}
 			
@@ -146,19 +152,23 @@ namespace EGON_cs_API {
 		public String server;
 
 		public String Call(String parameter) {
+			String responseData;
 			//Console.WriteLine(parameter);
 			
 			Byte[] data = Encoding.ASCII.GetBytes("[" + parameter + "]\n");
-			this.stream.Write(data, 0, data.Length);
-			this.stream.Flush();
-			String responseData = String.Empty;
+
+			lock(this.stream) {
+				this.stream.Write(data, 0, data.Length);
+				this.stream.Flush();
+				responseData = String.Empty;
 			
-//			StreamReader reader = new StreamReader(this.stream);
-//			responseData = reader.ReadToEnd();
+//				StreamReader reader = new StreamReader(this.stream);
+//				responseData = reader.ReadToEnd();
 			
-			data = new Byte[10000];
-			Int32 bytes = this.stream.Read(data, 0, data.Length);
-			responseData = Encoding.ASCII.GetString(data, 0, bytes);
+				data = new Byte[10000];
+				Int32 bytes = this.stream.Read(data, 0, data.Length);
+				responseData = Encoding.ASCII.GetString(data, 0, bytes);
+			}
 			
 			return responseData;
 		}
