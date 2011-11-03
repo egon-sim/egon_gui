@@ -61,7 +61,12 @@ namespace EGON_cs_test {
 			
 			Simulator sim1 = sims[0];
 			SimulatorLog log = sim1.Log;
-			
+
+			Console.WriteLine(log.syncData.DateTimeToErl(DateTime.Now));
+
+//			server.Shutdown();
+//			return;
+
 			Console.WriteLine(log.syncData.ToString());
 			Console.WriteLine(log.AvailableParameters().Count);
 			log.ClearParameters();
@@ -131,7 +136,7 @@ namespace EGON_cs_test {
 			foreach (string param in log.AvailableParameters()) {
 				Console.WriteLine(param);
 			}
-			foreach (LogEntry line in log.CsvDump()) {
+			foreach (LogEntry line in log.Dump()) {
 				Console.WriteLine(line.ToString());
 			}
 			
