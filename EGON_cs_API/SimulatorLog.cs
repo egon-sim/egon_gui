@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using EGON_cs_API;
 
@@ -13,6 +14,7 @@ namespace EGON_cs_API {
 		public List<LogEntry> Items {
 			get { return this.entries; }
 		}
+
 	}
 
 	public class SyncData {
@@ -88,6 +90,16 @@ namespace EGON_cs_API {
 			return retval.Trim().Trim(new char[] {','});
 		}
 
+		public string ToXls() {
+			string retval = this.timestamp.TimeOfDay.ToString().Split('.')[0] + "\t";
+
+			foreach (string s in this.values) {
+				retval += s.Replace(".", ",") + "\t";
+			}
+
+			return retval.Trim().Trim(new char[] {','});
+		}
+
 		public override string ToString() {
 			string retval = this.timestamp.ToString() + " | ";
 
@@ -117,16 +129,18 @@ namespace EGON_cs_API {
 			set { this.simInterface.Call("{cast, es_log_server, cycle_len, " + value + "}"); }
 		}
 
-		public List<string> AvailableParameters() {
-			string dump = this.simInterface.Call("{get, es_log_server, parameters}");
+		public List<string> ParameterNames {
+			get {
+				string dump = this.simInterface.Call("{get, es_log_server, parameters}");
 
-			List<string> ps = Lib.StringToList(dump, new char[] {'[', '{'}, new char[] {']', '}'});
-			List<string> retval = new List<string>();
-			foreach (string param in ps) {
-				List<string> parts = Lib.StringToList(param, new char[] {'[', '{'}, new char[] {']', '}'});
-				retval.Add(parts[1]);
+				List<string> ps = Lib.StringToList(dump, new char[] {'[', '{'}, new char[] {']', '}'});
+				List<string> retval = new List<string>();
+				foreach (string param in ps) {
+					List<string> parts = Lib.StringToList(param, new char[] {'[', '{'}, new char[] {']', '}'});
+					retval.Add(parts[1]);
+				}
+				return retval;
 			}
-			return retval;
 		}
 
 		public void ClearParameters() {
@@ -150,6 +164,26 @@ namespace EGON_cs_API {
 			}
 
 			return new LogRange(entries);
+		}
+
+		public void WriteRange(string FileName, DateTime start, DateTime finish, int frequency) {
+			LogRange range = this.Range(start, finish, frequency);
+
+			FileStream fs = new FileStream(FileName, FileMode.Create);
+			StreamWriter sw = new StreamWriter(fs);
+
+			string header = "Time";
+
+			foreach (string s in this.ParameterNames) {
+				header += "\t" + s;
+			}
+			sw.WriteLine(header);
+
+			foreach (LogEntry l in range.Items) {
+				sw.WriteLine(l.ToXls());
+			}
+			sw.Close();
+			fs.Close();
 		}
 
 		public List<LogEntry> Dump() {

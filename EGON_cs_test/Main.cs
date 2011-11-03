@@ -5,7 +5,7 @@ using EGON_cs_API;
 namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
-			int port = 1056;
+			int port = 1055;
 
 /*			string[] tests = new string[] {
 				"[1, 2, 3, 4, 5, 6, 7]",
@@ -76,12 +76,12 @@ namespace EGON_cs_test {
 //			return;
 
 			Console.WriteLine(log.syncData.ToString());
-			Console.WriteLine(log.AvailableParameters().Count);
+			Console.WriteLine(log.ParameterNames.Count);
 			log.ClearParameters();
-			Console.WriteLine(log.AvailableParameters().Count);
+			Console.WriteLine(log.ParameterNames.Count);
 			log.AddParameter("Tavg", "es_core_server", "{get, tavg}");
 			log.AddParameter("Neutron flux", "es_core_server", "{get, flux}");
-			Console.WriteLine(log.AvailableParameters().Count);
+			Console.WriteLine(log.ParameterNames.Count);
 			Console.WriteLine(log.CycleLen);
 
 			Clock clock = sim1.getClock();
@@ -141,15 +141,17 @@ namespace EGON_cs_test {
 				System.Threading.Thread.Sleep(1000);
 			}
 
-			foreach (string param in log.AvailableParameters()) {
+			foreach (string param in log.ParameterNames) {
 				Console.WriteLine(param);
 			}
 
 
 			Console.WriteLine("Now: {0}", DateTime.Now);
-			foreach (LogEntry line in log.Range(DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 2).Items) {
+/*			foreach (LogEntry line in log.Range(DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1).Items) {
 				Console.WriteLine(line.ToString());
-			}
+			}*/
+
+			log.WriteRange("log.xls", DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1);
 			
 			server.Shutdown();
 		}
