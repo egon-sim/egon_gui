@@ -42,6 +42,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ErlInterface.cs" />
     <Compile Include="Simulator.cs" />
+    <Compile Include="SimulatorLog.cs" />
     <Compile Include="EgonServer.cs" />
     <Compile Include="Turbine.cs" />
     <Compile Include="Clock.cs" />
