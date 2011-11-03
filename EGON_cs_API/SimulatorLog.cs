@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using EGON_cs_API;
 
 namespace EGON_cs_API {
+	public class LogRange {
+		List<LogEntry> entries;
+
+		public LogRange(List<LogEntry> entries) {
+			this.entries = entries;
+		}
+
+		public List<LogEntry> Items {
+			get { return this.entries; }
+		}
+	}
+
 	public class SyncData {
 		private SimulatorInterface simInterface;
 		private DateTime baseLine;
@@ -53,6 +65,10 @@ namespace EGON_cs_API {
 		private SyncData syncData;
 
 		public LogEntry(string entry, SyncData syncData) {
+			if (entry == "") {
+				throw new Exception("Entry string empty.");
+			}
+
 			this.syncData = syncData;
 
 			List<string> parts = Lib.StringToList(entry, new char[] {'[', '{'}, new char[] {']', '}'});
@@ -119,6 +135,21 @@ namespace EGON_cs_API {
 
 		public void AddParameter(string parameterName, string serverName, string parameterCall) {
 			this.simInterface.Call("{action, es_log_server, add_parameter, {\"" + parameterName + "\", " + serverName + ", " + parameterCall + "}}");
+		}
+
+		public LogRange Range(DateTime start, DateTime finish, int frequency) {
+			string query = "{get, es_log_server, range, {" + this.syncData.DateTimeToErl(start) + ", " + this.syncData.DateTimeToErl(finish) + ", " + frequency.ToString() + "}}";
+
+			string dump = this.simInterface.Call(query);
+			List<string> lines = Lib.StringToList(dump);
+
+			List<LogEntry> entries = new List<LogEntry>();
+
+			foreach (string line in lines) {
+				entries.Add(new LogEntry(line, this.syncData));
+			}
+
+			return new LogRange(entries);
 		}
 
 		public List<LogEntry> Dump() {

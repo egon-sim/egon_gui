@@ -5,6 +5,8 @@ using EGON_cs_API;
 namespace EGON_cs_test {
 	class MainClass {
 		public static void Main(string[] args) {
+			int port = 1056;
+
 /*			string[] tests = new string[] {
 				"[1, 2, 3, 4, 5, 6, 7]",
 				"[1,   2, [3,  [4, 5]], 6, [7, 8]]",
@@ -27,16 +29,22 @@ namespace EGON_cs_test {
 			}
 			return;*/
 
+			// CLEANUP
+
 			EgonServer server = new EgonServer("egon_server-0.1");
-
 			server.GenerateIni();
-//			return;
 
+			if (false) {
+				server.StartServer();
+				server.Connect("Nikola", "127.0.0.1", port);
+				server.Shutdown();
+				return;
+				System.Threading.Thread.Sleep(1000);
+			}
+
+			server = new EgonServer("egon_server-0.1");
 			server.StartServer();
-
-			server.Connect("Nikola", "127.0.0.1", 1055);
-//			server.Shutdown();
-//			return;
+			server.Connect("Nikola", "127.0.0.1", port);
 			
 			List<Simulator> sims = server.listSims();
 			Console.WriteLine("Number of sims at start: {0}", sims.Count);
@@ -136,7 +144,10 @@ namespace EGON_cs_test {
 			foreach (string param in log.AvailableParameters()) {
 				Console.WriteLine(param);
 			}
-			foreach (LogEntry line in log.Dump()) {
+
+
+			Console.WriteLine("Now: {0}", DateTime.Now);
+			foreach (LogEntry line in log.Range(DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 2).Items) {
 				Console.WriteLine(line.ToString());
 			}
 			
