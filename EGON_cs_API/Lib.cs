@@ -31,6 +31,9 @@ namespace EGON_cs_API {
 		}
 
 		public static List<string> StringToList(string val, char[] startBraces, char[] endBraces) {
+			if (val == "") {
+				throw new Exception("Input string empty.");
+			}
 			foreach (char brace in startBraces) {
 				if (val.IndexOf(brace, 1) > -1) {
 					return Lib.Flatten(new List<string>(), "", val.Trim(), startBraces, endBraces, -1);
