@@ -76,12 +76,13 @@ namespace EGON_cs_test {
 //			return;
 
 			Console.WriteLine(log.syncData.ToString());
-			Console.WriteLine(log.ParameterNames.Count);
+			Console.WriteLine(log.ParameterDescriptions.Count);
 			log.ClearParameters();
-			Console.WriteLine(log.ParameterNames.Count);
-			log.AddParameter("Tavg", "es_core_server", "{get, tavg}");
-			log.AddParameter("Neutron flux", "es_core_server", "{get, flux}");
-			Console.WriteLine(log.ParameterNames.Count);
+			Console.WriteLine(log.ParameterIds.Count);
+			log.AddParameter("tavg", "Core Tavg", "es_core_server", "{get, tavg}");
+			log.AddParameter("flux", "Neutron flux", "es_core_server", "{get, flux}");
+			log.AddParameter("turbine_power", "Turbine power", "es_turbine_server", "{get, power}");
+			Console.WriteLine(log.ParameterDescriptions.Count);
 			Console.WriteLine(log.CycleLen);
 
 			Clock clock = sim1.getClock();
@@ -141,15 +142,15 @@ namespace EGON_cs_test {
 				System.Threading.Thread.Sleep(1000);
 			}
 
-			foreach (string param in log.ParameterNames) {
+			foreach (string param in log.ParameterDescriptions) {
 				Console.WriteLine(param);
 			}
 
 
 			Console.WriteLine("Now: {0}", DateTime.Now);
-/*			foreach (LogEntry line in log.Range(DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1).Items) {
+			foreach (LogEntry line in log.Range(new string[] {"turbine_power", "flux"}, DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1).Items) {
 				Console.WriteLine(line.ToString());
-			}*/
+			}
 
 			log.WriteRange("log.xls", DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1);
 			

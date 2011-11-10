@@ -129,7 +129,21 @@ namespace EGON_cs_API {
 			set { this.simInterface.Call("{cast, es_log_server, cycle_len, " + value + "}"); }
 		}
 
-		public List<string> ParameterNames {
+		public List<string> ParameterDescriptions {
+			get {
+				string dump = this.simInterface.Call("{get, es_log_server, parameters}");
+
+				List<string> ps = Lib.StringToList(dump, new char[] {'[', '{'}, new char[] {']', '}'});
+				List<string> retval = new List<string>();
+				foreach (string param in ps) {
+					List<string> parts = Lib.StringToList(param, new char[] {'[', '{'}, new char[] {']', '}'});
+					retval.Add(parts[2]);
+				}
+				return retval;
+			}
+		}
+
+		public List<string> ParameterIds {
 			get {
 				string dump = this.simInterface.Call("{get, es_log_server, parameters}");
 
@@ -147,12 +161,28 @@ namespace EGON_cs_API {
 			this.simInterface.Call("{cast, es_log_server, parameters, []}\n");
 		}
 
-		public void AddParameter(string parameterName, string serverName, string parameterCall) {
-			this.simInterface.Call("{action, es_log_server, add_parameter, {\"" + parameterName + "\", " + serverName + ", " + parameterCall + "}}");
+		public void AddParameter(string parameterId, string parameterName, string serverName, string parameterCall) {
+			this.simInterface.Call("{action, es_log_server, add_parameter, {\"" + parameterId + "\", \"" + parameterName + "\", " + serverName + ", " + parameterCall + "}}");
 		}
 
 		public LogRange Range(DateTime start, DateTime finish, int frequency) {
-			string query = "{get, es_log_server, range, {" + this.syncData.DateTimeToErl(start) + ", " + this.syncData.DateTimeToErl(finish) + ", " + frequency.ToString() + "}}";
+			string query = "{get, es_log_server, range, {all, " + this.syncData.DateTimeToErl(start) + ", " + this.syncData.DateTimeToErl(finish) + ", " + frequency.ToString() + "}}";
+
+			string dump = this.simInterface.Call(query);
+			List<string> lines = Lib.StringToList(dump);
+
+			List<LogEntry> entries = new List<LogEntry>();
+
+			foreach (string line in lines) {
+				entries.Add(new LogEntry(line, this.syncData));
+			}
+
+			return new LogRange(entries);
+		}
+
+		public LogRange Range(string[] points, DateTime start, DateTime finish, int frequency) {
+			string pointsList = "[" + String.Join(", ", points) + "]";
+			string query = "{get, es_log_server, range, {" + pointsList + ", " + this.syncData.DateTimeToErl(start) + ", " + this.syncData.DateTimeToErl(finish) + ", " + frequency.ToString() + "}}";
 
 			string dump = this.simInterface.Call(query);
 			List<string> lines = Lib.StringToList(dump);
@@ -174,7 +204,7 @@ namespace EGON_cs_API {
 
 			string header = "Time";
 
-			foreach (string s in this.ParameterNames) {
+			foreach (string s in this.ParameterDescriptions) {
 				header += "\t" + s;
 			}
 			sw.WriteLine(header);
