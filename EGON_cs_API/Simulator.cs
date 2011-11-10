@@ -1,5 +1,6 @@
 using System;
 using EGON_cs_API;
+using System.Collections.Generic;
 
 namespace EGON_cs_API {
 	public class Simulator {
@@ -11,22 +12,27 @@ namespace EGON_cs_API {
 		public SimulatorLog log;
 		
 		public Simulator(ServerInterface serverInterface, string name, string description) {
-			this.name = name;
-			this.description = description;
-
 			this.simId = serverInterface.StartSim(name, description);
 			this.simInterface = serverInterface.ConnectToSim(this.simId);
+
+			this.Init();
 			this.log = new SimulatorLog(this.simInterface);
 		}
 
-		public Simulator(ServerInterface serverInterface, string simId, string name, string description, string owner) {
-			this.name = name;
-			this.description = description;
-			this.owner = owner;
-
+		public Simulator(ServerInterface serverInterface, string simId) {
 			this.simId = simId;
 			this.simInterface = serverInterface.ConnectToSim(this.simId);
+
+			this.Init();
 			this.log = new SimulatorLog(this.simInterface);
+		}
+
+		public void Init() {
+			List<string> parts = this.simInterface.GetSimInfo(this.SimId);
+
+			this.name = parts[2];
+			this.description = parts[3];
+			this.owner = parts[4];
 		}
 		
 		public string SimId {

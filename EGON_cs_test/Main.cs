@@ -66,7 +66,7 @@ namespace EGON_cs_test {
 			foreach (Simulator s in sims) {
 				Console.WriteLine(s.ToString());
 			}
-			
+
 			Simulator sim1 = sims[0];
 			SimulatorLog log = sim1.Log;
 

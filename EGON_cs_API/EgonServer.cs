@@ -66,7 +66,7 @@ namespace EGON_cs_API {
 					newSimList.Add(foundSim);
 					this.simulators.Remove(foundSim);
 				} else {
-					newSimList.Add(new Simulator(this.servInterface, parts[1], parts[3], parts[4], parts[5]));
+					newSimList.Add(new Simulator(this.servInterface, simId));
 				}
 			}
 

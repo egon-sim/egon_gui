@@ -54,7 +54,6 @@ namespace EGON_cs_API {
 			int port = int.Parse(match.Groups[1].Value);	
 			return new SimulatorInterface(this.username, this.server, port);
 		}
-
 	}
 
 	public class SimulatorInterface : ErlInterface {
@@ -143,6 +142,21 @@ namespace EGON_cs_API {
 			}
 			
 			return;
+		}
+
+		public List<string> GetSimInfo(string simId) {
+			string response = this.Call("{ask, sim_info}");
+			string pattern = @"{simulator_manifest,(.+)}";
+			Match match;
+			
+			try {
+				match = Regex.Matches(response, pattern)[0];
+			} catch (ArgumentOutOfRangeException) {
+				Console.WriteLine("Response doesn't match: {0}", response);
+				return null;
+			}
+
+			return Lib.StringToList('[' + match.Groups[1].Value + ']');
 		}
 	}
 

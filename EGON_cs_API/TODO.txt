@@ -1,14 +1,12 @@
 GENERAL:
 %0 wrap ErlInterface in a process separate from the rest of the API
 %0 rewrite EgonServer.GenerateIni() to be able to start egon_server without knowing exact version of egon_server and erts (find out versions from some kind of config file?)
-* rewrite Simulator(ServerInterface, string, string, string, string) to Simulator(ServerInterface, string) - let it take all additional info directly from egon_server
 
 (UN)REGISTERING:
 *+ rewrite Lib.StringToArray to use Regexp and support arrays (then register Rods.ctrlRodPosition)
 #+ move type conversion from Parameter.Value to Parameter.Set
 
 BUGS:
-* set this.owner in Simulator(ServerInterface, string, string)
 *0 check lock syntax in SimulatorInterface.Refresh, SimulatorInterface.Register and SimulatorInterface.Unregister
 %0 ErlInterface.Call() has limitation in "data = new Byte[10000];"
 
