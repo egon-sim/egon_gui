@@ -77,11 +77,11 @@ namespace EGON_cs_test {
 
 			Console.WriteLine(log.syncData.ToString());
 			Console.WriteLine(log.ParameterDescriptions.Count);
-			log.ClearParameters();
+//			log.ClearParameters();
 			Console.WriteLine(log.ParameterIds.Count);
-			log.AddParameter("tavg", "Core Tavg", "es_core_server", "{get, tavg}");
-			log.AddParameter("flux", "Neutron flux", "es_core_server", "{get, flux}");
-			log.AddParameter("turbine_power", "Turbine power", "es_turbine_server", "{get, power}");
+//			log.AddParameter("tavg", "Core Tavg", "es_core_server", "{get, tavg}");
+//			log.AddParameter("flux", "Neutron flux", "es_core_server", "{get, flux}");
+//			log.AddParameter("turbine_power", "Turbine power", "es_turbine_server", "{get, power}");
 			Console.WriteLine(log.ParameterDescriptions.Count);
 			Console.WriteLine(log.CycleLen);
 
@@ -142,13 +142,17 @@ namespace EGON_cs_test {
 				System.Threading.Thread.Sleep(1000);
 			}
 
+			foreach (string param in log.ParameterIds) {
+				Console.WriteLine(param);
+			}
+			Console.WriteLine("-----------");
 			foreach (string param in log.ParameterDescriptions) {
 				Console.WriteLine(param);
 			}
 
 
 			Console.WriteLine("Now: {0}", DateTime.Now);
-			foreach (LogEntry line in log.Range(new string[] {"turbine_power", "flux"}, DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1).Items) {
+			foreach (LogEntry line in log.Range(new string[] {"turbine_power", "rodctrl_speed", "tref", "rate"}, DateTime.Now - new TimeSpan(81000000), DateTime.Now - new TimeSpan(25000000), 1).Items) {
 				Console.WriteLine(line.ToString());
 			}
 
