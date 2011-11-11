@@ -58,6 +58,10 @@ namespace EGON_cs_API {
 				}
 			}
 
+			if (val == "") {
+				return new List<string>();
+			}
+
 			string[] parts = val.Split(',');
 			for(int i = 0; i < parts.Length; i++) {
 				parts[i] = parts[i].Trim();
