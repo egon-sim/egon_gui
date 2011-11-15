@@ -1,4 +1,5 @@
 GENERAL:
+*+ Lib.StringToList needs support for strings
 %0 wrap ErlInterface in a process separate from the rest of the API
 %0 rewrite EgonServer.GenerateIni() to be able to start egon_server without knowing exact version of egon_server and erts (find out versions from some kind of config file?)
 
